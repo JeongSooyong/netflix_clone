@@ -79,4 +79,13 @@ SELECT USER_ID
   AND COMMON_NO = 101
 </select>
 
+<!-- 비밀번호 찾기 -->
+<select id="findPw" parameterType="com.soo.netflix_clone.vo.UserVo" resultMap="userResultMap">
+SELECT USER_PW
+	FROM netflix.`user`
+	WHERE USER_ID = #{userId}
+	AND USER_EMAIL = #{userEmail}
+  AND COMMON_NO = 101
+</select>
+
 </mapper>

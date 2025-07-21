@@ -29,7 +29,7 @@ public class MainController {
     public String mainPage(Model model, HttpSession session) {
         List<MovieVo> movies = movieService.selectAllMovies();
         model.addAttribute("movies", movies);
-        return "main";  // src/main/resources/templates/main.html 렌더링
+        return "main";  
     }
     
 }

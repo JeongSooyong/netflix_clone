@@ -56,4 +56,10 @@ public class UserDaoImpl implements IUserDao {
         return session.selectOne(NS + "findId", vo);
     }
 
+    // 비밀번호 찾기
+    @Override
+    public UserVo findPw(UserVo vo) {
+        return session.selectOne(NS + "findPw", vo);
+    }
+
 }

@@ -2,33 +2,19 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>아이디 찾기 결과</title>
+    <title>아이디 찾기</title>
     <link rel="stylesheet" href="/css/find.css" />
 </head>
 <body>
     <div class="background"></div>
     <div class="container">
-        <h1>아이디 찾기 결과</h1>
+        <h1>아이디 찾기</h1>
         
-        <!-- 아이디를 찾았을 경우 (결과가 있으면 표시) -->
-        <div th:if="${foundUserId}">
-            <p>회원님의 아이디는 <strong><span th:text="${foundUserId}"></span></strong> 입니다.</p>
-        </div>
-        
-        <!-- 아이디를 찾지 못했을 경우 (메시지가 있으면 표시) -->
-        <div th:if="${message}">
-            <p th:text="${message}"></p>
-        </div>
-        
-        <!-- 둘 다 없을 경우 (혹은 메시지가 없는데 foundUserId도 없는 경우) -->
-        <div th:if="${!foundUserId} and ${!message}">
-            <p>아이디 찾기 결과를 표시할 수 없습니다. 다시 시도해주세요.</p>
-        </div>
-
-        <div class="navigation-links">
-            <a href="/login" class="button">로그인 페이지로</a>
-            <a href="/find" class="button">다시 찾기</a>
-        </div>
+        <form action="/findId2" method="post" class="find-form">
+            <label for="email">가입 시 등록한 이메일</label>
+            <input type="email" id="email" name="userEmail" placeholder="이메일을 입력하세요" required />
+            <button type="submit">아이디 찾기</button>
+        </form>
     </div>
 </body>
 </html>

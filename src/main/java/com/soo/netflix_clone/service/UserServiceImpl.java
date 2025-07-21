@@ -48,4 +48,10 @@ public class UserServiceImpl implements IUserService {
     public UserVo findId(UserVo vo) {
         return dao.findId(vo);
     }
+
+    // 비밀번호 찾기
+    @Override
+    public UserVo findPw(UserVo vo) {
+        return dao.findPw(vo);
+    }
 }

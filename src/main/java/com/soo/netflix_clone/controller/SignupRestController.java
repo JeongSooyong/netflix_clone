@@ -23,7 +23,7 @@ public class SignupRestController {
         Map<String, Boolean> response = new HashMap<>();
         // service.countUserId()가 boolean을 반환하므로, 그 값을 그대로 사용
         boolean isDuplicated = service.countUserId(userId);
-        response.put("isDuplicated", isDuplicated); // isDuplicated: true (중복), false (사용 가능)
+        response.put("isDuplicated", isDuplicated);
         return response;
     }
 }

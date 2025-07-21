@@ -24,5 +24,8 @@ public interface IUserService {
     // 아이디 찾기
     public UserVo findId(UserVo vo);
 
+    // 비밀번호 찾기
+    public UserVo findPw(UserVo vo);
+
 }
 
