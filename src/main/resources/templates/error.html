@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>오류 발생</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 100px;
+            color: #333;
+        }
+        .container {
+            display: inline-block;
+            background: white;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>오류가 발생했습니다</h1>
+        <p>죄송합니다. 요청하신 페이지를 처리하는 중 문제가 발생했습니다.</p>
+        <a href="/">홈으로 돌아가기</a>
+    </div>
+    <!-- login.html -->
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+</body>
+</html>

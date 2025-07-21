@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>로그인</h1>
+        <form action="/login" method="post">
+            <input type="text" name="userId" placeholder="사용자 아이디" required>
+            <input type="password" name="userPw" placeholder="비밀번호" required>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
+    <div class="signup-conStainer">
+        <span>아직 회원이 아니신가요?</span>
+        <a href="/signup"> 지금 가입하기</a>
+    </div>
+    <div class="find-credentials-container">
+        <span>아이디나 비밀번호를 잊어버리셨나요?</span>
+    </div>
+    <div>
+        <a href="/find">아이디 찾기</a> <!-- 실제 아이디 찾기 페이지 URL로 변경 -->
+        <a href="/find">비밀번호 찾기</a> <!-- 실제 비밀번호 찾기 페이지 URL로 변경 -->
+    </div>
+
+    <!-- 에러 메시지 표시 -->
+    <script th:inline="javascript">
+        var errorMessage = [[${errorMsg}]];
+
+        if (errorMessage != null && errorMessage !== '') {
+            alert(errorMessage);
+        }
+    </script>
+    
+</body>
+</html> 

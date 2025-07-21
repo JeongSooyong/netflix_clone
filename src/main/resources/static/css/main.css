@@ -1,0 +1,74 @@
+body.main-body {
+    background-color: #141414;
+    color: #fff;
+    margin: 0;
+    font-family: 'Noto Sans KR', Arial, sans-serif;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(20,20,20,0.9);
+}
+.logo {
+    color: #e50914;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.navbar nav a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+.profile img {
+    width: 40px;
+    border-radius: 4px;
+}
+.hero {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: flex-end;
+}
+.hero-content {
+    background: rgba(0,0,0,0.5);
+    padding: 40px;
+    margin: 40px;
+    border-radius: 8px;
+}
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.hero-content button {
+    background: #e50914;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    margin-right: 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.row {
+    margin: 40px 0 0 40px;
+}
+.row h2 {
+    margin-bottom: 20px;
+}
+.row-posters {
+    display: flex;
+    overflow-x: auto;
+}
+.row-poster {
+    width: 200px;
+    margin-right: 10px;
+    border-radius: 4px;
+    transition: transform 0.2s;
+}
+.row-poster:hover {
+    transform: scale(1.08);
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Netflix Main</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="main-body">
+    <header class="navbar">
+        <div class="logo">NETFLIX</div>
+        <nav>
+            <a href="#">홈</a>
+            <a href="#">시리즈</a>
+            <a href="#">영화</a>
+            <a href="#">내가 찜한 콘텐츠</a>
+        </nav>
+        <div class="profile">
+            <a href="/myinfo">내 정보</a>
+            <a href="/logout">로그아웃</a>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>대표 영화/시리즈 제목</h1>
+            <p>이곳에 간단한 설명이 들어갑니다.</p>
+            <button>재생</button>
+            <button>내가 찜한 콘텐츠</button>
+        </div>
+    </section>
+    <section class="row">
+        <h2>지금 뜨는 콘텐츠</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" class="movie-item">
+                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}"
+                    th:alt="${movie.movieTitle}"
+                    class="row-poster">
+                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            </div>
+        </div>
+        <h2>로맨스</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" class="movie-item">
+                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}"
+                    th:alt="${movie.movieTitle}"
+                    class="row-poster">
+                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            </div>
+        </div>
+        <h2>액션</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" class="movie-item">
+                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}"
+                    th:alt="${movie.movieTitle}"
+                    class="row-poster">
+                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            </div>
+        </div>
+        <h2>만화 애니메이션</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" class="movie-item">
+                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}"
+                    th:alt="${movie.movieTitle}"
+                    class="row-poster">
+                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            </div>
+        </div>
+    </section>
+    <!-- 여러 row 섹션을 추가할 수 있습니다 -->
+</body>
+</html>

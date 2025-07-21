@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 정보</title>
+    <link rel="stylesheet" th:href="@{/css/myinfo.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>내 정보</h1>
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td th:text="${user.userId}"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td th:text="${user.userEmail}"></td>
+            </tr>
+        </table>
+        <a href="/main" class="btn">메인으로</a>
+        <br>
+        <form action="/delUser" method="post">
+            <input type="hidden" name="userId" th:value="${user.userId}" />
+            <button type="submit" onclick="return confirm('정말로 회원 탈퇴를 하시겠습니까?');">회원탈퇴</button>
+        </form>
+    </div>
+</body>
+</html> 

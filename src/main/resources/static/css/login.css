@@ -1,0 +1,108 @@
+body {
+    background-image: url('../img/desert-6952778_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.login-container {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 60px;
+    border-radius: 8px;
+    color: white;
+    width: 100%;
+    max-width: 450px;
+    box-sizing: border-box;
+}
+
+.login-container h1 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 32px;
+    text-align: center;
+}
+
+.login-container input[type="text"],
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.input-group input[type="text"] {
+    flex-grow: 1;
+    margin-right: 8px;
+    margin-bottom: 0;
+}
+
+.input-group button {
+    padding: 16px 20px;
+    border: none;
+    background-color: #e50914;
+    color: white;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.login-container button[type="submit"] {
+    width: 100%;
+    padding: 16px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 24px;
+}
+
+#duplicateCheckMsg {
+    margin-top: -10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.signup-container {
+    color: #a3a3a3;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup-container a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}

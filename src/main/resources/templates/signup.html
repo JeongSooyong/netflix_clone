@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/signup.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <h1>회원가입</h1>
+
+        <!--회원가입 버튼을 누르면 폼에 입력한 값들을 signup으로 서버에 데이터를 전송한다.-->
+        <form action="/signup" method="post" id="signupForm">
+            <div class="input-group">
+                <input type="text" name="userId" id="userIdInput" placeholder="아이디" required>
+                <button type="button" id="checkDuplicateBtn">중복 확인</button>
+            </div>
+            <span id="duplicateCheckMsg" style="display: block; margin-top: 5px; font-size: 0.9em;"></span>
+            <input type="email" name="userEmail" id="userEmailInput" placeholder="이메일 주소" required>
+            <input type="password" name="userPw" id="userPwInput" placeholder="비밀번호" required>
+            <input type="password" name="confirmUserPw" id="confirmUserPwInput" placeholder="비밀번호 확인" required>
+            <!-- 비밀번호 일치 여부 메시지 표시 영역 추가 -->
+            <span id="passwordMatchMsg" style="display: block; margin-top: 5px; font-size: 0.9em;"></span>
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+</body>
+</html>

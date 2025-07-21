@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.netflix_clone.model.MovieDaoImpl">
+
+<!-- movieResultMap 정의 -->
+    <resultMap id="movieResultMap" type="com.soo.netflix_clone.vo.MovieVo">
+        <id property="movieNo" column="movie_no"/> <!-- 기본 키 (Primary Key) 매핑 -->
+        <result property="movieTitle" column="movie_title"/>
+        <result property="movieDescrip" column="movie_descrip"/>
+        <result property="movieReleaseDate" column="movie_release_date"/>
+        <result property="movieDuration" column="movie_duration"/>
+        <result property="movieGenre" column="movie_genre"/>
+        <result property="moviePoster" column="movie_poster"/>
+        <result property="movieVideoUrl" column="movie_video_url"/>
+        <result property="movieViewCount" column="movie_view_count"/>
+    </resultMap>
+
+<!-- 모든 영화 -->
+<select id="selectAllMovies" 
+  resultType="com.soo.netflix_clone.vo.MovieVo">
+SELECT MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
+  MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
+  MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT
+	FROM MOVIE;
+</select>
+
+</mapper>
