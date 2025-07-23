@@ -33,10 +33,10 @@ SELECT USER_NO,
     USER_PW,
     USER_EMAIL,
     USER_SIGNUP_DATE,
-    USER_DEL_DATE
+    USER_DEL_DATE,
+    COMMON_NO
 	FROM netflix.`user`
 	WHERE USER_ID = #{userId}
-	AND USER_PW = #{userPw}
   AND COMMON_NO = '101'
 </select>
 
@@ -79,13 +79,12 @@ SELECT USER_ID
   AND COMMON_NO = 101
 </select>
 
-<!-- 비밀번호 찾기 -->
-<select id="findPw" parameterType="com.soo.netflix_clone.vo.UserVo" resultMap="userResultMap">
-SELECT USER_PW
-	FROM netflix.`user`
-	WHERE USER_ID = #{userId}
-	AND USER_EMAIL = #{userEmail}
-  AND COMMON_NO = 101
-</select>
+<!-- 비밀번호 찾기 및 수정하기-->
+<update id="updatePw" parameterType="com.soo.netflix_clone.vo.UserVo">
+UPDATE netflix.`user`
+  SET USER_PW=#{userPw}
+  WHERE USER_ID=#{userId}
+  AND COMMON_NO=101
+</update>
 
 </mapper>

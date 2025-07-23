@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
@@ -46,7 +47,7 @@ public class MyInfoController {
     }
 
     @PostMapping("/findId2")
-    public String findId(Model model, String userEmail) {
+    public String findId2(Model model, String userEmail) {
 
         UserVo vo = new UserVo();
         vo.setUserEmail(userEmail);
@@ -63,21 +64,49 @@ public class MyInfoController {
         return "findId2";
     }
 
-    @PostMapping("/findPw")
-    public String findPw(Model model, String userEmail, String userId) {
+    @GetMapping("/updatePw")
+    public String updatePw() {
+        return "updatePw";
+    }
 
-        UserVo vo = new UserVo();
-        vo.setUserEmail(userEmail);
-        vo.setUserId(userId);
-
-        UserVo foundUserPw = userService.findPw(vo); 
-        if (foundUserPw != null && foundUserPw.getUserId() != null) { 
-            model.addAttribute("foundUserPw", foundUserPw.getUserPw());
-        } else {
-            model.addAttribute("message", "해당 이메일로 등록된 아이디를 찾을 수 없습니다.");
+    
+    @PostMapping("/updatePw2")
+    public String updatePw(
+        Model model,
+        @RequestParam("userId") String userId, // 사용자가 폼에 입력한 아이디
+        @RequestParam("userEmail") String userEmail, // 사용자가 폼에 입력한 이메일 (userId와 함께 사용자를 특정)
+        @RequestParam("newPassword") String newPassword, // 새로 설정할 비밀번호 (평문)
+        @RequestParam("confirmPassword") String confirmPassword // 새 비밀번호 확인 (평문)
+    ) {
+        // 1. 새 비밀번호와 확인 비밀번호 일치 여부 검증 (서버 측 필수)
+        if (!newPassword.equals(confirmPassword)) {
+            model.addAttribute("errorMsg", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+            return "findPw"; // 다시 비밀번호 찾기 폼 (findPw.html)으로 돌아가 오류 메시지 표시
+                                // 또는 새로운 비밀번호 입력 페이지가 있다면 거기로
         }
 
-        return "findPw";
+        // 2. UserVo 객체에 필요한 정보 담기 (서비스 계층으로 전달)
+        UserVo userVo = new UserVo();
+        userVo.setUserId(userId);
+        userVo.setUserEmail(userEmail);
+        userVo.setUserPw(newPassword); // 서비스 계층에서 이 평문 비밀번호를 해싱할 것임
+        
+        // 3. 서비스 계층의 updatePw 메서드 호출 (새 비밀번호로 DB 업데이트)
+        //    (userService.updatePw는 평문 비밀번호를 받아서 해싱 후 DB에 업데이트합니다.)
+        int updateResult = userService.updatePw(userVo); 
+
+        // 4. 결과에 따른 처리
+        if (updateResult > 0) {
+            // 비밀번호 변경 성공 메시지 (findPw2.html에 표시될 내용)
+            model.addAttribute("successMsg", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 로그인해주세요.");
+        } else {
+            // 업데이트 실패 (아이디-이메일 불일치, DB 업데이트 오류 등)
+            model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다. 아이디 또는 이메일을 정확히 확인해주세요.");
+        }
+        
+        return "updatePwResult";
     }
-    
+
 }
+
+// 비밀번호 해시 완료 , 비밀번호 재설정시 이메일 불일치시 재설정 안되도록 하기(매퍼부터 수정)

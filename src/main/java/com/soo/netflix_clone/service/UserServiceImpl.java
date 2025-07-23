@@ -1,6 +1,7 @@
 package com.soo.netflix_clone.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.soo.netflix_clone.model.IUserDao;
@@ -12,11 +13,17 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private IUserDao dao;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder; // 스프링 시큐리티에 등록한 BCryptPasswordEncoder 주입받기
     
     // 회원가입
     @Override
     public int insertUser(UserVo vo) {
-        return dao.insertUser(vo);
+        // 사용자가 입력한 비밀번호를 암호화
+        String encodedPassword = bCryptPasswordEncoder.encode(vo.getUserPw());
+        vo.setUserPw(encodedPassword); // 암호화된 비밀번호를 UserVo에 다시 설정
+        return dao.insertUser(vo); // 암호화된 비밀번호를 DB에 저장
     }
 
     // 개인정보 및 로그인
@@ -49,9 +56,13 @@ public class UserServiceImpl implements IUserService {
         return dao.findId(vo);
     }
 
-    // 비밀번호 찾기
+    // 비밀번호 찾기 및 수정하기
     @Override
-    public UserVo findPw(UserVo vo) {
-        return dao.findPw(vo);
+    public int updatePw(UserVo vo) {
+        String newUserPw = bCryptPasswordEncoder.encode(vo.getUserPw()); // userPw는 새 평문 비밀번호
+
+        // 3. UserVo 객체의 userPw 필드에 해싱된 비밀번호를 설정
+        vo.setUserPw(newUserPw);
+        return dao.updatePw(vo);
     }
 }

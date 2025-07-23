@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>비밀번호 변경 완료</title>
+    <link rel="stylesheet" href="/css/find.css" />
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>비밀번호 변경 결과</h1>
+        
+        <!-- 비밀번호 변경 성공 시 (컨트롤러에서 successMsg를 담아줬을 때) -->
+        <div th:if="${successMsg}">
+            <p><strong><span th:text="${successMsg}"></span></strong></p>
+            <p>이제 새로운 비밀번호로 로그인하실 수 있습니다.</p>
+        </div>
+        
+        <!-- 비밀번호 변경 실패 시 (컨트롤러에서 errorMsg를 담아줬을 때) -->
+        <div th:if="${errorMsg}">
+            <p>비밀번호 변경에 실패했습니다.</p>
+            <p><strong><span th:text="${errorMsg}"></span></strong></p>
+            <p>문제가 계속되면 고객센터에 문의해주세요.</p>
+        </div>
+        
+        <!-- 성공/실패 메시지가 모두 없을 경우 (예기치 못한 상황 대비) -->
+        <div th:unless="${successMsg} or ${errorMsg}">
+            <p>비밀번호 변경 처리 결과를 표시할 수 없습니다.</p>
+            <p>다시 시도하거나 로그인 페이지로 이동해주세요.</p>
+        </div>
+
+        <div class="navigation-links">
+            <a href="/login" class="button">로그인 페이지로</a>
+            <a href="/find" class="button">다시 찾기 (아이디/비밀번호)</a>
+        </div>
+    </div>
+</body>
+</html>
