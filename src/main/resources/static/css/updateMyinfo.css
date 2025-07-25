@@ -1,0 +1,46 @@
+.form-table input[type="email"],
+.form-table input[type="password"] {
+    width: calc(100% - 10px); /* 패딩 고려 */
+    padding: 8px 5px;
+    border: 1px solid #555;
+    background: #282828;
+    color: #fff;
+    border-radius: 4px;
+    box-sizing: border-box; /* 패딩과 보더가 width에 포함되도록 */
+    font-size: 1rem;
+}
+
+.form-table input[type="email"]:focus,
+.form-table input[type="password"]:focus {
+    outline: none;
+    border-color: #e50914;
+}
+
+/* 버튼 간 간격 조정 및 정렬 */
+.btn-group {
+    display: flex;
+    gap: 15px; /* 버튼 사이 간격 */
+    margin-top: 32px;
+}
+
+.btn-group .btn {
+    flex: 1; /* 버튼들이 가로 공간을 균등하게 차지 */
+    width: auto; /* flex 컨테이너 내에서 width를 auto로 설정하여 flex-item 속성 적용 */
+}
+
+/* 특정 버튼 색상 */
+.btn-secondary {
+    background: #444; /* 취소 버튼 색상 */
+}
+
+.btn-secondary:hover {
+    background: #666;
+}
+
+/* 오류 메시지 스타일 */
+.error-message {
+    color: #e50914;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.95rem;
+}

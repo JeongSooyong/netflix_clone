@@ -78,33 +78,33 @@ public class MyInfoController {
         @RequestParam("newPassword") String newPassword, // 새로 설정할 비밀번호 (평문)
         @RequestParam("confirmPassword") String confirmPassword // 새 비밀번호 확인 (평문)
     ) {
-        // 1. 새 비밀번호와 확인 비밀번호 일치 여부 검증 (서버 측 필수)
+        // 1. 새 비밀번호와 확인 비밀번호 일치 여부 검증
         if (!newPassword.equals(confirmPassword)) {
             model.addAttribute("errorMsg", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
-            return "findPw"; // 다시 비밀번호 찾기 폼 (findPw.html)으로 돌아가 오류 메시지 표시
-                                // 또는 새로운 비밀번호 입력 페이지가 있다면 거기로
+            return "findPw"; 
         }
 
-        // 2. UserVo 객체에 필요한 정보 담기 (서비스 계층으로 전달)
         UserVo userVo = new UserVo();
         userVo.setUserId(userId);
         userVo.setUserEmail(userEmail);
-        userVo.setUserPw(newPassword); // 서비스 계층에서 이 평문 비밀번호를 해싱할 것임
+        userVo.setUserPw(newPassword); // 서비스 계층에서 이 평문 비밀번호를 해싱
         
-        // 3. 서비스 계층의 updatePw 메서드 호출 (새 비밀번호로 DB 업데이트)
-        //    (userService.updatePw는 평문 비밀번호를 받아서 해싱 후 DB에 업데이트합니다.)
         int updateResult = userService.updatePw(userVo); 
 
-        // 4. 결과에 따른 처리
         if (updateResult > 0) {
-            // 비밀번호 변경 성공 메시지 (findPw2.html에 표시될 내용)
             model.addAttribute("successMsg", "비밀번호가 성공적으로 변경되었습니다. 새로운 비밀번호로 로그인해주세요.");
         } else {
-            // 업데이트 실패 (아이디-이메일 불일치, DB 업데이트 오류 등)
             model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다. 아이디 또는 이메일을 정확히 확인해주세요.");
         }
         
         return "updatePwResult";
+    }
+
+    @GetMapping("/updateMyinfo")
+    public String updateMyinfo(HttpSession session, Model model) {
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+        model.addAttribute("user", loginUser);
+        return "updateMyinfo";
     }
 
 }

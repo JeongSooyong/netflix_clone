@@ -84,6 +84,7 @@ SELECT USER_ID
 UPDATE netflix.`user`
   SET USER_PW=#{userPw}
   WHERE USER_ID=#{userId}
+  AND USER_EMAIL=#{userEmail}
   AND COMMON_NO=101
 </update>
 

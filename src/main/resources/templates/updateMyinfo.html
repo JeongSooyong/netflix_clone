@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 정보 수정</title>
+    <!-- 기존 myinfo.css를 사용 -->
+    <link rel="stylesheet" th:href="@{/css/myinfo.css}">
+    <!-- updateMyinfo.html에 특화된 스타일을 위한 css 파일 -->
+    <link rel="stylesheet" th:href="@{/css/updateMyinfo.css}"> 
+</head>
+<body>
+    <div class="container">
+        <h1>내 정보 수정</h1>
+        <form action="/updateUser" method="post">
+            <table class="form-table">
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${user.userId}"></td>
+                    <input type="hidden" name="userId" th:value="${user.userId}" />
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td>
+                        <input type="email" id="userEmail" name="userEmail" th:value="${user.userEmail}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>새 비밀번호</th>
+                    <td>
+                        <input type="password" id="newPassword" name="newPassword" placeholder="새 비밀번호를 입력하세요">
+                    </td>
+                </tr>
+                <tr>
+                    <th>새 비밀번호 확인</th>
+                    <td>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="새 비밀번호를 다시 입력하세요">
+                    </td>
+                </tr>
+            </table>
+            
+            <p th:if="${errorMsg}" class="error-message" th:text="${errorMsg}"></p>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">정보 저장</button>
+                <a href="/myinfo" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
