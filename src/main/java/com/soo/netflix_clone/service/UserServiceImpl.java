@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUserService {
         return dao.findId(vo);
     }
 
-    // 비밀번호 찾기 및 수정하기
+    // 비밀번호 재설정
     @Override
     public int updatePw(UserVo vo) {
         String newUserPw = bCryptPasswordEncoder.encode(vo.getUserPw()); // userPw는 새 평문 비밀번호
@@ -65,4 +65,11 @@ public class UserServiceImpl implements IUserService {
         vo.setUserPw(newUserPw);
         return dao.updatePw(vo);
     }
+
+    // 개인정보 수정
+    @Override
+    public int updateMyinfo(String userId) {
+        return dao.updateMyinfo(userId);
+    }
+
 }

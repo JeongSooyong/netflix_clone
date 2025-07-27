@@ -56,10 +56,16 @@ public class UserDaoImpl implements IUserDao {
         return session.selectOne(NS + "findId", vo);
     }
 
-    // 비밀번호 찾기 및 수정하기
+    // 비밀번호 재설정
     @Override
     public int updatePw(UserVo vo) {
         return session.update(NS + "updatePw", vo);
+    }
+
+    // 개인정보 수정
+    @Override
+    public int updateMyinfo(String userId) {
+        return session.update(NS + "updateMyinfo", userId);
     }
 
 }

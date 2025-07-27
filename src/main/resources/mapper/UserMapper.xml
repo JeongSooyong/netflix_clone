@@ -88,4 +88,12 @@ UPDATE netflix.`user`
   AND COMMON_NO=101
 </update>
 
+<!-- 개인정보 수정 -->
+<update id="updateMyinfo" parameterType="String">
+UPDATE netflix.`user`
+  SET USER_PW=#{userPw}, USER_EMAIL=#{userEmail}
+  WHERE USER_ID=#{userId}
+  AND COMMON_NO=101
+</update>
+
 </mapper>

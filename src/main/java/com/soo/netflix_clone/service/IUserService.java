@@ -24,8 +24,11 @@ public interface IUserService {
     // 아이디 찾기
     public UserVo findId(UserVo vo);
 
-    // 비밀번호 찾기 및 수정하기
+    // 비밀번호 재설정
     public int updatePw(UserVo vo);
+
+    // 개인정보 수정
+    public int updateMyinfo(String userId);
 
 }
 

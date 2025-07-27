@@ -107,6 +107,12 @@ public class MyInfoController {
         return "updateMyinfo";
     }
 
+
+    @PostMapping("/updateMyinfo2")
+    public String updateMyinfo2() {
+        return "updateMyinfo2";
+    }
+
 }
 
 // 비밀번호 해시 완료 , 비밀번호 재설정시 이메일 불일치시 재설정 안되도록 하기(매퍼부터 수정)
