@@ -3,11 +3,14 @@ package com.soo.netflix_clone.controller;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
@@ -20,6 +23,9 @@ public class MyInfoController {
     
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder; // 스프링 시큐리티에 등록한 BCryptPasswordEncoder 주입받기
 
     @GetMapping("/myinfo")
     public String myInfo(HttpSession session, Model model) {
@@ -109,8 +115,40 @@ public class MyInfoController {
 
 
     @PostMapping("/updateMyinfo2")
-    public String updateMyinfo2() {
-        return "updateMyinfo2";
+    public String updateMyinfo2(Model model, HttpSession session, RedirectAttributes redirectAttributes,
+        @RequestParam("userId") String userId,
+        @RequestParam("userEmail") String userEmail,
+        @RequestParam(value = "newPassword", required = false) String newPassword,
+        @RequestParam(value = "confirmPassword", required = false) String confirmPassword) {
+
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+
+        String finalPassword = null;
+        if (newPassword != null && !newPassword.isEmpty()) {
+            if (!newPassword.equals(confirmPassword)) {
+                redirectAttributes.addFlashAttribute("errorMsg", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+                return "redirect:/updateMyinfo";
+            }
+            finalPassword = bCryptPasswordEncoder.encode(newPassword);
+        }
+
+        UserVo userToUpdate = new UserVo();
+        userToUpdate.setUserId(userId);
+        userToUpdate.setUserEmail(userEmail);
+        userToUpdate.setUserPw(finalPassword);
+
+        int updateResult = userService.updateMyinfo(userToUpdate);
+
+        if (updateResult > 0) {
+            loginUser.setUserEmail(userEmail);
+            session.setAttribute("loginUser", loginUser);
+
+            redirectAttributes.addFlashAttribute("successMsg", "회원 정보가 성공적으로 수정되었습니다!");
+            return "redirect:/myinfo";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMsg", "회원 정보 수정에 실패했습니다. 다시 시도해주세요.");
+            return "redirect:/updateMyinfo";
+        }
     }
 
 }

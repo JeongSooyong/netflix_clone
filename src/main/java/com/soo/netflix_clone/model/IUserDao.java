@@ -27,7 +27,7 @@ public interface IUserDao {
     public int updatePw(UserVo vo);
 
     // 개인정보 수정
-    public int updateMyinfo(String userId);
+    public int updateMyinfo(UserVo vo);
 
 
 }

@@ -89,7 +89,7 @@ UPDATE netflix.`user`
 </update>
 
 <!-- 개인정보 수정 -->
-<update id="updateMyinfo" parameterType="String">
+<update id="updateMyinfo" parameterType="com.soo.netflix_clone.vo.UserVo">
 UPDATE netflix.`user`
   SET USER_PW=#{userPw}, USER_EMAIL=#{userEmail}
   WHERE USER_ID=#{userId}

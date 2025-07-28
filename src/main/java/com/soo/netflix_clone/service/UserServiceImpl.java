@@ -68,8 +68,8 @@ public class UserServiceImpl implements IUserService {
 
     // 개인정보 수정
     @Override
-    public int updateMyinfo(String userId) {
-        return dao.updateMyinfo(userId);
+    public int updateMyinfo(UserVo vo) {
+        return dao.updateMyinfo(vo);
     }
 
 }

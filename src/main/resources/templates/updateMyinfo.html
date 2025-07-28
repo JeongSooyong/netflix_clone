@@ -11,12 +11,15 @@
 <body>
     <div class="container">
         <h1>내 정보 수정</h1>
-        <form action="/updateMyinfo" method="post">
+        <form action="/updateMyinfo2" method="post"> <!-- 이 부분이 수정되었습니다! -->
+            <!-- hidden input은 테이블 밖에 두는 것이 더 좋습니다. -->
+            <input type="hidden" name="userId" th:value="${user.userId}" />
+
             <table class="form-table">
                 <tr>
                     <th>아이디</th>
                     <td th:text="${user.userId}"></td>
-                    <input type="hidden" name="userId" th:value="${user.userId}" />
+                    <!-- 이곳에 있던 <input type="hidden">은 위로 옮겨졌습니다. -->
                 </tr>
                 <tr>
                     <th>이메일</th>

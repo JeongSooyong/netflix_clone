@@ -64,8 +64,8 @@ public class UserDaoImpl implements IUserDao {
 
     // 개인정보 수정
     @Override
-    public int updateMyinfo(String userId) {
-        return session.update(NS + "updateMyinfo", userId);
+    public int updateMyinfo(UserVo vo) {
+        return session.update(NS + "updateMyinfo", vo);
     }
 
 }
