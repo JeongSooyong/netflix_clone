@@ -15,6 +15,7 @@
             <a href="#">내가 찜한 콘텐츠</a>
         </nav>
         <div class="profile">
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}" href="/insertMovie" class="admin-button">영화 등록</a>
             <a href="/myinfo">내 정보</a>
             <a href="/logout">로그아웃</a>
         </div>

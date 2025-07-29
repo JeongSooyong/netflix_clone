@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 등록</title>
+    <!-- 기존 myinfo.css를 사용하여 전체적인 레이아웃 및 배경 분위기 유지 -->
+    <link rel="stylesheet" th:href="@{/css/myinfo.css}">
+    <!-- updateMyinfo.css를 재사용하여 폼 입력 필드 및 버튼 스타일 통일 -->
+    <link rel="stylesheet" th:href="@{/css/updateMyinfo.css}"> 
+    <link rel="stylesheet" th:href="@{/css/insertMovie.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>영화 등록</h1>
+        <!-- 폼 제출 시 /insertMovie 경로의 POST 메서드로 데이터 전송 -->
+        <form action="/insertMovie" method="post">
+            <table class="form-table">
+                <tr>
+                    <th>영화 제목</th>
+                    <td>
+                        <input type="text" id="movieTitle" name="movieTitle" placeholder="영화 제목을 입력하세요" required class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>영화 설명</th>
+                    <td>
+                        <textarea id="movieDescrip" name="movieDescrip" rows="5" placeholder="영화 설명을 입력하세요" required class="form-control"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>개봉일</th>
+                    <td>
+                        <input type="date" id="movieReleaseDate" name="movieReleaseDate" required class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>상영 시간 (분)</th>
+                    <td>
+                        <input type="number" id="movieDuration" name="movieDuration" placeholder="상영 시간을 분 단위로 입력하세요 (예: 120)" required min="1" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>장르 번호</th>
+                    <td>
+                        <!-- 장르를 번호로 입력받는 경우 (예: 101=액션, 102=로맨스) -->
+                        <input type="number" id="movieGenre" name="movieGenre" placeholder="장르 번호를 입력하세요 (예: 101)" required min="1" class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>포스터 파일명/URL</th>
+                    <td>
+                        <!-- 실제 파일 업로드 구현 시 type="file"로 변경 및 추가 설정 필요 -->
+                        <input type="text" id="moviePoster" name="moviePoster" placeholder="포스터 이미지 파일명 또는 URL (예: movie1.jpg)" required class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <th>유튜브 임베드 URL</th>
+                    <td>
+                        <input type="url" id="movieVideoUrl" name="movieVideoUrl" placeholder="유튜브 임베드 URL을 입력하세요 (예: https://www.youtube.com/embed/...) " class="form-control">
+                    </td>
+                </tr>
+            </table>
+            
+            <!-- 오류 메시지 표시 (컨트롤러에서 errorMsg를 addFlashAttribute 한 경우) -->
+            <p th:if="${errorMsg}" class="error-message" th:text="${errorMsg}"></p>
+            <!-- 성공 메시지 표시 (컨트롤러에서 successMsg를 addFlashAttribute 한 경우) -->
+            <p th:if="${successMsg}" class="success-message" th:text="${successMsg}"></p>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">영화 등록</button>
+                <!-- 취소 버튼은 메인 페이지로 이동 -->
+                <a href="/main" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -8,21 +8,23 @@ import com.soo.netflix_clone.model.IUserDao;
 import com.soo.netflix_clone.vo.UserVo;
 
 
-@Service
+@Service // 비즈니스 로직을 명시하는 어노테이션
 public class UserServiceImpl implements IUserService {
 
+    // IUserDao 자동 주입
     @Autowired
     private IUserDao dao;
 
+    // 스프링 시큐리티에 등록한 BCryptPasswordEncoder 자동 주입
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder; // 스프링 시큐리티에 등록한 BCryptPasswordEncoder 주입받기
+    private BCryptPasswordEncoder bCryptPasswordEncoder; 
     
     // 회원가입
     @Override
     public int insertUser(UserVo vo) {
-        // 사용자가 입력한 비밀번호를 암호화
+        // BCryptPasswordEncoder로 사용자가 입력한 비밀번호를 해시화하여 변수 encodedPassword에 할당
         String encodedPassword = bCryptPasswordEncoder.encode(vo.getUserPw());
-        vo.setUserPw(encodedPassword); // 암호화된 비밀번호를 UserVo에 다시 설정
+        vo.setUserPw(encodedPassword); // 해시화된 비밀번호를 UserVo에 다시 저장
         return dao.insertUser(vo); // 암호화된 비밀번호를 DB에 저장
     }
 
@@ -59,10 +61,13 @@ public class UserServiceImpl implements IUserService {
     // 비밀번호 재설정
     @Override
     public int updatePw(UserVo vo) {
-        String newUserPw = bCryptPasswordEncoder.encode(vo.getUserPw()); // userPw는 새 평문 비밀번호
 
-        // 3. UserVo 객체의 userPw 필드에 해싱된 비밀번호를 설정
+        // newUserPw에 해시화된 userPw를 할당
+        String newUserPw = bCryptPasswordEncoder.encode(vo.getUserPw()); 
+
+        // UserVo 객체의 userPw 필드에 해싱된 비밀번호를 저장
         vo.setUserPw(newUserPw);
+        
         return dao.updatePw(vo);
     }
 

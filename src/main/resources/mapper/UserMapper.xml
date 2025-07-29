@@ -37,7 +37,7 @@ SELECT USER_NO,
     COMMON_NO
 	FROM netflix.`user`
 	WHERE USER_ID = #{userId}
-  AND COMMON_NO = '101'
+  AND (COMMON_NO = '101' OR COMMON_NO = '104')
 </select>
 
 

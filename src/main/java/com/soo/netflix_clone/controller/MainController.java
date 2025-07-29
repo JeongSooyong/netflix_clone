@@ -31,6 +31,11 @@ public class MainController {
     // 로그인 했을시 메인 페이지
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session) {
+
+        // 로그인된 사용자 정보를 담는 변수 loginUser
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+        model.addAttribute("loginUser", loginUser);
+
         // movieService의 selectAllMovies메서드를 List에 담는다.
         List<MovieVo> movies = movieService.selectAllMovies();
         model.addAttribute("movies", movies);
