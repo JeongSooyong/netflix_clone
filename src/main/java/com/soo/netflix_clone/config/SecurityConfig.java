@@ -8,14 +8,16 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    // 스프링 시큐리티 빈으로 등록
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((authz) -> authz
                 .anyRequest().permitAll()
-            )
-            .csrf().disable()
-            .formLogin().disable();
+            ) // 개발중에는 인증없이 접근 허용. 추후 수정
+            .csrf().disable() // 개발하는 동안 CSRF(Cross-Site Request Forgery) 방어 비활성
+            .formLogin().disable(); // 기본 폼 로그인 기능을 사용하지 않음.
         return http.build();
     }
 

@@ -15,22 +15,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SignupController {
 
+    // user서비스 자동 주입
     @Autowired
-    private UserServiceImpl service;
+    private UserServiceImpl userService;
 
-    // 회원가입
+    // 회원가입 페이지
     @GetMapping("/signup")
     public String signup(Model model) {
         return "signup";
     }
 
-    // html의 회원가입 버튼을 누르면 메서드가 실행된다.
+    // 회원가입
     @PostMapping("/signup")
     public String signupPost(UserVo vo, Model model) {
-        int result = service.insertUser(vo);
+
+        // userService의 insertUser메서드를 호출하여 변수 result에 할당
+        int result = userService.insertUser(vo);
+
+        // result가 0이상일 경우(회원가입에 성공했을 경우)
         if(result > 0) {
             return "redirect:/";
-        } else {
+        } else { // 회원가입에 실패했을 경우
             model.addAttribute("error", "회원가입에 실패했습니다.");
             return "signup";
         }
