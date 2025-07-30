@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import com.soo.netflix_clone.model.IMovieDao;
 import com.soo.netflix_clone.vo.MovieVo;
 
-@Service
+@Service // 비즈니스 로직을 명시하는 어노테이션
 public class MovieServiceImpl implements IMovieService {
 
+    // IMovieDao 자동주입
     @Autowired
     private IMovieDao dao;
 

@@ -10,5 +10,10 @@
         <result property="genreName" column="genre_name"/>
     </resultMap>
 
+<!-- 장르 목록 -->
+<select id="selectAllGenres" resultMap="genreResultMap">
+SELECT GENRE_NAME 
+	FROM netflix.genre
+</select>
 
 </mapper>

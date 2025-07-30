@@ -1,6 +1,6 @@
 package com.soo.netflix_clone.vo;
 
-public class Genre {
+public class GenreVo {
 
     private int genreNo;
     private String genreName;

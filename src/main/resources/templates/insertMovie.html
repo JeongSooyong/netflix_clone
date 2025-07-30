@@ -42,8 +42,16 @@
                 <tr>
                     <th>장르 번호</th>
                     <td>
-                        <!-- 장르를 번호로 입력받는 경우 (예: 101=액션, 102=로맨스) -->
-                        <input type="number" id="movieGenre" name="movieGenre" placeholder="장르 번호를 입력하세요 (예: 101)" required min="1" class="form-control">
+                        <!-- 장르를 여러 개 체크할 수 있는 체크박스 그룹 -->
+                        <div class="genre-checkbox-group">
+                            <!-- 컨트롤러에서 넘겨받은 genres 리스트를 반복 -->
+                            <label th:each="genre : ${genres}">
+                                <!-- name="movieGenres"로 같은 이름 사용 시 여러 값 전송 가능 -->
+                                <!-- value는 장르의 고유 ID (GENRE_NO) -->
+                                <input type="checkbox" name="movieGenres" th:value="${genre.genreNo}"> 
+                                <span th:text="${genre.genreName}">액션</span>
+                            </label>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +62,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>동영상(저작권 문제로 유튜브 임베드 URL로 대체)</th>
+                    <th>동영상 파일(저작권 문제로 유튜브 임베드 URL로 대체)</th>
                     <td>
                         <input type="url" id="movieVideoUrl" name="movieVideoUrl" placeholder="유튜브 임베드 URL을 입력하세요 (예: https://www.youtube.com/embed/...) " class="form-control">
                     </td>
