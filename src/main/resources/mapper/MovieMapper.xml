@@ -15,6 +15,7 @@
         <result property="moviePoster" column="movie_poster"/>
         <result property="movieVideoUrl" column="movie_video_url"/>
         <result property="movieViewCount" column="movie_view_count"/>
+        <result property="commonNo" column="common_no"/>
     </resultMap>
 
 <!-- 모든 영화 -->
@@ -25,5 +26,16 @@ SELECT MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE,
   MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT
 	FROM MOVIE;
 </select>
+
+<!-- 영상 등록 -->
+<insert id="insertMovie" parameterType="com.soo.netflix_clone.vo.MovieVo">
+INSERT INTO netflix.movie 
+  (MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
+  MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
+  MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT, COMMON_NO)
+VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate}, 
+  #{movieDuration}, #{movieGenre}, #{moviePoster},
+  #{movieVideoUrl}, #{movieViewCount}, 201)
+</insert>
 
 </mapper>

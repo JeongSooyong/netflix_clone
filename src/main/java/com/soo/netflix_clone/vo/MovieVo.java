@@ -1,13 +1,16 @@
 package com.soo.netflix_clone.vo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class MovieVo {
 
     private int movieNo;
     private String movieTitle;
     private String movieDescrip;
-    private LocalDateTime movieReleaseDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate movieReleaseDate;
     private int movieDuration;
     private int movieGenre;
     private String moviePoster;
@@ -39,11 +42,11 @@ public class MovieVo {
         this.movieDescrip = movieDescrip;
     }
 
-    public LocalDateTime getMovieReleaseDate() {
+    public LocalDate getMovieReleaseDate() {
         return this.movieReleaseDate;
     }
 
-    public void setMovieReleaseDate(LocalDateTime movieReleaseDate) {
+    public void setMovieReleaseDate(LocalDate movieReleaseDate) {
         this.movieReleaseDate = movieReleaseDate;
     }
 

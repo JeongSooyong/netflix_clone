@@ -15,13 +15,19 @@ public class MovieServiceImpl implements IMovieService {
     @Autowired
     private IMovieDao dao;
 
-    // 모든 영화
+    // 모든 영상
     @Override
     public List<MovieVo> selectAllMovies() {
         return dao.selectAllMovies();
     }
 
-    // 영화 조회
+    // 영상 등록
+    @Override
+    public int insertMovie(MovieVo vo) {
+        return dao.insertMovie(vo);
+    }
+
+    // 영상 조회
     @Override
     public MovieVo selectMovie(MovieVo vo) {
         return dao.selectMovie(vo);

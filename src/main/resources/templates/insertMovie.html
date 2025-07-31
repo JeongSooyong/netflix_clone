@@ -13,7 +13,7 @@
     <div class="container">
         <h1>영화 등록</h1>
         <!-- 폼 제출 시 /insertMovie 경로의 POST 메서드로 데이터 전송 -->
-        <form action="/insertMovie" method="post">
+        <form action="/insertMovie2" method="post" enctype="multipart/form-data">
             <table class="form-table">
                 <tr>
                     <th>영화 제목</th>
@@ -44,12 +44,11 @@
                     <td>
                         <!-- 장르를 여러 개 체크할 수 있는 체크박스 그룹 -->
                         <div class="genre-checkbox-group">
-                            <!-- 컨트롤러에서 넘겨받은 genres 리스트를 반복 -->
                             <label th:each="genre : ${genres}">
                                 <!-- name="movieGenres"로 같은 이름 사용 시 여러 값 전송 가능 -->
                                 <!-- value는 장르의 고유 ID (GENRE_NO) -->
                                 <input type="checkbox" name="movieGenres" th:value="${genre.genreNo}"> 
-                                <span th:text="${genre.genreName}">액션</span>
+                                <span th:text="${genre.genreName}"/>
                             </label>
                         </div>
                     </td>
@@ -58,13 +57,13 @@
                     <th>포스터 파일명</th>
                     <td>
                         <!-- 실제 파일 업로드 구현 시 type="file"로 변경 및 추가 설정 필요 -->
-                        <input type="text" id="moviePoster" name="moviePoster" placeholder="포스터 이미지 파일명 또는 URL (예: movie1.jpg)" required class="form-control">
+                        <input type="file" id="moviePosterFile" name="posterFile" accept="image/*" required class="form-control">
                     </td>
                 </tr>
                 <tr>
                     <th>동영상 파일(저작권 문제로 유튜브 임베드 URL로 대체)</th>
                     <td>
-                        <input type="url" id="movieVideoUrl" name="movieVideoUrl" placeholder="유튜브 임베드 URL을 입력하세요 (예: https://www.youtube.com/embed/...) " class="form-control">
+                        <input type="text" id="movieVideoUrl" name="movieVideoUrl" placeholder="유튜브 임베드 URL을 입력하세요" class="form-control">
                     </td>
                 </tr>
             </table>

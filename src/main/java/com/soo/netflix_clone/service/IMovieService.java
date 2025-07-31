@@ -6,10 +6,13 @@ import com.soo.netflix_clone.vo.MovieVo;
 
 public interface IMovieService {
 
-    // 모든 영화
+    // 모든 영상
     public List<MovieVo> selectAllMovies();
 
-    // 영화 조회
+    // 영상 등록
+    public int insertMovie(MovieVo vo);
+
+    // 영상 조회
     public MovieVo selectMovie(MovieVo vo);
 
 }
