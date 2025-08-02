@@ -9,13 +9,13 @@ public class MovieVo {
     private int movieNo;
     private String movieTitle;
     private String movieDescrip;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate movieReleaseDate;
     private int movieDuration;
     private int movieGenre;
     private String moviePoster;
     private String movieVideoUrl;
     private int movieViewCount;
+    private int commonNo;
 
 
     public int getMovieNo() {
@@ -90,6 +90,15 @@ public class MovieVo {
         this.movieViewCount = movieViewCount;
     }
 
+    public int getCommonNo() {
+        return this.commonNo;
+    }
+
+    public void setCommonNo(int commonNo) {
+        this.commonNo = commonNo;
+    }
+
+    
 
     @Override
     public String toString() {
@@ -103,8 +112,10 @@ public class MovieVo {
             ", moviePoster='" + getMoviePoster() + "'" +
             ", movieVideoUrl='" + getMovieVideoUrl() + "'" +
             ", movieViewCount='" + getMovieViewCount() + "'" +
+            ", commonNo='" + getCommonNo() + "'" +
             "}";
     }
+
 
 
 }

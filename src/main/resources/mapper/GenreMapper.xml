@@ -12,7 +12,7 @@
 
 <!-- 장르 목록 -->
 <select id="selectAllGenres" resultMap="genreResultMap">
-SELECT GENRE_NAME 
+SELECT GENRE_NO, GENRE_NAME 
 	FROM netflix.genre
 </select>
 

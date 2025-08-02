@@ -20,11 +20,11 @@
 
 <!-- 모든 영화 -->
 <select id="selectAllMovies" 
-  resultType="com.soo.netflix_clone.vo.MovieVo">
+  resultMap="movieResultMap">
 SELECT MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
   MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
   MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT
-	FROM MOVIE;
+	FROM MOVIE
 </select>
 
 <!-- 영상 등록 -->
@@ -34,7 +34,7 @@ INSERT INTO netflix.movie
   MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
   MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT, COMMON_NO)
 VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate}, 
-  #{movieDuration}, #{movieGenre}, #{moviePoster},
+  #{movieDuration}, #{movieGenre}, #{posterFilename},
   #{movieVideoUrl}, #{movieViewCount}, 201)
 </insert>
 
