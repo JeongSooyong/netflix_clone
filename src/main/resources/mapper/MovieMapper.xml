@@ -38,4 +38,22 @@ VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate},
   #{movieVideoUrl}, #{movieViewCount}, 201)
 </insert>
 
+<!-- 영상 상세 조회 -->
+<select id="selectMovie" parameterType="com.soo.netflix_clone.vo.MovieVo" resultMap="movieResultMap">
+SELECT
+    m.MOVIE_TITLE,
+    m.MOVIE_DESCRIP,
+    m.MOVIE_RELEASE_DATE,
+    m.MOVIE_DURATION,
+    g.GENRE_NAME,          
+    m.MOVIE_POSTER,
+    m.MOVIE_VIDEO_URL,
+    m.MOVIE_VIEW_COUNT
+FROM
+    netflix.movie m        
+INNER JOIN
+    netflix.genre g ON m.MOVIE_GENRE = g.GENRE_NO
+  WHERE MOVIE_TITLE = #{movieTitle}
+</select>
+
 </mapper>

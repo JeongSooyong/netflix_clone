@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.movieTitle} + ' - 상세 정보'">영화 상세 정보</title>
+    <link rel="stylesheet" href="/css/selectMovie.css">
+    <link rel="stylesheet" href="/css/main.css"> 
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">NETFLIX</div>
+        <nav>
+            <a href="#">홈</a>
+            <a href="#">시리즈</a>
+            <a href="#">영화</a>
+            <a href="#">내가 찜한 콘텐츠</a>
+        </nav>
+        <div class="profile">
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}" href="/insertMovie" class="admin-button">영화 등록</a>
+            <a href="/myinfo">내 정보</a>
+            <a href="/logout">로그아웃</a>
+        </div>
+    </header>
+
+    <div class="detail-container">
+        <div class="detail-poster">
+            <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}">
+        </div>
+        <div class="detail-content">
+            <h1 th:text="${movie.movieTitle}"></h1>
+            <p th:text="${movie.movieDescrip}"></p>
+            <div class="detail-info">
+                <span th:if="${movie.movieReleaseDate}" th:text="|개봉일: ${#temporals.format(movie.movieReleaseDate, 'yyyy-MM-dd')}|">개봉일: YYYY-MM-DD</span>
+                <span th:text="|상영 시간: ${movie.movieDuration}분|">상영 시간: 00분</span>
+                <span th:text="|장르: ${movie.genreName}">장르</span> 
+                <span th:text="|조회수: ${movie.movieViewCount}|">조회수: 0</span>
+            </div>
+            
+            <a href="/main" class="btn-back">목록으로 돌아가기</a>
+        </div>
+    </div>
+    
+    <div th:if="${movie.movieVideoUrl}" class="detail-video-embed">
+        <!-- th:utext는 HTML 엔티티를 이스케이프하지 않고 그대로 렌더링합니다. -->
+        <!-- movieVideoUrl이 iframe 태그 전체를 포함하고 있다고 가정 -->
+        <div th:utext="${movie.movieVideoUrl}"></div> 
+    </div>
+
+</body>
+</html>

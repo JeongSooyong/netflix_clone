@@ -27,10 +27,10 @@ public class MovieServiceImpl implements IMovieService {
         return dao.insertMovie(vo);
     }
 
-    // 영상 조회
+    // 영상 상세 조회
     @Override
-    public MovieVo selectMovie(MovieVo vo) {
-        return dao.selectMovie(vo);
+    public MovieVo selectMovie(String movieTitle) {
+        return dao.selectMovie(movieTitle);
     }
 
 }

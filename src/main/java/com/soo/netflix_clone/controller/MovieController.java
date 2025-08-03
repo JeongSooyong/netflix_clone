@@ -14,16 +14,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.servlet.http.HttpSession;
 
 import com.soo.netflix_clone.service.GenreServiceImpl;
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.vo.GenreVo;
 import com.soo.netflix_clone.vo.MovieVo;
+import com.soo.netflix_clone.vo.UserVo;
 
 @Controller
 public class MovieController {
@@ -145,6 +149,28 @@ public class MovieController {
             redirectAttributes.addFlashAttribute("errorMsg", "영화 등록 중 예상치 못한 오류가 발생했습니다: " + e.getMessage());
             return "redirect:/insertMovie";
         }
+    }
+
+
+    @GetMapping("/selectMovie/{movieTitle}")
+    public String selectMovie(@PathVariable("movieTitle") String movieTitle, Model model, HttpSession session) {
+
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+        model.addAttribute("loginUser", loginUser);
+
+        MovieVo vo = new MovieVo();
+        vo.setMovieTitle(movieTitle);
+
+        MovieVo movie = movieService.selectMovie(movieTitle); 
+
+        if (movie == null) {
+            model.addAttribute("errorMsg", "해당 영화 정보를 찾을 수 없습니다.");
+            return "redirect:/main";
+        }
+
+        model.addAttribute("movie", movie);
+
+        return "selectMovie";
     }
 
 }

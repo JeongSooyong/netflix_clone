@@ -16,7 +16,7 @@ public class MovieVo {
     private String movieVideoUrl;
     private int movieViewCount;
     private int commonNo;
-
+    private String genreName;
 
     public int getMovieNo() {
         return this.movieNo;
@@ -98,6 +98,14 @@ public class MovieVo {
         this.commonNo = commonNo;
     }
 
+    public String getGenreName() {
+        return this.genreName;
+    }
+
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
+
     
 
     @Override
@@ -109,6 +117,7 @@ public class MovieVo {
             ", movieReleaseDate='" + getMovieReleaseDate() + "'" +
             ", movieDuration='" + getMovieDuration() + "'" +
             ", movieGenre='" + getMovieGenre() + "'" +
+            ", genreName='" + getGenreName() + "'" + 
             ", moviePoster='" + getMoviePoster() + "'" +
             ", movieVideoUrl='" + getMovieVideoUrl() + "'" +
             ", movieViewCount='" + getMovieViewCount() + "'" +

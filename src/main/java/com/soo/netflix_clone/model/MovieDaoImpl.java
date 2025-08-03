@@ -35,10 +35,10 @@ public class MovieDaoImpl implements IMovieDao {
     }
 
 
-    // 영상 조회
+    // 영상 상세 조회
     @Override
-    public MovieVo selectMovie(MovieVo vo) {
-        return session.selectOne(NS + "selectMovie", vo);
+    public MovieVo selectMovie(String movieTitle) {
+        return session.selectOne(NS + "selectMovie", movieTitle);
     }
 
 }

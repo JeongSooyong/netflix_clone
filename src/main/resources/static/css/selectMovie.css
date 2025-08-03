@@ -1,0 +1,83 @@
+/* 기본 레이아웃 스타일 (예시) */
+body { font-family: 'Arial', sans-serif; background-color: #141414; color: #fff; }
+.detail-container {
+    max-width: 960px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    gap: 30px; /* 포스터와 내용 사이 간격 */
+    flex-wrap: wrap; /* 작은 화면에서 요소들이 줄바꿈되도록 */
+}
+.detail-poster { flex: 1 1 300px; } /* 최소 300px, 늘어나고 줄어듬 */
+.detail-poster img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.detail-content { flex: 2 1 400px; } /* 최소 400px, 늘어나고 줄어듬 */
+.detail-content h1 { font-size: 2.5em; margin-bottom: 10px; color: #e50914; }
+.detail-content p { font-size: 1.1em; line-height: 1.6; margin-bottom: 15px; }
+.detail-info span { display: block; margin-bottom: 5px; font-size: 0.9em; color: #ccc; }
+.detail-video-embed { margin-top: 30px; text-align: center; }
+.detail-video-embed iframe {
+    width: 100%;
+    max-width: 800px; /* 최대 너비 제한 */
+    height: 450px; /* 16:9 비율 (width의 9/16) */
+    border: none;
+    border-radius: 8px;
+}
+.btn-back {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e50914;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.btn-back:hover { background-color: #ff202c; }
+
+/* 추가적으로 필요하다면 header/navbar 스타일을 main.css에서 가져오거나 여기에 추가 */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #000;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #e50914;
+}
+nav a, .profile a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+nav a:hover, .profile a:hover {
+    color: #e50914;
+}
+
+.profile a {
+    color: #fff; /* main.html의 nav 메뉴와 동일하게 흰색으로 설정 */
+    margin: 0 15px; /* nav 메뉴와 동일하게 좌우 여백을 설정 (만약 필요하다면) */
+    text-decoration: none; /* 링크의 기본 밑줄 제거 */
+    font-weight: 500; /* nav 메뉴와 동일하게 글씨 두께 설정 */
+    /* font-size는 일반적으로 16px이거나 상위 요소로부터 상속받는 크기일 것입니다. */
+    /* 만약 nav 메뉴의 글씨 크기가 특별히 다르다면, 여기에 font-size를 추가해주세요.
+       예: font-size: 1rem; 또는 font-size: 16px; */
+}

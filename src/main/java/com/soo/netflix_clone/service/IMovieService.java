@@ -12,7 +12,7 @@ public interface IMovieService {
     // 영상 등록
     public int insertMovie(MovieVo vo);
 
-    // 영상 조회
-    public MovieVo selectMovie(MovieVo vo);
+    // 영상 상세 조회
+    public MovieVo selectMovie(String movieTitle);
 
 }
