@@ -1,0 +1,83 @@
+.edit-container {
+    max-width: 960px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+.edit-container h1 {
+    color: #e50914;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.edit-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ccc;
+}
+.edit-form input[type="text"],
+.edit-form input[type="number"],
+.edit-form input[type="date"],
+.edit-form textarea,
+.edit-form select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: #eee;
+    box-sizing: border-box; /* 패딩 포함한 너비 계산 */
+}
+.edit-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+.edit-form select {
+    width: 100%; /* select 태그는 padding 계산이 좀 다를 수 있어 100%로 지정 */
+}
+.edit-form input[type="file"] {
+    margin-bottom: 20px;
+}
+.edit-form .current-poster {
+    margin-bottom: 15px;
+    text-align: center;
+}
+.edit-form .current-poster img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #555;
+}
+.edit-form .button-group {
+    text-align: center;
+    margin-top: 30px;
+}
+.edit-form .btn-action {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+}
+.edit-form .btn-submit {
+    background-color: #e50914; /* 넷플릭스 주황색 */
+    color: #fff;
+}
+.edit-form .btn-submit:hover {
+    background-color: #f40612;
+}
+.edit-form .btn-cancel {
+    background-color: #666; /* 회색 */
+    color: #fff;
+}
+.edit-form .btn-cancel:hover {
+    background-color: #555;
+}

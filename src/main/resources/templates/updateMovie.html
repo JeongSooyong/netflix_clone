@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.movieTitle} + ' - 영화 정보 수정'">영화 정보 수정</title>
+    <link rel="stylesheet" href="/css/selectMovie.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/updateMovie.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">NETFLIX</div>
+        <nav>
+            <a href="#">홈</a>
+            <a href="#">시리즈</a>
+            <a href="#">영화</a>
+            <a href="#">내가 찜한 콘텐츠</a>
+        </nav>
+        <div class="profile">
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}" href="/insertMovie" class="admin-button">영화 등록</a>
+            <a href="/myinfo">내 정보</a>
+            <a href="/logout">로그아웃</a>
+        </div>
+    </header>
+
+    <div class="edit-container">
+        <h1 th:text="${movie.movieTitle} + ' 정보 수정'">영화 정보 수정</h1>
+        <form th:action="@{/updateMovieProcess}" th:object="${movie}" method="post" enctype="multipart/form-data" class="edit-form">
+            <input type="hidden" name="currentMoviePoster" th:value="${movie.moviePoster}" />
+
+            <label for="movieTitle">영화 제목:</label>
+            <input type="text" id="movieTitle" th:field="*{movieTitle}" required /><br/>
+
+            <label for="movieDescrip">영화 설명:</label>
+            <textarea id="movieDescrip" th:field="*{movieDescrip}"></textarea><br/>
+
+            <label for="movieReleaseDate">개봉일:</label>
+            <input type="date" id="movieReleaseDate" th:field="*{movieReleaseDate}" /><br/>
+
+            <label for="movieDuration">상영 시간 (분):</label>
+            <input type="number" id="movieDuration" th:field="*{movieDuration}" min="0" /><br/>
+
+            <label for="movieGenre">장르:</label>
+            <select id="movieGenre" th:field="*{movieGenre}">
+                <option th:each="genre : ${genres}" th:value="${genre.genreNo}" th:text="${genre.genreName}"
+                        th:selected="${genre.genreNo == movie.movieGenre}">장르명</option>
+                <option th:unless="${genres}" value="">장르 불러오기 실패</option>
+            </select><br/>
+
+            <label for="moviePosterFile">포스터 이미지:</label>
+            <div class="current-poster" th:if="${movie.moviePoster}">
+                <p>현재 포스터:</p>
+                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}" />
+            </div>
+            <input type="file" id="moviePosterFile" name="moviePosterFile" accept="image/*" /><br/>
+
+            <label for="movieVideoUrl">동영상 URL (iframe 태그):</label>
+            <textarea id="movieVideoUrl" th:field="*{movieVideoUrl}"></textarea><br/>
+            
+            <div class="button-group">
+                <button type="submit" class="btn-action btn-submit">수정 완료</button>
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}" class="btn-action btn-cancel">취소 (뒤로가기)</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

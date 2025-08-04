@@ -37,6 +37,10 @@
             </div>
             
             <a href="/main" class="btn-back">목록으로 돌아가기</a>
+            <br>
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}"
+               th:href="@{/updateMovie/{movieTitle}(movieTitle=${movie.movieTitle})}"
+               class="btn-back btn-admin-action">영화 정보 수정</a>
         </div>
     </div>
     
