@@ -65,7 +65,7 @@ public class MovieController {
     public String insertMovie2(
         @ModelAttribute MovieVo movieVo, 
         @RequestParam("moviePosterFile") MultipartFile posterFile,
-        @RequestParam(value = "movieGenres", required = false) List<Integer> selectedGenreNos,
+        @RequestParam(value = "movieGenres", required = false) List<Integer> selectedGenreNos, // 장르를 List형태로 받아옴.
         RedirectAttributes redirectAttributes
     ) {
 
@@ -80,35 +80,54 @@ public class MovieController {
 
         // 파일 업로드
         try {
+            // originalFileName에 posterFile의 파일명 할당
             String originalFileName = posterFile.getOriginalFilename(); 
+            // 파일의 확장자명을 담을 변수 fileExtension
             String fileExtension = "";
+            // originalFileName이 null이 아니거나 파일 확장자명이 있는지 확인할 조건문
             if (originalFileName != null && originalFileName.lastIndexOf(".") != -1) {
+                // 파일의 확장자명을 fileExtension에 할당
                 fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
             }
             
+            // 서버에 파일을 저장할 때 사용할 고유한 파일명 + 확장자명을 saveFileName에 할당
             saveFileName = UUID.randomUUID().toString() + fileExtension;
 
+            // 파일을 저장할 폴더가 존재하는지 확인하는 코드
+            // 파일을 관리하기 위한 객체 생성
             File uploadDirectory = new File(uploadDir);
+            // 폴더가 존재하는지 확인하는 조건문
             if (!uploadDirectory.exists()) {
+                // 업로드파일을 담을 폴더가 없다면 폴더 생성
                 uploadDirectory.mkdirs();
             }
 
+            // 업로드된 파일이 실제로 저장될 '경로 + 파일명' 정보를 가진 File 객체 생성
             File newFile = new File(uploadDirectory, saveFileName);
             
+            // insertMovie 뷰에서 파일을 읽고, 폴더에 담기 위한 변수 선언
             InputStream inputStream = null;
             OutputStream outputStream = null;
 
             try {
+                // 업로드된 파일에서 데이터를 읽기위한 코드
                 inputStream = posterFile.getInputStream();
+                // 새 파일에 데이터를 내보낼 코드
                 outputStream = new FileOutputStream(newFile);
                 
+                // 데이터를 임시로 담을 코드
                 byte[] buffer = new byte[1024];
+                // 읽어들인 바이트 수를 저장할 변수 readBytes
                 int readBytes;
+                // 파일을 끝까지 읽을 때까지 반복
                 while ((readBytes = inputStream.read(buffer)) != -1) {
+                    // 읽은 만큼만 새 파일에 쓰기
                     outputStream.write(buffer, 0, readBytes);
                 }
             } finally {
-                if (inputStream != null) {
+                // inputStream 변수가 null인지 확인
+                if (inputStream != null) { 
+                    // 입력 스트림이 사용하던 자원을 반환
                     try { inputStream.close(); } catch (IOException e) { e.printStackTrace(); }
                 }
                 if (outputStream != null) {
