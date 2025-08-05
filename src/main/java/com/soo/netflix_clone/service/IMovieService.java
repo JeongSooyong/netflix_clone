@@ -15,4 +15,7 @@ public interface IMovieService {
     // 영상 상세 조회
     public MovieVo selectMovie(String movieTitle);
 
+    // 영상 정보 수정
+    public int updateMovie(MovieVo vo);
+
 }

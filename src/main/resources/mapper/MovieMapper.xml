@@ -39,21 +39,25 @@ VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate},
 </insert>
 
 <!-- 영상 상세 조회 -->
-<select id="selectMovie" parameterType="com.soo.netflix_clone.vo.MovieVo" resultMap="movieResultMap">
+<select id="selectMovie" parameterType="String" resultMap="movieResultMap">
 SELECT
-    m.MOVIE_TITLE,
-    m.MOVIE_DESCRIP,
-    m.MOVIE_RELEASE_DATE,
-    m.MOVIE_DURATION,
-    g.GENRE_NAME,          
-    m.MOVIE_POSTER,
-    m.MOVIE_VIDEO_URL,
-    m.MOVIE_VIEW_COUNT
+    m.MOVIE_TITLE, m.MOVIE_DESCRIP, m.MOVIE_RELEASE_DATE,
+    m.MOVIE_DURATION, g.GENRE_NAME, m.MOVIE_POSTER,
+    m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT
 FROM
     netflix.movie m        
 INNER JOIN
     netflix.genre g ON m.MOVIE_GENRE = g.GENRE_NO
   WHERE MOVIE_TITLE = #{movieTitle}
 </select>
+
+<!-- 영화 정보 수정 -->
+<update id="updateMovie" parameterType="com.soo.netflix_clone.vo.MovieVo">
+UPDATE netflix.movie
+	SET MOVIE_TITLE=#{movieTitle}, MOVIE_DESCRIP=#{movieDescrip}, MOVIE_RELEASE_DATE=#{movieReleaseDate}, 
+	MOVIE_DURATION=#{movieDuration}, MOVIE_GENRE=#{movieGenre}, MOVIE_POSTER=#{moviePoster}, 
+	MOVIE_VIDEO_URL=#{movieVideoUrl}
+WHERE MOVIE_TITLE = #{movieTitle}
+</update>
 
 </mapper>

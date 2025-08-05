@@ -41,4 +41,10 @@ public class MovieDaoImpl implements IMovieDao {
         return session.selectOne(NS + "selectMovie", movieTitle);
     }
 
+    // 영상 정보 수정
+    @Override
+    public int updateMovie(MovieVo vo) {
+        return session.update(NS + "updateMovie", vo);
+    }
+
 }

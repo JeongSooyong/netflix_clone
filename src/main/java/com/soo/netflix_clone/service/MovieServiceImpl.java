@@ -33,4 +33,10 @@ public class MovieServiceImpl implements IMovieService {
         return dao.selectMovie(movieTitle);
     }
 
+    // 영상 정보 수정
+    @Override
+    public int updateMovie(MovieVo vo) {
+        return dao.updateMovie(vo);
+    }
+
 }

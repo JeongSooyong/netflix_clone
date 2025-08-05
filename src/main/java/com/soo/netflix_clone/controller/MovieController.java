@@ -202,20 +202,29 @@ public class MovieController {
         return "selectMovie";
     }
 
+    // 영상 정보 수정 페이지
     @GetMapping("/updateMovie/{movieTitle}")
     public String updateMovie(@PathVariable("movieTitle") String movieTitle, HttpSession session, Model model) {
 
+        // 로그인 유저의 세션
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
         model.addAttribute("loginUser", loginUser);
 
-        MovieVo movie = movieService.selectMovie(movieTitle);
+        // 서비스 계층의 selectMovie메서드를 movieVo에 담아 뷰에 영화 정보를 띄운다.
+        MovieVo movieVo = movieService.selectMovie(movieTitle);
+        model.addAttribute("movieVo", movieVo); 
 
-        model.addAttribute("movie", movie); 
-
-        List<GenreVo> genres = genreService.selectAllGenres();
-        model.addAttribute("genres", genres);
+        // 영상 정보 수정 페이지의 장르 수정에 모든 장르를 List에 담아서 뷰에 띄운다.
+        List<GenreVo> genreVo = genreService.selectAllGenres();
+        model.addAttribute("genreVo", genreVo);
 
         return "updateMovie";
+    }
+
+
+    @PostMapping("/updateMovie/{movieTitle}")
+    public String updateMovie2() {
+        return "selectMovie";
     }
 
 }

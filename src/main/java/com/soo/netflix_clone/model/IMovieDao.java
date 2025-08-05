@@ -12,7 +12,10 @@ public interface IMovieDao {
     // 영상 등록
     public int insertMovie(MovieVo vo);
 
-    // 영화 상세 조회
+    // 영상 상세 조회
     public MovieVo selectMovie(String movieTitle);
+
+    // 영상 정보 수정
+    public int updateMovie(MovieVo vo);
 
 }

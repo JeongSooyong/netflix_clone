@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${movie.movieTitle} + ' - 영화 정보 수정'">영화 정보 수정</title>
+    <title th:text="${movieVo.movieTitle} + ' - 영화 정보 수정'">영화 정보 수정</title>
     <link rel="stylesheet" href="/css/selectMovie.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/updateMovie.css">
@@ -24,9 +24,10 @@
     </header>
 
     <div class="edit-container">
-        <h1 th:text="${movie.movieTitle} + ' 정보 수정'">영화 정보 수정</h1>
-        <form th:action="@{/updateMovieProcess}" th:object="${movie}" method="post" enctype="multipart/form-data" class="edit-form">
-            <input type="hidden" name="currentMoviePoster" th:value="${movie.moviePoster}" />
+        <h1 th:text="${movieVo.movieTitle} + ' 정보 수정'">영화 정보 수정</h1>
+        <form th:action="@{/updateMovieProcess}" th:object="${movieVo}" method="post" enctype="multipart/form-data" class="edit-form">
+            <input type="hidden" th:field="*{movieNo}" />
+            <input type="hidden" name="currentMoviePoster" th:value="${movieVo.moviePoster}" />
 
             <label for="movieTitle">영화 제목:</label>
             <input type="text" id="movieTitle" th:field="*{movieTitle}" required /><br/>
@@ -42,15 +43,15 @@
 
             <label for="movieGenre">장르:</label>
             <select id="movieGenre" th:field="*{movieGenre}">
-                <option th:each="genre : ${genres}" th:value="${genre.genreNo}" th:text="${genre.genreName}"
-                        th:selected="${genre.genreNo == movie.movieGenre}">장르명</option>
-                <option th:unless="${genres}" value="">장르 불러오기 실패</option>
+                <option th:each="genre : ${genreVo}" th:value="${genre.genreNo}" th:text="${genre.genreName}"
+                        th:selected="${genre.genreNo == movieVo.movieGenre}">장르명</option>
+                <option th:unless="${genreVo}" value="">장르 불러오기 실패</option> 
             </select><br/>
 
             <label for="moviePosterFile">포스터 이미지:</label>
-            <div class="current-poster" th:if="${movie.moviePoster}">
+            <div class="current-poster" th:if="${movieVo.moviePoster}"> 
                 <p>현재 포스터:</p>
-                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}" />
+                <img th:src="@{/img/{filename}(filename=${movieVo.moviePoster})}" th:alt="${movieVo.movieTitle}" /> 
             </div>
             <input type="file" id="moviePosterFile" name="moviePosterFile" accept="image/*" /><br/>
 
@@ -59,7 +60,7 @@
             
             <div class="button-group">
                 <button type="submit" class="btn-action btn-submit">수정 완료</button>
-                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}" class="btn-action btn-cancel">취소 (뒤로가기)</a>
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movieVo.movieTitle})}" class="btn-action btn-cancel">취소 (뒤로가기)</a>
             </div>
         </form>
     </div>
