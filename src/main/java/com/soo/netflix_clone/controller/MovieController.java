@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -221,10 +225,64 @@ public class MovieController {
         return "updateMovie";
     }
 
+    // 영화 정보 수정
+    @PostMapping("/updateMovie2")
+    public String updateMovie2(
+            // MovieVo를 객체로 받아온다.
+            @ModelAttribute MovieVo movieVo, 
+            // updateMovie의 updateMovie2 폼의 moviePosterFile, currentMoviePoster를 받아온다.
+            @RequestParam(value = "moviePosterFile", required = false) MultipartFile moviePosterFile,
+            @RequestParam(value = "currentMoviePoster", required = false) String currentMoviePoster,
+            RedirectAttributes redirectAttributes) {
 
-    @PostMapping("/updateMovie/{movieTitle}")
-    public String updateMovie2() {
-        return "selectMovie";
+        // updateMovie.html의 현재 DB에 저장되있는 영화포스터(currentMoviePoster)를 변수 finalMoviePosterName에 할당
+        String finalMoviePosterName = currentMoviePoster;
+
+        // moviePosterFile이 null이 아닐 경우
+        if (moviePosterFile != null && !moviePosterFile.isEmpty()) {
+            try {
+                // 영화포스터가 null이 아닐 경우
+                if (currentMoviePoster != null && !currentMoviePoster.isEmpty()) {
+                     // File 객체 생성하고 파일 존재여부를 확인한 뒤 해당 파일을 삭제
+                    File oldFile = new File(uploadDir, currentMoviePoster);
+                    if (oldFile.exists()) { 
+                        oldFile.delete(); 
+                    }
+                }
+
+                // moviePosterFile의 파일명을 변수 originalFileName에 할당
+                String originalFileName = moviePosterFile.getOriginalFilename();
+                String fileExtension = "";
+                if (originalFileName != null && originalFileName.contains(".")) {
+                    fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                }
+                finalMoviePosterName = UUID.randomUUID().toString() + fileExtension;
+
+                File uploadDirFile = new File(uploadDir);
+                if (!uploadDirFile.exists()) {
+                    uploadDirFile.mkdirs();
+                }
+
+                File destFile = new File(uploadDir, finalMoviePosterName);
+                moviePosterFile.transferTo(destFile);
+
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("errorMessage", "포스터 파일 저장 중 오류가 발생했습니다. 다시 시도해주세요.");
+                return "redirect:/updateMovie/" + movieVo.getMovieNo();
+            }
+        }
+
+        movieVo.setMoviePoster(finalMoviePosterName);
+
+        int updateResult = movieService.updateMovie(movieVo);
+
+        if (updateResult > 0) {
+            redirectAttributes.addFlashAttribute("message", "영화 정보가 성공적으로 수정되었습니다.");
+            return "redirect:/main";
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "영화 정보 수정에 실패했습니다. (데이터베이스 업데이트 오류)");
+            return "redirect:/updateMovie/" + movieVo.getMovieNo();
+        }
     }
 
 }

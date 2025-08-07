@@ -25,7 +25,7 @@
 
     <div class="edit-container">
         <h1 th:text="${movieVo.movieTitle} + ' 정보 수정'">영화 정보 수정</h1>
-        <form th:action="@{/updateMovieProcess}" th:object="${movieVo}" method="post" enctype="multipart/form-data" class="edit-form">
+        <form th:action="@{/updateMovie2}" th:object="${movieVo}" method="post" enctype="multipart/form-data" class="edit-form">
             <input type="hidden" th:field="*{movieNo}" />
             <input type="hidden" name="currentMoviePoster" th:value="${movieVo.moviePoster}" />
 
