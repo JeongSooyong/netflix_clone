@@ -44,7 +44,7 @@
         <h2>로맨스</h2>
         <div class="row-posters">
             <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
-            <div th:each="movie : ${movies}" class="movie-item">
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 1}" class="movie-item">
                 <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
                     <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
                         class="row-poster">

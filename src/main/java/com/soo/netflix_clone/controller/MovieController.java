@@ -252,17 +252,25 @@ public class MovieController {
 
                 // moviePosterFile의 파일명을 변수 originalFileName에 할당
                 String originalFileName = moviePosterFile.getOriginalFilename();
+                // 파일 확장자명을 저장할 변수 fileExtension
                 String fileExtension = "";
+                // 파일명(originalFileNam)이 null이 아니고 확장자명을 포함하고 있다면 
                 if (originalFileName != null && originalFileName.contains(".")) {
+                    // 파일 확장자명을 추출하여 fileExtension에 할당
                     fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 }
+
+                // finalMoviePosterName에 서버에 저장할 파일명 + 확장자명 할당
                 finalMoviePosterName = UUID.randomUUID().toString() + fileExtension;
 
+                // 파일 업로드 경로 객체 생성.
                 File uploadDirFile = new File(uploadDir);
+                // 업로드 경로 존재여부를 확인하고 없다면 경로 생성
                 if (!uploadDirFile.exists()) {
                     uploadDirFile.mkdirs();
                 }
 
+                // 최종 파일 저장 경로 객체 생성하고 moviePosterFile를 destFile로 전송
                 File destFile = new File(uploadDir, finalMoviePosterName);
                 moviePosterFile.transferTo(destFile);
 
@@ -272,14 +280,17 @@ public class MovieController {
             }
         }
 
+        // moviePoster에 finalMoviePosterName할당
         movieVo.setMoviePoster(finalMoviePosterName);
 
+        // 서비스 계층의 updateMovie메서드의 결과를 updateResult에 할당
         int updateResult = movieService.updateMovie(movieVo);
 
+        // updateResult가 0보다 클 경우(updateMovie가 정상적으로 실행 완료 됐을 경우)
         if (updateResult > 0) {
             redirectAttributes.addFlashAttribute("message", "영화 정보가 성공적으로 수정되었습니다.");
             return "redirect:/main";
-        } else {
+        } else { // 영상 정보 수정이 안됐을 경우
             redirectAttributes.addFlashAttribute("errorMessage", "영화 정보 수정에 실패했습니다. (데이터베이스 업데이트 오류)");
             return "redirect:/updateMovie/" + movieVo.getMovieNo();
         }
