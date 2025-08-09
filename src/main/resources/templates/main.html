@@ -55,19 +55,78 @@
         <h2>액션</h2>
         <div class="row-posters">
             <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
-            <div th:each="movie : ${movies}" class="movie-item">
-                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
-                    class="row-poster">
-                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 2}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
             </div>
         </div>
         <h2>만화 애니메이션</h2>
         <div class="row-posters">
             <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
-            <div th:each="movie : ${movies}" class="movie-item">
-                <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
-                    class="row-poster">
-                <p class="movie-title" th:text="${movie.movieTitle}"></p>
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 3}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
+            </div>
+        </div>
+        <h2>코미디</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 4}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
+            </div>
+        </div>
+        <h2>범죄</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 5}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
+            </div>
+        </div>
+        <h2>스릴러</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 6}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
+            </div>
+        </div>
+        <h2>공포</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 7}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
+            </div>
+        </div>
+        <h2>드라마</h2>
+        <div class="row-posters">
+            <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
+            <div th:each="movie : ${movies}" th:if="${movie.movieGenre == 8}" class="movie-item">
+                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                    <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"
+                        class="row-poster">
+                    <p class="movie-title" th:text="${movie.movieTitle}"></p>
+                </a>
             </div>
         </div>
     </section>

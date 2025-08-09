@@ -41,6 +41,8 @@
             <a th:if="${loginUser != null and loginUser.commonNo == 104}"
                th:href="@{/updateMovie/{movieTitle}(movieTitle=${movie.movieTitle})}"
                class="btn-back btn-admin-action">영화 정보 수정</a>
+            <br>
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}" class="btn-back btn-admin-action">영화 비공개</a>
         </div>
     </div>
     
