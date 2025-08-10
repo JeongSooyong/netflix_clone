@@ -301,18 +301,22 @@ public class MovieController {
     public String moviePrivate(@RequestParam("movieTitle") String movieTitle, 
         HttpSession session, RedirectAttributes redirectAttributes) {
 
+        // 현재 세션을 변수 loginUser에 할당
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
         
+        // loginUser가 null이거나 loginUser가 104가 아닐경우(로그인이 안된상태이거나 관리자가 아닐경우)
         if (loginUser == null || loginUser.getCommonNo() != 104) {
             redirectAttributes.addFlashAttribute("errorMessage", "관리자만 접근할 수 있는 기능입니다.");
             return "redirect:/main"; 
         }
 
+        // 서비스계층의 moviePrivate를 호출하여 변수 updateRows에 할당
         int updatedRows = movieService.moviePrivate(movieTitle); 
 
+        // updateRows가 0보다 크다면 영화 비공개처리 완료
         if (updatedRows > 0) {
             redirectAttributes.addFlashAttribute("successMessage", "'" + movieTitle + "' 영화가 성공적으로 비공개 처리되었습니다.");
-        } else {
+        } else { // 그렇지 않다면 비공개처리 실패
             redirectAttributes.addFlashAttribute("errorMessage", "'" + movieTitle + "' 영화 비공개 처리에 실패했거나 해당 영화를 찾을 수 없습니다.");
         }
         return "redirect:/main";
