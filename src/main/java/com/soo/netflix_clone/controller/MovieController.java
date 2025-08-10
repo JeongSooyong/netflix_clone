@@ -322,4 +322,38 @@ public class MovieController {
         return "redirect:/main";
     }
 
+    // 영상 검색
+    @GetMapping("/searchMovie")
+    public String searchMovies(
+            // 뷰의 keyword를 파라미터로
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model
+    ) {
+
+        // MovieVo를 List형태로 searchResults에 할당
+        List<MovieVo> searchResults;
+
+        // 검색어가 비어있지 않은 경우
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 서비스계층의 keyword를 파라미터로 하는 영상검색 메서드 호출
+            searchResults = movieService.searchMovie(keyword);
+            model.addAttribute("keyword", keyword);
+            
+            // searchResults가 null일 경우
+            if (searchResults.isEmpty()) {
+                model.addAttribute("searchMessage", "'" + keyword + "' 에 대한 검색 결과가 없습니다.");
+            } else { // 반대의 경우
+                model.addAttribute("searchMessage", "'" + keyword + "' 에 대한 검색 결과입니다.");
+            }
+        } else {
+            return "redirect:/main";
+        }
+        
+        model.addAttribute("movies", searchResults); 
+
+        return "searchMovie"; 
+    }
+
+
+
 }

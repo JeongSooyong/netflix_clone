@@ -53,4 +53,10 @@ public class MovieDaoImpl implements IMovieDao {
         return session.update(NS + "moviePrivate", movieTitle);
     }
 
+    // 영상 검색
+    @Override
+    public List<MovieVo> searchMovie(String keyword) {
+        return session.selectList(NS + "searchMovie", keyword);
+    }
+
 }

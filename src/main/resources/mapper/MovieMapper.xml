@@ -68,6 +68,17 @@ UPDATE netflix.movie
 WHERE MOVIE_TITLE = #{movieTitle}
 </update>
 
+<!-- 영상 검색 -->
+<select id="searchMovie" parameterType="String" resultMap="movieResultMap">
+SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_DESCRIP,
+  MOVIE_RELEASE_DATE, MOVIE_DURATION, MOVIE_GENRE,
+  MOVIE_POSTER, MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT,
+  COMMON_NO, G.GENRE_NAME 
+FROM netflix.movie M      
+  LEFT JOIN netflix.genre G ON M.MOVIE_GENRE = G.GENRE_NO
+  WHERE M.MOVIE_TITLE LIKE CONCAT('%', #{keyword}, '%')
+  AND M.COMMON_NO = 201
+</select>
 
 
 </mapper>

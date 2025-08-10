@@ -21,4 +21,7 @@ public interface IMovieService {
     // 영상 비공개 처리
     public int moviePrivate(String movieTitle);
 
+    // 영상 검색
+    public List<MovieVo> searchMovie(String keyword);
+
 }

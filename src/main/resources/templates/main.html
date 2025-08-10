@@ -9,6 +9,12 @@
 
 <body class="main-body">
     <header class="navbar">
+        <div class="search-bar">
+            <form th:action="@{/searchMovie}" method="get">
+                <input type="text" name="keyword" placeholder="영화 제목을 검색하세요..." th:value="${keyword}">
+                <button type="submit">검색</button>
+            </form>
+        </div>
         <div class="logo">NETFLIX</div>
         <nav>
             <a href="#">홈</a>
@@ -33,7 +39,7 @@
     </section>
     <section class="row">
         <h2>지금 뜨는 콘텐츠</h2>
-        <div class="row-posters">
+        <div class="row-posters" id="movieListContainer">
             <!-- Thymeleaf의 th:each를 사용하여 movies 리스트 반복 -->
             <div th:each="movie : ${movies}" class="movie-item">
                 <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}"

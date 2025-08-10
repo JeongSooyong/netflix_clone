@@ -45,4 +45,10 @@ public class MovieServiceImpl implements IMovieService {
         return dao.moviePrivate(movieTitle);
     }
 
+    // 영상 검색
+    @Override
+    public List<MovieVo> searchMovie(String keyword) {
+        return dao.searchMovie(keyword);
+    }
+
 }
