@@ -47,4 +47,10 @@ public class MovieDaoImpl implements IMovieDao {
         return session.update(NS + "updateMovie", vo);
     }
 
+    // 영상 비공개 처리
+    @Override
+    public int moviePrivate(String movieTitle) {
+        return session.update(NS + "moviePrivate", movieTitle);
+    }
+
 }

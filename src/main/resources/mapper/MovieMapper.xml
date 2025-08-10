@@ -23,7 +23,7 @@
   resultMap="movieResultMap">
 SELECT MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
   MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
-  MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT
+  MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT, COMMON_NO
 	FROM MOVIE
   WHERE COMMON_NO = 201
 </select>
@@ -44,7 +44,7 @@ VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate},
 SELECT
     m.MOVIE_TITLE, m.MOVIE_DESCRIP, m.MOVIE_RELEASE_DATE,
     m.MOVIE_DURATION, g.GENRE_NAME, m.MOVIE_POSTER,
-    m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT
+    m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT, m.COMMON_NO
 FROM
     netflix.movie m        
 INNER JOIN
@@ -58,6 +58,13 @@ UPDATE netflix.movie
 	SET MOVIE_TITLE=#{movieTitle}, MOVIE_DESCRIP=#{movieDescrip}, MOVIE_RELEASE_DATE=#{movieReleaseDate}, 
 	MOVIE_DURATION=#{movieDuration}, MOVIE_GENRE=#{movieGenre}, MOVIE_POSTER=#{moviePoster}, 
 	MOVIE_VIDEO_URL=#{movieVideoUrl}
+WHERE MOVIE_TITLE = #{movieTitle}
+</update>
+
+<!-- 영화 비공개 처리 -->
+<update id="moviePrivate" parameterType="String">
+UPDATE netflix.movie
+	SET COMMON_NO = 202
 WHERE MOVIE_TITLE = #{movieTitle}
 </update>
 

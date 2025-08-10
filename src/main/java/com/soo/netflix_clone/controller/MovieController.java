@@ -296,4 +296,26 @@ public class MovieController {
         }
     }
 
+    // 영상 비공개 처리
+    @PostMapping("/moviePrivate")
+    public String moviePrivate(@RequestParam("movieTitle") String movieTitle, 
+        HttpSession session, RedirectAttributes redirectAttributes) {
+
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+        
+        if (loginUser == null || loginUser.getCommonNo() != 104) {
+            redirectAttributes.addFlashAttribute("errorMessage", "관리자만 접근할 수 있는 기능입니다.");
+            return "redirect:/main"; 
+        }
+
+        int updatedRows = movieService.moviePrivate(movieTitle); 
+
+        if (updatedRows > 0) {
+            redirectAttributes.addFlashAttribute("successMessage", "'" + movieTitle + "' 영화가 성공적으로 비공개 처리되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "'" + movieTitle + "' 영화 비공개 처리에 실패했거나 해당 영화를 찾을 수 없습니다.");
+        }
+        return "redirect:/main";
+    }
+
 }

@@ -39,4 +39,10 @@ public class MovieServiceImpl implements IMovieService {
         return dao.updateMovie(vo);
     }
 
+    // 영상 비공개 처리
+    @Override
+    public int moviePrivate(String movieTitle) {
+        return dao.moviePrivate(movieTitle);
+    }
+
 }

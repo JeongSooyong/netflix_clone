@@ -18,4 +18,7 @@ public interface IMovieService {
     // 영상 정보 수정
     public int updateMovie(MovieVo vo);
 
+    // 영상 비공개 처리
+    public int moviePrivate(String movieTitle);
+
 }
