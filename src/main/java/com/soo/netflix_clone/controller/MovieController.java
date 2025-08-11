@@ -195,6 +195,13 @@ public class MovieController {
         // 서비스 계층의 selectMovie메서드 실행하여 movie라는 변수에 할당
         MovieVo movie = movieService.selectMovie(movieTitle); 
 
+        if (movie != null) {
+            System.out.println("DEBUG: selectMovie 컨트롤러 - movie.movieTitle: " + movie.getMovieTitle());
+            System.out.println("DEBUG: selectMovie 컨트롤러 - movie.movieNo: " + movie.getMovieNo());
+        } else {
+            System.out.println("DEBUG: selectMovie 컨트롤러 - movieService.selectMovie(movieTitle) 결과가 null입니다.");
+        }
+
         // movie가 null일때(영상이 선택되지 않았을때)
         if (movie == null) {
             model.addAttribute("errorMsg", "해당 영화 정보를 찾을 수 없습니다.");

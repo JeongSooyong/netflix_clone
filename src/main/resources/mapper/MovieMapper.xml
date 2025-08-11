@@ -42,9 +42,9 @@ VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate},
 <!-- 영상 상세 조회 -->
 <select id="selectMovie" parameterType="String" resultMap="movieResultMap">
 SELECT
-    m.MOVIE_TITLE, m.MOVIE_DESCRIP, m.MOVIE_RELEASE_DATE,
-    m.MOVIE_DURATION, g.GENRE_NAME, m.MOVIE_POSTER,
-    m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT, m.COMMON_NO
+    m.MOVIE_NO, m.MOVIE_TITLE, m.MOVIE_DESCRIP, 
+    m.MOVIE_RELEASE_DATE, m.MOVIE_DURATION, g.GENRE_NAME, 
+    m.MOVIE_POSTER, m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT, m.COMMON_NO
 FROM
     netflix.movie m        
 INNER JOIN

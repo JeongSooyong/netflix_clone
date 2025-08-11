@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.netflix_clone.model.LikeDaoImpl">
+
+<!-- LikeResultMap 정의 -->
+    <resultMap id="likeResultMap" type="com.soo.netflix_clone.vo.LikeVo">
+        <result property="userNo" column="user_no"/>
+        <result property="movieNo" column="movie_no"/>
+    </resultMap>
+
+<!-- 영화 추천 -->
+<insert id="likeMovie" parameterType="com.soo.netflix_clone.vo.LikeVo">
+INSERT INTO netflix.`like`
+  (USER_NO, MOVIE_NO)
+VALUES(#{userNo}, #{movieNo})
+</insert>
+
+
+</mapper>

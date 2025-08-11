@@ -7,6 +7,62 @@
     <link rel="stylesheet" href="/css/selectMovie.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
+<script>
+    // 페이지 로드 후 스크립트 실행
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButton = document.getElementById('toggleLikeButton');
+
+        if (toggleButton) { // 버튼이 존재하는 경우에만 이벤트 리스너 추가
+            toggleButton.addEventListener('click', function() {
+                const movieNo = this.dataset.movieNo;
+                let isLiked = this.dataset.isLiked === 'true'; // 현재 좋아요 상태 (Boolean으로 변환)
+
+                const url = '/likeMovie'; // 컨트롤러의 @PostMapping("/likeMovie") 경로
+
+                const buttonTextSpan = this.querySelector('span');
+
+                // AJAX 요청 (fetch API 사용)
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ movieNo: movieNo })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.message || '서버 오류 발생');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // 성공적으로 처리되었을 때 (서버가 토글했든, 새로 좋아요를 눌렀든)
+                        // 클라이언트의 좋아요 상태를 업데이트하고 UI를 변경합니다.
+                        isLiked = !isLiked; // 현재 상태 반전 (토글)
+                        this.dataset.isLiked = isLiked ? 'true' : 'false'; // data 속성 업데이트
+
+                        buttonTextSpan.textContent = isLiked ? '추천 취소' : '추천'; // 버튼 텍스트 변경
+                        this.classList.toggle('btn-unlike', isLiked); // '추천 취소' 스타일
+                        this.classList.toggle('btn-like', !isLiked);  // '추천' 스타일
+
+                        // 사용자에게 성공 메시지 표시
+                        alert(data.message);
+                    } else {
+                        // 서버에서 'success: false'를 보냈을 경우 (예: 이미 추천함)
+                        alert('작업 실패: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('AJAX 오류:', error);
+                    alert('오류가 발생했습니다: ' + error.message);
+                });
+            });
+        }
+    });
+</script>
 
 <body>
     <header class="navbar">
@@ -41,13 +97,20 @@
             </div>
 
             <a href="/main" class="btn-back">목록으로 돌아가기</a>
+            <th:block th:if="${loginUser != null}">
+                <button type="button" class="btn-like" id="toggleLikeButton" th:data-movie-no="${movie.movieNo}"
+                    th:data-is-liked="${isLiked} ? 'true' : 'false'"
+                    th:classappend="${isLiked} ? 'btn-unlike' : 'btn-like'">
+                    <span th:text="${isLiked} ? '추천 취소' : '추천'"></span>
+                </button>
+            </th:block>
             <br>
             <a th:if="${loginUser != null and loginUser.commonNo == 104}"
                 th:href="@{/updateMovie/{movieTitle}(movieTitle=${movie.movieTitle})}"
                 class="btn-back btn-admin-action">영화 정보 수정</a>
             <br>
-            <form th:if="${loginUser != null and loginUser.commonNo == 104 and movie.commonNo == 201}" th:action="@{/moviePrivate}" method="post"
-                onsubmit="return confirm('정말로 이 영화를 비공개 처리하시겠습니까?');">
+            <form th:if="${loginUser != null and loginUser.commonNo == 104 and movie.commonNo == 201}"
+                th:action="@{/moviePrivate}" method="post" onsubmit="return confirm('정말로 이 영화를 비공개 처리하시겠습니까?');">
                 <!-- 영화 제목을 hidden 파라미터로 전달 -->
                 <input type="hidden" name="movieTitle" th:value="${movie.movieTitle}">
 
