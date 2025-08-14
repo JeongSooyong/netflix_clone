@@ -25,4 +25,9 @@ public class LikeDaoImpl implements ILikeDao {
         return session.insert(NS + "likeMovie", vo);
     }
 
+    // 영상 추천 취소
+    public int likeMovieCancel(LikeVo vo) {
+        return session.delete(NS + "likeMovieCancel", vo);
+    }
+
 }

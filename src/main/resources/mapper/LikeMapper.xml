@@ -17,5 +17,11 @@ INSERT INTO netflix.`like`
 VALUES(#{userNo}, #{movieNo})
 </insert>
 
+<!-- 영화 추천 취소 -->
+<delete id="likeMovieCancel" parameterType="com.soo.netflix_clone.vo.LikeVo">
+DELETE FROM netflix.`like`
+  WHERE USER_NO=#{userNo} AND MOVIE_NO=#{movieNo}
+</delete>
+
 
 </mapper>

@@ -13,8 +13,15 @@ public class LikeServiceImpl implements ILikeService {
     private ILikeDao dao;
 
     // 영상 추천
+    @Override
     public int likeMovie(LikeVo vo) {
         return dao.likeMovie(vo);
+    }
+
+    // 영상 추천 취소
+    @Override
+    public int likeMovieCancel(LikeVo vo) {
+        return dao.likeMovieCancel(vo);
     }
 
 }

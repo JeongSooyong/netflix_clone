@@ -10,26 +10,37 @@
 <script>
     // 페이지 로드 후 스크립트 실행
     document.addEventListener('DOMContentLoaded', function() {
+        // 페이지에서 id가 toggleLikeButton인 요소를 찾아 toggleButton에 할당
         const toggleButton = document.getElementById('toggleLikeButton');
 
-        if (toggleButton) { // 버튼이 존재하는 경우에만 이벤트 리스너 추가
+        // toggleButton의 존재 여부 확인
+        if (toggleButton) { 
+            // toggleButton을 클릭했을때
             toggleButton.addEventListener('click', function() {
+
+                // data-movieNo의 값을 movieNo에 할당
                 const movieNo = this.dataset.movieNo;
-                let isLiked = this.dataset.isLiked === 'true'; // 현재 좋아요 상태 (Boolean으로 변환)
+                // data-isLiked의 타입, 값을 비교하여 isLiked에 할당
+                let isLiked = this.dataset.isLiked === 'true'; 
+                // isLiked가 true면 /likeMovieCancel을 false면 /likeMovie를 url에 할당
+                // 영상에 추천이 눌러져있다면 버튼 클릭시 /likeMovieCancel을 요청해야함.
+                const url = isLiked ? '/likeMovieCancel' : '/likeMovie';
 
-                const url = '/likeMovie'; // 컨트롤러의 @PostMapping("/likeMovie") 경로
-
+                // buttonTextSpan에 toggleButton안의 span태그를 할당
                 const buttonTextSpan = this.querySelector('span');
 
-                // AJAX 요청 (fetch API 사용)
+                // AJAX 요청
                 fetch(url, {
+                    // JSON형식으로 movieNo, Number(movieNo)를 문자열로 변환해서 서버에 데이터 전송
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ movieNo: movieNo })
+                    body: JSON.stringify({ movieNo: Number(movieNo) })
                 })
                 .then(response => {
+                    // response.ok는 서버의 응답이 200~299인지 확인하는 코드
+                    // 서버의 응답이 200~299가 아니라면 서버가 보낸 에러 JSON을 읽어 Error를 던짐
                     if (!response.ok) {
                         return response.json().then(errorData => {
                             throw new Error(errorData.message || '서버 오류 발생');
@@ -38,20 +49,19 @@
                     return response.json();
                 })
                 .then(data => {
+                    // 처리에 성공했을때(추천이 성공적으로 완료됐을때)
                     if (data.success) {
-                        // 성공적으로 처리되었을 때 (서버가 토글했든, 새로 좋아요를 눌렀든)
-                        // 클라이언트의 좋아요 상태를 업데이트하고 UI를 변경합니다.
-                        isLiked = !isLiked; // 현재 상태 반전 (토글)
+                        // isLiked에 !isLiked를 할당
+                        isLiked = !isLiked; 
                         this.dataset.isLiked = isLiked ? 'true' : 'false'; // data 속성 업데이트
 
                         buttonTextSpan.textContent = isLiked ? '추천 취소' : '추천'; // 버튼 텍스트 변경
-                        this.classList.toggle('btn-unlike', isLiked); // '추천 취소' 스타일
-                        this.classList.toggle('btn-like', !isLiked);  // '추천' 스타일
+                        this.classList.toggle('btn-unlike', isLiked); 
+                        this.classList.toggle('btn-like', !isLiked);  
 
                         // 사용자에게 성공 메시지 표시
                         alert(data.message);
                     } else {
-                        // 서버에서 'success: false'를 보냈을 경우 (예: 이미 추천함)
                         alert('작업 실패: ' + data.message);
                     }
                 })
