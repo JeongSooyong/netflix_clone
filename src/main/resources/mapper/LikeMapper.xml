@@ -23,5 +23,19 @@ DELETE FROM netflix.`like`
   WHERE USER_NO=#{userNo} AND MOVIE_NO=#{movieNo}
 </delete>
 
+<!-- 영상 추천 개수 -->
+<select id="countLikeMovie" parameterType="Integer">
+SELECT COUNT(*)
+	FROM netflix.`like`
+	WHERE MOVIE_NO = #{movieNo}
+</select>
+
+<!-- 영상 추천 여부 확인 -->
+<select id="isLikedMovie" parameterType="map">
+SELECT COUNT(*)
+  FROM netflix.`like`
+  WHERE USER_NO = #{userNo} AND MOVIE_NO = #{movieNo}
+</select>
+
 
 </mapper>

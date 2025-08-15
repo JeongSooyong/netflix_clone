@@ -86,6 +86,12 @@ public class MovieRestController {
                 // response(HashMap)에 해당 값들을 put
                 response.put("success", true);
                 response.put("message", "영화 추천 완료!");
+
+                // 현재 추천 개수를 다시 조회
+                int currentCountLikeMovie = likeService.countLikeMovie(movieNo);
+                // response(HashMap)에 현재 추천 개수를 다시 담는다.
+                response.put("currentCountLikeMovie", currentCountLikeMovie);
+
             } else {
                 response.put("success", false);
                 response.put("message", "이미 추천했거나 처리 중 오류가 발생했습니다.");

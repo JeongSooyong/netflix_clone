@@ -1,5 +1,8 @@
 package com.soo.netflix_clone.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,13 +24,30 @@ public class LikeDaoImpl implements ILikeDao {
     }
 
     // 영상 추천
+    @Override
     public int likeMovie(LikeVo vo) {
         return session.insert(NS + "likeMovie", vo);
     }
 
     // 영상 추천 취소
+    @Override
     public int likeMovieCancel(LikeVo vo) {
         return session.delete(NS + "likeMovieCancel", vo);
+    }
+
+    // 영상 추천 개수
+    @Override
+    public int countLikeMovie(int movieNo) {
+        return session.selectOne(NS + "countLikeMovie", movieNo);
+    }
+
+    // 영상 추천 여부 확인
+    @Override
+    public int isLikedMovie(int userNo, int movieNo) {
+        Map<String, Integer> isLiked = new HashMap<>();
+        isLiked.put("userNo", userNo);
+        isLiked.put("movieNo", movieNo);
+        return session.selectOne(NS + "isLikedMovie", isLiked);
     }
 
 }

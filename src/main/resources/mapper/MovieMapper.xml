@@ -21,10 +21,11 @@
 <!-- 모든 영화 -->
 <select id="selectAllMovies" 
   resultMap="movieResultMap">
-SELECT MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
-  MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
-  MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT, COMMON_NO
-	FROM MOVIE
+SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_DESCRIP, 
+  MOVIE_RELEASE_DATE, MOVIE_DURATION, MOVIE_GENRE, 
+  MOVIE_POSTER, MOVIE_VIDEO_URL, MOVIE_VIEW_COUNT, 
+  COMMON_NO 
+  FROM MOVIE
   WHERE COMMON_NO = 201
 </select>
 
@@ -40,7 +41,7 @@ VALUES(#{movieTitle}, #{movieDescrip}, #{movieReleaseDate},
 </insert>
 
 <!-- 영상 상세 조회 -->
-<select id="selectMovie" parameterType="String" resultMap="movieResultMap">
+<select id="selectMovie" parameterType="Integer" resultMap="movieResultMap">
 SELECT
     m.MOVIE_NO, m.MOVIE_TITLE, m.MOVIE_DESCRIP, 
     m.MOVIE_RELEASE_DATE, m.MOVIE_DURATION, g.GENRE_NAME, 
@@ -49,7 +50,7 @@ FROM
     netflix.movie m        
 INNER JOIN
     netflix.genre g ON m.MOVIE_GENRE = g.GENRE_NO
-  WHERE MOVIE_TITLE = #{movieTitle}
+  WHERE MOVIE_NO = #{movieNo}
 </select>
 
 <!-- 영화 정보 수정 -->

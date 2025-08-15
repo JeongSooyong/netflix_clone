@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 
 import com.soo.netflix_clone.service.GenreServiceImpl;
+import com.soo.netflix_clone.service.LikeServiceImpl;
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.vo.GenreVo;
@@ -48,6 +49,10 @@ public class MovieController {
     @Autowired
     private GenreServiceImpl genreService;
 
+    // like서비스 자동 주입
+    @Autowired
+    private LikeServiceImpl likeService;
+    
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
     @Value("${file.upload-dir}")
@@ -180,8 +185,8 @@ public class MovieController {
     }
 
     // 영화 상세 보기 페이지
-    @GetMapping("/selectMovie/{movieTitle}")
-    public String selectMovie(@PathVariable("movieTitle") String movieTitle, Model model, HttpSession session) {
+    @GetMapping("/selectMovie/{movieNo}")
+    public String selectMovie(Model model, HttpSession session, @PathVariable int movieNo) {
 
         // 로그인된 세션 UserVo를 가져오는 loginUser
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
@@ -190,17 +195,26 @@ public class MovieController {
         // 조회할 MovieVo 객체를 담을 변수 vo
         MovieVo vo = new MovieVo();
         // 변수 vo에 영상 제목을 할당
-        vo.setMovieTitle(movieTitle);
+        vo.setMovieNo(movieNo);
 
         // 서비스 계층의 selectMovie메서드 실행하여 movie라는 변수에 할당
-        MovieVo movie = movieService.selectMovie(movieTitle); 
+        MovieVo movie = movieService.selectMovie(movieNo); 
 
-        if (movie != null) {
-            System.out.println("DEBUG: selectMovie 컨트롤러 - movie.movieTitle: " + movie.getMovieTitle());
-            System.out.println("DEBUG: selectMovie 컨트롤러 - movie.movieNo: " + movie.getMovieNo());
-        } else {
-            System.out.println("DEBUG: selectMovie 컨트롤러 - movieService.selectMovie(movieTitle) 결과가 null입니다.");
+        // like 서비스 계층의 countLikeMovie 메서드를 실행하여 countLikeMovie라는 변수에 할당
+        int countLikeMovie = likeService.countLikeMovie(movieNo);
+
+        // Model에 좋아요 개수 추가
+        model.addAttribute("countLikeMovie", countLikeMovie);
+
+        // 추천 여부의 기본 값(isLiked)을 false로 할당
+        boolean isLiked = false; 
+        // loginUser가 null이 아닌지 확인(로그인 여부 확인)
+        if (loginUser != null) { 
+            // 서비스계층의 isLikedMovie메서드를 동작시켜서 0보다 크다면 true를 할당
+            isLiked = likeService.isLikedMovie(loginUser.getUserNo(), movieNo) > 0;
         }
+        model.addAttribute("isLiked", isLiked);
+        
 
         // movie가 null일때(영상이 선택되지 않았을때)
         if (movie == null) {
@@ -214,15 +228,15 @@ public class MovieController {
     }
 
     // 영상 정보 수정 페이지
-    @GetMapping("/updateMovie/{movieTitle}")
-    public String updateMovie(@PathVariable("movieTitle") String movieTitle, HttpSession session, Model model) {
+    @GetMapping("/updateMovie/{movieNo}")
+    public String updateMovie(@PathVariable int movieNo, HttpSession session, Model model) {
 
         // 로그인 유저의 세션
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
         model.addAttribute("loginUser", loginUser);
 
         // 서비스 계층의 selectMovie메서드를 movieVo에 담아 뷰에 영화 정보를 띄운다.
-        MovieVo movieVo = movieService.selectMovie(movieTitle);
+        MovieVo movieVo = movieService.selectMovie(movieNo);
         model.addAttribute("movieVo", movieVo); 
 
         // 영상 정보 수정 페이지의 장르 수정에 모든 장르를 List에 담아서 뷰에 띄운다.
