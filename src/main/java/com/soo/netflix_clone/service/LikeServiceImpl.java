@@ -9,6 +9,7 @@ import com.soo.netflix_clone.vo.LikeVo;
 @Service // 비즈니스 로직을 명시하는 어노테이션
 public class LikeServiceImpl implements ILikeService {
 
+    // ILikeDao 자동주입
     @Autowired
     private ILikeDao dao;
 

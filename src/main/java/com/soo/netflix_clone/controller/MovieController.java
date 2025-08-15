@@ -30,8 +30,10 @@ import com.soo.netflix_clone.service.GenreServiceImpl;
 import com.soo.netflix_clone.service.LikeServiceImpl;
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
+import com.soo.netflix_clone.service.ReviewServiceImpl;
 import com.soo.netflix_clone.vo.GenreVo;
 import com.soo.netflix_clone.vo.MovieVo;
+import com.soo.netflix_clone.vo.ReviewVo;
 import com.soo.netflix_clone.vo.UserVo;
 
 @Controller
@@ -52,6 +54,10 @@ public class MovieController {
     // like서비스 자동 주입
     @Autowired
     private LikeServiceImpl likeService;
+
+    // review서비스 자동 주입
+    @Autowired
+    private ReviewServiceImpl reviewService;
     
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
@@ -205,6 +211,11 @@ public class MovieController {
 
         // Model에 좋아요 개수 추가
         model.addAttribute("countLikeMovie", countLikeMovie);
+
+        List<ReviewVo> review = reviewService.selectMovieReview(movieNo); 
+        model.addAttribute("review", review); 
+
+        
 
         // 추천 여부의 기본 값(isLiked)을 false로 할당
         boolean isLiked = false; 
