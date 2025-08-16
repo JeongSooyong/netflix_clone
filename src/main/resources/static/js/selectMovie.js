@@ -92,10 +92,100 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const insertMovieReview = document.getElementById('reviewPart');
+    // 리뷰 작성
 
-    if (reviewPart) {
+    // reveiwForm안의 요소들을 reviewForm라는 변수에 할당
+    const reviewForm = document.getElementById('reviewForm');
+    // reviewContent안의 요소들을 reviewContentTextarea라는 변수에 할당
+    const reviewCommentTextarea = document.getElementById('reviewComment');
+    // reviewListContainer(기존의 리뷰 목록)안의 요소들을 reviewListContainer라는 변수에 할당
+    const reviewListContainer = document.getElementById('reviewListContainer');
+    // '리뷰 없음' 메세지를 담은 div를 변수 noReviewsMessage에 할당
+    const noReviewsMessage = document.getElementById('noReviewsMessage');
 
+    // reviewForm이 존재 할때만
+    if (reviewForm) {
+        // 폼 제출시 새로고침 안되도록
+        reviewForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // input에 hidden으로 설정한 movieNoInput의 value를 변수 movieNo에 할당
+            const movieNo = document.getElementById('movieNoInput').value;
+            // input에 hidden으로 설정한 userNo의 value를 변수 userNo에 할당
+            const userNo = document.getElementById('userNoInput').value;
+            // reviewContentTextara의 value에서 공백을 제거한 값을 변수 reviewContent에 할당
+            const reviewComment = reviewCommentTextarea.value.trim();
+            // user가 체크한 별점을 변수 reviewRating로 초기화
+            let reviewRating = null;
+            // 선택한 평점 버튼을 탐색하여 담기 위한 변수 ratingRadios
+            const ratingRadios = document.querySelectorAll('input[name="reviewRating"]');
+            // 평점을 user가 체크한 평점과 일치하는지 확인하기위한 반복문
+            for (const radio of ratingRadios) {
+                // 현재 radio변수에 할당된 버튼이 true라면
+                if (radio.checked) {
+                    // radio의 value를 reviewRating에 할당
+                    reviewRating = radio.value;
+                    break;
+                }
+            }
+
+            // reviewContent가 비었다면
+            if (!reviewComment) {
+                // 리뷰 내용을 입력해주세요. 라는 경고메세지
+                alert('리뷰 내용을 입력해주세요.');
+                return;
+            }
+            // reviewRating이 null 이라면
+            if (reviewRating === null) {
+                // 평점을 선택해주세요. 라는 경고메세지
+                alert('평점을 선택해주세요.');
+                return;
+            }
+
+            // ReviewVo에 매핑될 객체를 JSON형태로 생성
+            const reviewData = {
+                reviewTarget: movieNo,
+                userNo: userNo,
+                reviewRating: reviewRating,
+                reviewComment: reviewComment
+            };
+
+            // AJAX방식으로 데이터 전송
+            fetch('/insertMovieReview', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reviewData)
+            })
+                .then(response => {
+                    // 서버 응답이 200이 아니라면
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`리뷰 전송 실패: ${response.status}${response.statusText}-${text}`);
+                        });
+                    }
+                    return response.text();
+                })
+                .then(message => {
+                    console.log('서버 응답:', message);
+                    alert(message);
+
+                    // 리뷰 내용과 평점 버튼 초기화
+                    reviewCommentTextarea.value = '';
+                    ratingRadios.forEach(radio => radio.checked = false);
+
+                    // 리뷰 없었다가 새로 생겼을때 noReviewsMessage를 숨김.
+                    if (noReviewsMessage) {
+                        noReviewsMessage.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('리뷰 작성 실패:', error);
+                    alert('리뷰 작성 실패' + error.message);
+                });
+
+        });
     }
 
 });

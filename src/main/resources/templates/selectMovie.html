@@ -73,7 +73,7 @@
         <!-- movieVideoUrl이 iframe 태그 전체를 포함하고 있다고 가정 -->
         <div th:utext="${movie.movieVideoUrl}"></div>
     </div>
-    <div class="review-section" id="reviewPart">
+    <div class="review-section">
         <h2>리뷰</h2>
 
         <!-- 리뷰 작성 폼 (로그인한 사용자만 볼 수 있도록 조건부 렌더링) -->
@@ -92,8 +92,8 @@
                     <input type="radio" id="star1" name="reviewRating" value="1"><label for="star1">⭐</label>
                 </div>
                 <br>
-                <textarea name="reviewContent" placeholder="이 영화에 대한 감상을 자유롭게 남겨주세요!" rows="5" required
-                    id="reviewContent"></textarea>
+                <textarea name="reviewComment" placeholder="이 영화에 대한 감상을 자유롭게 남겨주세요!" rows="5" required
+                    id="reviewComment"></textarea>
                 <button type="submit" class="btn-submit-review">리뷰 등록</button>
             </form>
         </div>
@@ -104,7 +104,7 @@
             <div class="review-item" th:each="reviewItem : ${review}">
                 <p><strong>작성자: <span th:text="${reviewItem.userId}">리뷰 작성자명</span></strong></p>
                 <p class="review-rating" th:text="${'⭐'.repeat(reviewItem.reviewRating)}">⭐⭐⭐⭐⭐</p>
-                <p class="review-content" th:text="${reviewItem.reviewComment}">이 영화 정말 재미있었어요! 스토리가 몰입감 있고 연기도 훌륭합니다.
+                <p class="review-comment" th:text="${reviewItem.reviewComment}">이 영화 정말 재미있었어요! 스토리가 몰입감 있고 연기도 훌륭합니다.
                 </p>
                 <p class="review-date" th:text="${#temporals.format(reviewItem.reviewDate, 'yyyy.MM.dd HH:mm')}">
                     2025.08.15</p>
