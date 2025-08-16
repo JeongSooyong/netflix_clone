@@ -91,4 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
         });
     }
+
+    const insertMovieReview = document.getElementById('reviewPart');
+
+    if (reviewPart) {
+
+    }
+
 });
+

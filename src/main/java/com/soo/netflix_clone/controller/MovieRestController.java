@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soo.netflix_clone.service.LikeServiceImpl;
 import com.soo.netflix_clone.service.MovieServiceImpl;
+import com.soo.netflix_clone.service.ReviewServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.vo.LikeVo;
 import com.soo.netflix_clone.vo.MovieVo;
+import com.soo.netflix_clone.vo.ReviewVo;
 import com.soo.netflix_clone.vo.UserVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -37,6 +39,10 @@ public class MovieRestController {
     // like 서비스 자동 주입
     @Autowired
     private LikeServiceImpl likeService;
+
+    // review 서비스 자동 주입
+    @Autowired
+    private ReviewServiceImpl reviewService;
 
     // 영상 추천
     @PostMapping("/likeMovie")
@@ -160,6 +166,17 @@ public class MovieRestController {
             response.put("message", "취소 처리 중 오류가 발생했습니다: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 리뷰 작성
+    @PostMapping("/insertMovieReview")
+    @ResponseBody
+    public ResponseEntity<String> insertMovieReview(@RequestBody ReviewVo reviewVo){
+        
+        // 리뷰 서비스 계층의 insertMovieReview메서드 호출
+        reviewService.insertMovieReview(reviewVo);
+
+        return ResponseEntity.ok("리뷰가 성공적으로 작성되었습니다.");
     }
 
 }

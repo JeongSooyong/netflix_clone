@@ -73,7 +73,7 @@
         <!-- movieVideoUrl이 iframe 태그 전체를 포함하고 있다고 가정 -->
         <div th:utext="${movie.movieVideoUrl}"></div>
     </div>
-    <div class="review-section">
+    <div class="review-section" id="reviewPart">
         <h2>리뷰</h2>
 
         <!-- 리뷰 작성 폼 (로그인한 사용자만 볼 수 있도록 조건부 렌더링) -->
