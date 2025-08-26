@@ -8,10 +8,10 @@
 
 ## 프로젝트 미리보기
 
-![로그인 페이지 예시](assets/images/login_screenshot.png)
-![메인 페이지 예시](assets/images/main_page_screenshot.png)
-_예시: 영화 검색 기능 시연 GIF_
-![영화 검색 기능](assets/gifs/movie_search_demo.gif)
+<img width="1354" height="592" alt="image" src="https://github.com/user-attachments/assets/4679ab6e-a3ea-4b8b-8cf5-296bac02f84c" />
+
+<img width="1322" height="523" alt="image" src="https://github.com/user-attachments/assets/2f9e73fa-c207-4991-902e-7796440e3508" />
+
 
 ---
 
