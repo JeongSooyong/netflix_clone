@@ -41,4 +41,27 @@
 
 ## ⚠️ 트러블 슈팅 및 문제 해결
 
-**[사례 1] MyBatis `session.insert()` 반환 타입 불일치 문제**
+**[사례 1] 스프링 시큐리티 BCryptPasswordEncoder 적용 후 로그인 실패 문제 해결**
+
+문제 상황: 
+회원가입 기능을 구현하며 Spring Security에서 제공하는 BCryptPasswordEncoder 빈(Bean)을 등록하고, 서비스 로직에서 이를 호출하여 비밀번호를 해시화하여 데이터베이스에 INSERT하도록 설정했습니다. 
+DB에 저장된 비밀번호 값이 정상적으로 해시화되어 있음을 확인했지만, 회원가입 시 사용한 아이디와 비밀번호로 로그인 시도 시 지속적으로 로그인에 실패하는 문제가 발생했습니다.
+
+원인 분석: 초기 로그인 로직은 MyBatis Mapper에서 아이디(#{userId})와 함께 사용자가 입력한 비밀번호(#{userPw})를 쿼리에 직접 넣어 DB에 저장된 값과 비교하는 방식이었습니다.
+
+-- 기존 로그인 쿼리
+SELECT * FROM USER_TABLE WHERE user_id = #{userId} AND user_pw = #{userPw}
+그러나 BCryptPasswordEncoder로 해시화된 비밀번호는 평문(사용자가 입력한 비밀번호)과 직접적으로 비교할 수 없습니다. 
+사용자가 입력한 평문 비밀번호가 #{userPw}로 넘어와도, DB에 저장된 해시화된 비밀번호와는 일치하지 않았던 것입니다.
+
+해결 과정:
+초기 로그인 처리 방식은 MyBatis Mapper에서 사용자가 입력한 비밀번호(#{userPw})를 SQL 쿼리에 직접 포함하여, DB에 저장된 해시화된 비밀번호와 직접 비교하는 방식이었습니다.
+
+기존 로그인 쿼리 : SELECT * FROM USER_TABLE WHERE user_id = #{userId} AND user_pw = #{userPw}
+BCryptPasswordEncoder로 해시화된 비밀번호는 원본 평문 비밀번호와는 완전히 다른 형태를 가지며, 단순 SQL WHERE절 비교 쿼리문으로는 로그인이 되지 않았습니다. 
+Spring Security는 내부적으로 등록된 PasswordEncoder(저의 경우 BCryptPasswordEncoder)를 조합하여 사용자 인증을 처리합니다.
+문제의 원인은 바로 DB 쿼리 자체가 평문 비밀번호와 해시된 비밀번호를 직접 비교하는 잘못된 방식이었기 때문에 Spring Security 내부 인증 과정에서 비밀번호 불일치로 판단된 것이었습니다.
+
+배운 점: 회원가입 시 서비스 계층에서 BCryptPasswordEncoder를 활용하여 회원가입 시에 사용자 비밀번호를 안전하게 해시화하고 데이터베이스에 저장하는 것의 중요성을 다시 한번 체감했습니다. 그리고 로그인 과정에서 Spring Security가 등록된 BCryptPasswordEncoder빈과 인증 메커니즘을 통해 사용자가 입력한 평문 비밀번호와 DB의 해시된 비밀번호를 자동으로 비교하고 검증한다는 것을 알게 되었습니다.
+더 나아가 이런 개인정보 관련에서 비밀번호 해시화의 중요성도 배울 수 있었습니다.
+
