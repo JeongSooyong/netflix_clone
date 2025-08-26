@@ -39,7 +39,7 @@
 <img src="https://skillicons.dev/icons?i=java,spring,javascript,html,css,mysql,mybatis,thymeleaf" />
 
 
-⚠️ 트러블 슈팅 및 문제 해결
+### ⚠️ 트러블 슈팅 및 문제 해결
 [사례 1] 스프링 시큐리티 BCryptPasswordEncoder 적용 후 로그인 실패 문제 해결
 문제 상황: 회원가입 기능을 구현하며 Spring Security에서 제공하는 BCryptPasswordEncoder 빈(Bean)을 등록하고, 서비스 로직에서 이를 호출하여 비밀번호를 해시화하여 데이터베이스에 INSERT하도록 설정했습니다. DB에 저장된 비밀번호 값이 정상적으로 해시화되어 있음을 확인했지만, 회원가입 시 사용한 아이디와 비밀번호로 로그인 시도 시 지속적으로 로그인에 실패하는 문제가 발생했습니다.
 
