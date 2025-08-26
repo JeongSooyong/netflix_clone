@@ -36,7 +36,9 @@
 
 ## 🛠️ 기술 스택 (Tech Stack)
 
-본 프로젝트는 다음과 같은 기술 스택으로 개발되었습니다.
-
 <img src="https://skillicons.dev/icons?i=java,spring,javascript,html,css,mysql,mybatis,thymeleaf" />
 
+
+## ⚠️ 트러블 슈팅 및 문제 해결
+
+**[사례 1] MyBatis `session.insert()` 반환 타입 불일치 문제**
