@@ -38,8 +38,5 @@
 
 본 프로젝트는 다음과 같은 기술 스택으로 개발되었습니다.
 
-### Platforms & Languages
-<img src="https://skillicons.dev/icons?i=java,spring,javascript,html,css,mysql,oracle" />
+<img src="https://skillicons.dev/icons?i=java,spring,javascript,html,css,mysql,mybatis,thymeleaf" />
 
-### Tools
-<img src="https://skillicons.dev/icons?i=git,eclipse,vscode" />
