@@ -32,3 +32,14 @@
 | **시청 관리**  | 시청 기록 저장 및 조회                       | 🚧 구현 중 |                                                 |
 | **리뷰 시스템**| 영화 리뷰 작성, 추천 수 업데이트 | 🚧 구현 중  |       |
 | **추천 시스템**| 기본적인 영상 추천 기능                      | 🚧 구현 중  |        |
+
+
+## 🛠️ 기술 스택 (Tech Stack)
+
+본 프로젝트는 다음과 같은 기술 스택으로 개발되었습니다.
+
+### Platforms & Languages
+<img src="https://skillicons.dev/icons?i=java,spring,javascript,html,css,mysql,oracle" />
+
+### Tools
+<img src="https://skillicons.dev/icons?i=git,eclipse,vscode" />
