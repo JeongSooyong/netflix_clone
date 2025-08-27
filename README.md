@@ -66,25 +66,20 @@ markdown
     SELECT * FROM USER_TABLE WHERE user_id = #{userId} AND user_pw = #{userPw};
     ```
 
-    그러나 `BCryptPasswordEncoder`로 해시화된 비밀번호는 원본 평문 비밀번호와는 완전히 다른 형태이며, 단순 SQL `WHERE` 절 비교로는 절대 일치하지 않습니다. 해시 함수는 단방향성을 가지므로, 사용자가 입력한 평문 비밀번호가 `#{userPw}`로 넘어와도 DB에 저장된 해시화된 비밀번호와는 비교 자체가 불가능했습니다.
+    그러나 `BCryptPasswordEncoder`로 해시화된 비밀번호는 원본 평문 비밀번호와는 완전히 다른 형태이며, SQL `WHERE` 절 비교로는 로그인이 되지 않습니다. 
 
 *   **해결 과정**:
     문제의 원인은 바로 DB 쿼리 자체가 평문 비밀번호와 해시된 비밀번호를 직접 비교하는 잘못된 방식이었기 때문에, Spring Security 내부 인증 과정에서 비밀번호 불일치로 판단된 것이었습니다.
 
-    1.  **원인 파악**: 구글링을 통해 비밀번호 해시화의 본질과 Spring Security의 인증 플로우를 깊이 있게 파악했습니다. 특히, 해시화된 비밀번호는 평문과 직접적인 SQL 비교가 불가능하며, Spring Security가 등록된 `PasswordEncoder`를 활용하여 내부적으로 검증 로직을 수행한다는 것을 인지했습니다.
+    1.  **원인 파악**: 해시화된 비밀번호는 평문과 직접적인 SQL 비교가 불가능하며, Spring Security가 등록된 `PasswordEncoder`를 활용하여 내부적으로 검증 로직을 수행한다는 것을 알게되었습니다.
 
     2.  **로그인 쿼리 수정**:
-        MyBatis `Mapper`에서는 더 이상 비밀번호를 쿼리 조건으로 사용하지 않고, **아이디(`userId`)만을 기준으로 사용자 정보 전체를 조회**하도록 쿼리를 수정했습니다. 이로써 DB의 역할은 해당 아이디에 대한 사용자 데이터를 가져오는 것으로 한정되었습니다.
+        MyBatis `Mapper`의 로그인 쿼리는 비밀번호를 쿼리 조건으로 사용하지 않고, **아이디(`userId`)만을 기준으로**하도록 쿼리를 수정했습니다.
 
         ```sql
         -- 수정된 로그인 쿼리
         SELECT * FROM USER_TABLE WHERE user_id = #{userId};
         ```
 
-        이 수정된 쿼리를 통해 Spring Security의 `UserDetailsService`는 DB로부터 사용자 아이디에 해당하는 `UserDetails`(해시된 비밀번호 포함)를 성공적으로 로드할 수 있게 됩니다.
+        이 수정된 쿼리를 통해 로그인 된 사용자의 정보를 DB로부터 성공적으로 로드할 수 있게 되었습니다.
 
-    3.  **Spring Security의 자동 인증 메커니즘 활용**:
-        쿼리 수정 후, 제가 별도로 `BCryptPasswordEncoder`의 `matches()` 메서드를 호출하는 코드를 추가하지 않았음에도 불구하고, Spring Security 프레임워크 내부의 `DaoAuthenticationProvider`가 등록된 `BCryptPasswordEncoder`를 사용하여 사용자가 입력한 평문 비밀번호와 DB에서 가져온 해시된 비밀번호를 올바르게 비교(`matches()` 메서드를 내부적으로 활용)하고 성공적으로 인증 처리하는 것을 확인했습니다.
-
-*   **배운 점**:
-    이번 트러블 슈팅을 통해 회원가입 시 **서비스 계층에서 `BCryptPasswordEncoder`를 활용하여 사용자 비밀번호를 안전하게 해시화**하고 데이터베이스에 저장하는 것의 중요성을 다시 한번 체감했습니다. 그리고 로그인 과정에서 **제가 직접 `BCryptPasswordEncoder.matches()` 메서드를 호출하는 코드를 작성하지 않아도**, Spring Security가 등록된 `BCryptPasswordEncoder` 빈과 인증 메커니즘을 통해 **사용자가 입력한 평문 비밀번호와 DB의 해시된 비밀번호를 자동으로 비교하고 검증**한다는 사실을 명확히 이해하게 되었습니다. 더 나아가, 이 경험은 개인정보 보안에 있어 비밀번호 해시화의 절대적인 중요성과 함께, 각 컴포넌트(DAO, Service, Spring Security의 인증 로직) 간의 역할 분담과 상호 연동 방식, 그리고 프레임워크가 제공하는 자동화된 보안 기능의 가치를 깊이 있게 깨닫는 계기가 되었습니다.
