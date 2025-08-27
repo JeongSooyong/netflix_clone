@@ -9,6 +9,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,10 +33,12 @@ import com.soo.netflix_clone.service.LikeServiceImpl;
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.service.ReviewServiceImpl;
+import com.soo.netflix_clone.service.WatchHistoryServiceImpl;
 import com.soo.netflix_clone.vo.GenreVo;
 import com.soo.netflix_clone.vo.MovieVo;
 import com.soo.netflix_clone.vo.ReviewVo;
 import com.soo.netflix_clone.vo.UserVo;
+import com.soo.netflix_clone.vo.WatchHistoryVo;
 
 @Controller
 public class MovieController {
@@ -58,6 +62,10 @@ public class MovieController {
     // review서비스 자동 주입
     @Autowired
     private ReviewServiceImpl reviewService;
+
+    // WatchHistory서비스 자동 주입
+    @Autowired
+    private WatchHistoryServiceImpl watchHistoryService;
     
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
@@ -214,6 +222,16 @@ public class MovieController {
 
         List<ReviewVo> review = reviewService.selectMovieReview(movieNo); 
         model.addAttribute("review", review); 
+
+        // 영상 시청 기록을 담기 위한 객체 watchHistoryVo
+        WatchHistoryVo watchHistoryVo = new WatchHistoryVo();
+        // 사용자 번호, 영상 번호, 현재 날짜를 watchHistoryVo에 담는다.
+        watchHistoryVo.setUserNo(loginUser.getUserNo()); 
+        watchHistoryVo.setMovieNo(movieNo);
+        watchHistoryVo.setWatchHistoryDate(LocalDate.now());
+
+        // 서비스 로직의 insertWatchHistory 메서드 실행
+        watchHistoryService.insertWatchHistory(watchHistoryVo);
 
         
 
