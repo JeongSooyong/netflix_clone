@@ -26,4 +26,10 @@ public class WatchHistoryDaoImpl implements IWatchHistoryDao {
         return session.insert(NS + "insertWatchHistory", vo);
     }
 
+    // 가장 최근에 시청한 영상
+    @Override
+    public WatchHistoryVo selectLatestWatchHistory(int userNo) {
+        return session.selectOne(NS + "selectLatestWatchHistory", userNo);
+    }
+
 }

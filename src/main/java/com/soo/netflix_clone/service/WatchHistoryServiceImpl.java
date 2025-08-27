@@ -20,4 +20,10 @@ public class WatchHistoryServiceImpl implements IWatchHistoryService {
         return dao.insertWatchHistory(vo);
     }
 
+    // 가장 최근에 시청한 영상
+    @Override
+    public WatchHistoryVo selectLatestWatchHistory(int userNo) {
+        return dao.selectLatestWatchHistory(userNo);
+    }
+
 }

@@ -15,4 +15,13 @@ INSERT INTO netflix.watch_history
     VALUES(#{userNo}, #{movieNo}, CURRENT_TIMESTAMP)
 </insert>
 
+<!-- 가장 최근에 시청한 영상 -->
+<select id="selectLatestWatchHistory" parameterType="integer">
+SELECT USER_NO, MOVIE_NO, WATCH_HISTORY_DATE
+	FROM watch_history wh 
+  WHERE USER_NO = #{userNo}
+	ORDER BY WATCH_HISTORY_DATE DESC 
+	LIMIT 1
+</select>
+
 </mapper>
