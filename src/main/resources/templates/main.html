@@ -31,10 +31,9 @@
     </header>
     <section class="hero">
         <div class="hero-content">
-            <h1>대표 영화/시리즈 제목</h1>
-            <p>이곳에 간단한 설명이 들어갑니다.</p>
-            <button>재생</button>
-            <button>내가 찜한 콘텐츠</button>
+            <th:block th:if="${latestWatchedMovie != null}">
+                <h1 th:text="${latestWatchedMovie.movieTitle}">최근 시청 영화 제목</h1>
+            </th:block>
         </div>
     </section>
     <section class="row">
