@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.netflix_clone.model.ActorDaoImpl">
+
+<!-- actorResultMap 정의 -->
+    <resultMap id="actorResultMap" type="com.soo.netflix_clone.vo.ActorVo">
+        <id property="actorNo" column="actor_no"/> <!-- 기본 키 (Primary Key) 매핑 -->
+        <result property="actorName" column="actor_name"/>
+        <result property="actorPoster" column="actor_poster"/>
+        <result property="actorDescrip" column="actor_discrip"/>
+        <result property="actorGender" column="actor_gender"/>
+        <result property="actorNation" column="actor_nation"/>
+    </resultMap>
+
+<!-- 배우 조회 -->
+<select id="selectActor" parameterType=Integer>
+SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
+	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_NATION
+	FROM actor a 
+	WHERE ACTOR_NO = #{actorNo}
+</select>
+
+</mapper>

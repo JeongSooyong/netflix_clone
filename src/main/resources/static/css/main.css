@@ -77,5 +77,25 @@ body.main-body {
     margin: 0 15px;
     text-decoration: none;
     font-weight: 500;
-    font-size: 1rem; /* 이 부분이 중요! */
+    font-size: 1rem; 
+}
+
+.hero {
+    height: 500px; 
+    width: 100%; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; /* 배경 이미지 반복 없음 */
+    display: flex; /* 내부 콘텐츠 (hero-content)를 정렬하기 위해 */
+    align-items: center; /* 세로 중앙 정렬 */
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* 텍스트 가독성을 위해 그림자 */
+}
+
+.hero-content {
+    max-width: 600px; 
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* 반투명 배경으로 텍스트 가독성 높이기 */
+    border-radius: 8px;
+    margin-left: 5%; 
 }
