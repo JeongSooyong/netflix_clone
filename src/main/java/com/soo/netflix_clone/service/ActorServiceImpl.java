@@ -1,5 +1,7 @@
 package com.soo.netflix_clone.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,10 @@ public class ActorServiceImpl implements IActorService {
     @Autowired
     private IActorDao dao;
 
-    // 배우 조회
+    // 영화 출연 배우
     @Override
-    public ActorVo selectActor(int actorNo) {
-        return dao.selectActor(actorNo);
+    public List<ActorVo> selectActorsByMovie(int movieNo) {
+        return dao.selectActorsByMovie(movieNo);
     }
 
 }

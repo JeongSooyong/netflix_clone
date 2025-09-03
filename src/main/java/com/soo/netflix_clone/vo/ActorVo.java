@@ -5,11 +5,13 @@ import java.time.LocalDate;
 public class ActorVo {
 
     private int actorNo;
+    private String actorName;
     private String actorPoster;
     private String actorDescrip;
     private String actorGender;
     private LocalDate actorBirth;
     private String actorNation;
+
 
 
     public int getActorNo() {
@@ -18,6 +20,14 @@ public class ActorVo {
 
     public void setActorNo(int actorNo) {
         this.actorNo = actorNo;
+    }
+
+    public String getActorName() {
+        return this.actorName;
+    }
+
+    public void setActorName(String actorName) {
+        this.actorName = actorName;
     }
 
     public String getActorPoster() {
@@ -61,11 +71,11 @@ public class ActorVo {
     }
 
 
-
     @Override
     public String toString() {
         return "{" +
             " actorNo='" + getActorNo() + "'" +
+            ", actorName='" + getActorName() + "'" +
             ", actorPoster='" + getActorPoster() + "'" +
             ", actorDescrip='" + getActorDescrip() + "'" +
             ", actorGender='" + getActorGender() + "'" +
@@ -73,6 +83,7 @@ public class ActorVo {
             ", actorNation='" + getActorNation() + "'" +
             "}";
     }
+    
 
 
 }

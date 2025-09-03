@@ -1,5 +1,7 @@
 package com.soo.netflix_clone.model;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,10 +22,10 @@ public class ActorDaoImpl implements IActorDao {
         this.session = session;
     }
 
-    // 배우 조회
+    // 영화 출연 배우
     @Override
-    public ActorVo selectActor(int actorNo) {
-        return session.selectOne(NS + "selectActor", actorNo);
+    public List<ActorVo> selectActorsByMovie(int movieNo) {
+        return session.selectList(NS + "selectActorsByMovie", movieNo);
     }
 
 

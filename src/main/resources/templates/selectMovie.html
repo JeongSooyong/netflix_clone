@@ -38,7 +38,8 @@
                     th:text="|개봉일: ${#temporals.format(movie.movieReleaseDate, 'yyyy-MM-dd')}|">개봉일: YYYY-MM-DD</span>
                 <span th:text="|상영 시간: ${movie.movieDuration}분|">상영 시간: 00분</span>
                 <span th:text="|장르: ${movie.genreName}">장르</span>
-                <span id="countLikeMovie" th:text="${countLikeMovie}">0</span>
+                <span th:text="|출연: ${actor}|">출연: 00</span>
+                <span id="countLikeMovie" th:text="|추천수: ${countLikeMovie}">추천수: 0</span>
                 <span th:text="|조회수: ${movie.movieViewCount}|">조회수: 0</span>
             </div>
 

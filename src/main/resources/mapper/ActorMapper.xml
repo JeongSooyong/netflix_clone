@@ -9,17 +9,27 @@
         <id property="actorNo" column="actor_no"/> <!-- 기본 키 (Primary Key) 매핑 -->
         <result property="actorName" column="actor_name"/>
         <result property="actorPoster" column="actor_poster"/>
-        <result property="actorDescrip" column="actor_discrip"/>
+        <result property="actorDescrip" column="actor_descrip"/>
         <result property="actorGender" column="actor_gender"/>
+        <result property="actorBirth" column="actor_birth"/>
         <result property="actorNation" column="actor_nation"/>
     </resultMap>
 
-<!-- 배우 조회 -->
-<select id="selectActor" parameterType=Integer>
-SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
-	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_NATION
-	FROM actor a 
-	WHERE ACTOR_NO = #{actorNo}
+<!-- 영화 출현 배우 -->
+<select id="selectActorsByMovie" parameterType="Integer" resultType="com.soo.netflix_clone.vo.ActorVo">
+SELECT A.ACTOR_NO AS actorNo,
+  A.ACTOR_NAME AS actorName,
+  A.ACTOR_POSTER AS actorPoster,
+  A.ACTOR_DESCRIP AS actorDescrip,
+  A.ACTOR_GENDER AS actorGender,
+  A.ACTOR_BIRTH AS actorBirth,
+  A.ACTOR_NATION AS actorNation
+FROM
+  ACTOR A
+JOIN
+  MOVIE_ACTOR MA ON A.ACTOR_NO = MA.ACTOR_NO
+WHERE
+  MA.MOVIE_NO = #{movieNo}
 </select>
 
 </mapper>

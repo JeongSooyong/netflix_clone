@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.soo.netflix_clone.service.ActorServiceImpl;
+
 import jakarta.servlet.http.HttpSession;
 
 import com.soo.netflix_clone.service.GenreServiceImpl;
@@ -34,6 +37,7 @@ import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.service.ReviewServiceImpl;
 import com.soo.netflix_clone.service.WatchHistoryServiceImpl;
+import com.soo.netflix_clone.vo.ActorVo;
 import com.soo.netflix_clone.vo.GenreVo;
 import com.soo.netflix_clone.vo.MovieVo;
 import com.soo.netflix_clone.vo.ReviewVo;
@@ -66,6 +70,10 @@ public class MovieController {
     // WatchHistory서비스 자동 주입
     @Autowired
     private WatchHistoryServiceImpl watchHistoryService;
+
+    // actor서비스 자동 주입
+    @Autowired 
+    private ActorServiceImpl actorService;
     
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
@@ -232,6 +240,15 @@ public class MovieController {
 
         // 서비스 로직의 insertWatchHistory 메서드 실행
         watchHistoryService.insertWatchHistory(watchHistoryVo);
+
+        // 영화에 출연한 배우를 뷰에 띄우기 위한 서비스의 메서드 호출
+        List<ActorVo> actors = actorService.selectActorsByMovie(movieNo);
+        String actor = actors.stream() 
+                                .map(ActorVo::getActorName)
+                                .collect(Collectors.joining(", ")); 
+
+        model.addAttribute("actors", actors);
+        model.addAttribute("actor", actor);
 
         
 
