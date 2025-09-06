@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 배우 등록</title>
+    <link rel="stylesheet" href="/css/insertActor.css">
+</head>
+<body>
+    <div class="insert-actor-container">
+        <h1>새 배우 등록</h1>
+        
+        <div th:if="${errorMsg}" class="alert error" th:text="${errorMsg}"></div>
+        <div th:if="${successMsg}" class="alert success" th:text="${successMsg}"></div>
+
+        <form th:action="@{/insertActor2}" th:object="${actorVo}" method="post" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label for="actorName">배우 이름:</label>
+                <input type="text" id="actorName" th:field="*{actorName}" required autofocus/>
+            </div>
+
+            <div class="form-group">
+                <label for="actorPosterFile">프로필 이미지 파일:</label>
+                <input type="file" id="actorPosterFile" name="actorPosterFile" accept="image/*" required />
+            </div>
+
+            <div class="form-group">
+                <label for="actorDescrip">약력/설명:</label>
+                <textarea id="actorDescrip" th:field="*{actorDescrip}" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>성별:</label>
+                <div class="radio-group">
+                    <input type="radio" id="genderM" th:field="*{actorGender}" value="남" required/>
+                    <label for="genderM">남</label>
+                    <input type="radio" id="genderF" th:field="*{actorGender}" value="여" required/>
+                    <label for="genderF">여</label>
+                    <input type="radio" id="genderO" th:field="*{actorGender}" value="그 외" required/>
+                    <label for="genderO">그 외</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="actorBirth">생년월일:</label>
+                <input type="date" id="actorBirth" th:field="*{actorBirth}" />
+            </div>
+
+            <div class="form-group">
+                <label for="actorNation">국적:</label>
+                <input type="text" id="actorNation" th:field="*{actorNation}" />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">배우 등록</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

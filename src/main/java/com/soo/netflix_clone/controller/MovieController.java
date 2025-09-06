@@ -243,14 +243,7 @@ public class MovieController {
 
         // 영화에 출연한 배우를 뷰에 띄우기 위한 서비스의 메서드 호출
         List<ActorVo> actors = actorService.selectActorsByMovie(movieNo);
-        String actor = actors.stream() 
-                                .map(ActorVo::getActorName)
-                                .collect(Collectors.joining(", ")); 
-
         model.addAttribute("actors", actors);
-        model.addAttribute("actor", actor);
-
-        
 
         // 추천 여부의 기본 값(isLiked)을 false로 할당
         boolean isLiked = false; 

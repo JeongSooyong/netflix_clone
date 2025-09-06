@@ -7,6 +7,14 @@ import com.soo.netflix_clone.vo.ActorVo;
 public interface IActorService {
 
     // 영화 출연 배우
-    List<ActorVo> selectActorsByMovie(int movieNo);
+    public List<ActorVo> selectActorsByMovie(int movieNo);
+
+    // 배우 정보
+    public ActorVo selectActor(int actorNo);
+
+    // 배우 등록
+    public int insertActor(ActorVo vo);
+
+    
 
 }

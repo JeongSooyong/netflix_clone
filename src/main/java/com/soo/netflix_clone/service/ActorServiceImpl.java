@@ -22,4 +22,16 @@ public class ActorServiceImpl implements IActorService {
         return dao.selectActorsByMovie(movieNo);
     }
 
+    // 배우 조회
+    @Override
+    public ActorVo selectActor(int actorNo) {
+        return dao.selectActor(actorNo);
+    }
+
+    // 배우 등록
+    @Override
+    public int insertActor(ActorVo vo) {
+        return dao.insertActor(vo);
+    }
+
 }

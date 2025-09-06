@@ -38,7 +38,19 @@
                     th:text="|개봉일: ${#temporals.format(movie.movieReleaseDate, 'yyyy-MM-dd')}|">개봉일: YYYY-MM-DD</span>
                 <span th:text="|상영 시간: ${movie.movieDuration}분|">상영 시간: 00분</span>
                 <span th:text="|장르: ${movie.genreName}">장르</span>
-                <span th:text="|출연: ${actor}|">출연: 00</span>
+                <span>출연:
+                    <!-- actors 리스트를 반복하며 각 배우를 처리합니다. -->
+                    <span th:each="actorItem, iterStat : ${actors}">
+                        <!-- 각 배우의 이름에 링크를 걸고 텍스트 출력 -->
+                        <a th:href="@{/actors/{actorNo}(actorNo=${actorItem.actorNo})}" 
+                           th:text="${actorItem.actorName}" 
+                           class="actor-link">배우 이름</a>
+                        <!-- 마지막 배우가 아니면 쉼표와 공백을 출력 -->
+                        <span th:if="${!iterStat.last}">, </span>
+                    </span>
+                    <!-- 배우 목록이 비어있을 경우 (컨트롤러에서 actors 리스트에 아무것도 담지 않았을 때) -->
+                    <span th:if="${#lists.isEmpty(actors)}">배우 정보 없음</span>
+                </span>
                 <span id="countLikeMovie" th:text="|추천수: ${countLikeMovie}">추천수: 0</span>
                 <span th:text="|조회수: ${movie.movieViewCount}|">조회수: 0</span>
             </div>
@@ -70,8 +82,6 @@
     </div>
 
     <div th:if="${movie.movieVideoUrl}" class="detail-video-embed">
-        <!-- th:utext는 HTML 엔티티를 이스케이프하지 않고 그대로 렌더링합니다. -->
-        <!-- movieVideoUrl이 iframe 태그 전체를 포함하고 있다고 가정 -->
         <div th:utext="${movie.movieVideoUrl}"></div>
     </div>
     <div class="review-section">

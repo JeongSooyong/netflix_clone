@@ -1,0 +1,96 @@
+body {
+    font-family: 'Netflix Sans', Arial, sans-serif;
+    background-color: #141414;
+    color: #e5e5e5;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* 상단 정렬 */
+    min-height: 100vh;
+}
+
+.insert-actor-container {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 600px;
+}
+
+.insert-actor-container h1 {
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 2px solid #e50914;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #aaa;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+    width: calc(100% - 20px);
+    /* 패딩 고려 */
+    padding: 12px 10px;
+    background-color: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #e5e5e5;
+    font-size: 1em;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+    /* 세로 크기 조절 가능 */
+}
+
+.form-group input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+    /* 라디오 버튼 크기 조절 */
+    vertical-align: middle;
+}
+
+.form-group .radio-group label {
+    display: inline-block;
+    margin-right: 20px;
+    color: #e5e5e5;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.form-actions button {
+    background-color: #e50914;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-actions button:hover {
+    background-color: #ff0b17;
+}

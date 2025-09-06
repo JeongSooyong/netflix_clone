@@ -15,7 +15,6 @@
                 <button type="submit">검색</button>
             </form>
         </div>
-        <div class="logo">NETFLIX</div>
         <nav>
             <a href="#">홈</a>
             <a href="#">시리즈</a>
@@ -24,6 +23,8 @@
         </nav>
         <div class="profile">
             <a th:if="${loginUser != null and loginUser.commonNo == 104}" href="/insertMovie" class="admin-button">영화
+                등록</a>
+            <a th:if="${loginUser != null and loginUser.commonNo == 104}" href="/insertActor" class="admin-button">배우
                 등록</a>
             <a href="/myinfo">내 정보</a>
             <a href="/logout">로그아웃</a>

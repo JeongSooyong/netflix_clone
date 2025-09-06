@@ -32,4 +32,30 @@ WHERE
   MA.MOVIE_NO = #{movieNo}
 </select>
 
+<!-- 배우 조회 -->
+<select id="selectActor">
+SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
+	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_NATION
+	FROM actor a 
+	WHERE ACTOR_NO = #{actorNo}
+</select>
+
+<!-- 배우 등록 -->
+<insert id="insertActor" parameterType="com.soo.netflix_clone.vo.ActorVo">
+INSERT INTO netflix.actor
+	(ACTOR_NAME, ACTOR_POSTER, ACTOR_DESCRIP, 
+	ACTOR_GENDER, ACTOR_BIRTH, ACTOR_NATION)
+VALUES
+	(#{actorName}, #{actorPoster}, #{actorDescrip}, 
+	#{actorGender}, #{actorBirth}, #{actorNation})
+</insert>
+
+<!-- 배우 전체 조회 -->
+<select id="selectAllActor">
+SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
+	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_BIRTH,
+	ACTOR_NATION 
+	FROM actor a
+</select>
+
 </mapper>
