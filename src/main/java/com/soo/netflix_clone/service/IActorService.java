@@ -15,6 +15,9 @@ public interface IActorService {
     // 배우 등록
     public int insertActor(ActorVo vo);
 
+    // 배우 전체 조회
+    public List<ActorVo> selectAllActor();
+
     
 
 }

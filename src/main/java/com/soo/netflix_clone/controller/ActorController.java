@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,19 @@ public class ActorController {
         
 
         return "redirect:/main";
+    }
+
+    // insertMovie에서 배우 선택 버튼을 클릭했을때 나오는 팝업창
+    @GetMapping("/selectAllActor")
+    public String selectAllActor(Model model) {
+
+        // 서비스 계층의 selectAllActor 메서드 호출
+        List<ActorVo> actors = actorService.selectAllActor();
+
+        model.addAttribute("actors", actors);
+
+        return "selectAllActor";
+
     }
 
 

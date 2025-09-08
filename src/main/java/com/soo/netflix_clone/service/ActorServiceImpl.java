@@ -34,4 +34,10 @@ public class ActorServiceImpl implements IActorService {
         return dao.insertActor(vo);
     }
 
+    // 배우 전체 조회
+    @Override
+    public List<ActorVo> selectAllActor() {
+        return dao.selectAllActor();
+    }
+
 }

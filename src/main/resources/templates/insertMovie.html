@@ -8,6 +8,7 @@
     <!-- updateMyinfo.css를 재사용하여 폼 입력 필드 및 버튼 스타일 통일 -->
     <link rel="stylesheet" th:href="@{/css/updateMyinfo.css}"> 
     <link rel="stylesheet" th:href="@{/css/insertMovie.css}">
+    <script src="/js/insertMovie.js"></script>
 </head>
 <body>
     <div class="container">
@@ -50,6 +51,14 @@
                                 <input type="checkbox" name="movieGenres" th:value="${genre.genreNo}"> 
                                 <span th:text="${genre.genreName}"/>
                             </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>배우 선택</th>
+                    <td>
+                        <div>
+                            <button type="button" onclick="openActorSelection(event)" class="btn btn-primary">배우 선택</button>
                         </div>
                     </td>
                 </tr>
