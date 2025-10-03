@@ -18,5 +18,14 @@ public interface IActorDao {
     // 배우 전체 조회
     public List<ActorVo> selectAllActor();
 
+    // 배우 검색
+    public List<ActorVo> searchActor(String keyword);
+
+    // 출연 배우 insert
+    public int insertMovieActors(int movieNo, List<Integer> actorNos);
+
+    // 출연 배우 조회
+    public List<ActorVo> getActorsByMovie(int movieNo);
+
 
 }

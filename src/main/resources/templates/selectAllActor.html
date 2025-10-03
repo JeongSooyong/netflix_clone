@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>배우 선택</title>
-    <!-- 넷플릭스 톤에 맞는 스타일을 넣어주세요. -->
     <style>
-        /* (이전에 제공해 드렸던 스타일 시트 내용 복사) */
-        /* 이전에 드렸던 모든 style 태그 안의 CSS 내용을 여기에 복사-붙여넣기 하시면 됩니다. */
-        /* 길어서 여기에 다시 쓰지는 않겠습니다. */
         body {
             font-family: 'Netflix Sans', Arial, sans-serif;
             background-color: #141414;
@@ -107,17 +103,19 @@
 <body>
     <div class="popup-container">
         <h1>배우 선택</h1>
-        
-        <!-- 이 부분이 배우 목록을 Thymeleaf로 띄우는 핵심입니다 -->
-        <div id="actors" class="actor-list">
-            <div th:each="actor : ${actors}" class="actor-item" th:data-actor-no="${actor.actorNo}" onclick="toggleActorSelection(this)">
+        <div class="search-container">
+            <input type="text" id="actorSearchInput" placeholder="배우 이름을 검색하세요...">
+            <button onclick="searchActors()">검색</button>
+        </div>
+        <div id="actorsListContainer" class="actor-list">
+            <div th:each="actor : ${actors}" th:id="'actor-' + ${actor.actorNo}" class="actor-item" th:data-actor-no="${actor.actorNo}" th:data-actor-name="${actor.actorName}" onclick="toggleActorSelection(this)">
                 <!-- 배우 포스터 이미지가 있는 경우 -->
                 <img th:if="${actor.actorPoster}" th:src="@{/img/{filename}(filename=${actor.actorPoster})}" th:alt="${actor.actorName + ' 포스터'}" onerror="this.onerror=null; this.src='/img/default_actor.png';">
                 <!-- 배우 포스터가 없는 경우 기본 이미지 표시 -->
                 <img th:unless="${actor.actorPoster}" src="/img/default_actor.png" th:alt="${actor.actorName + ' 포스터'}">
                 
                 <p th:text="${actor.actorName}"></p>
-                <div class="selection-indicator" style="display: none;">✔</div> <!-- 선택 시 표시될 체크 아이콘 -->
+                <div class="selection-indicator" style="display: none;">✔</div> 
             </div>
             <!-- 배우 목록이 없는 경우 메시지 -->
             <div th:if="${#lists.isEmpty(actors)}" style="color:#aaa; text-align:center; width:100%;">
@@ -129,61 +127,6 @@
             <button onclick="sendSelectedActors()">선택 완료</button>
         </div>
     </div>
-
-    <!-- 팝업 내에서 배우 선택을 위한 JavaScript (이전에 드린 내용과 동일) -->
-    <script>
-        // 선택된 배우들을 저장할 Map (actorNo -> actorName)
-        const selectedActors = new Map();
-
-        // 팝업이 로드될 때 부모 창에서 이미 선택된 배우 ID 목록을 받아와 처리
-        window.onload = function() {
-            const queryParams = new URLSearchParams(window.location.search);
-            const preSelectedIds = queryParams.get('preSelectedActorNos');
-            if (preSelectedIds) {
-                const ids = preSelectedIds.split(',').map(Number);
-                ids.forEach(id => {
-                    const actorItem = document.querySelector(`.actor-item[data-actor-no="${id}"]`);
-                    if (actorItem) {
-                        toggleActorSelection(actorItem); // 이미 선택된 배우로 표시
-                    }
-                });
-            }
-        };
-
-        // 배우 항목 클릭 시 선택/해제 토글
-        function toggleActorSelection(element) {
-            const actorNo = parseInt(element.dataset.actorNo);
-            const actorName = element.querySelector('p').textContent;
-            const indicator = element.querySelector('.selection-indicator');
-
-            if (selectedActors.has(actorNo)) {
-                // 이미 선택되어 있으면 해제
-                selectedActors.delete(actorNo);
-                element.classList.remove('selected');
-                indicator.style.display = 'none';
-            } else {
-                // 선택되어 있지 않으면 선택
-                selectedActors.set(actorNo, actorName);
-                element.classList.add('selected');
-                indicator.style.display = 'flex';
-            }
-        }
-
-        // 선택 완료 버튼 클릭 시 부모 창으로 데이터 전송
-        function sendSelectedActors() {
-            // 선택된 배우들의 ID와 이름을 담은 배열 생성
-            const actorsToSend = Array.from(selectedActors.entries()).map(([no, name]) => ({
-                actorNo: no,
-                actorName: name
-            }));
-
-            // 부모 창의 콜백 함수 호출 (insertMovie.html의 전역 함수라고 가정)
-            if (window.opener && window.opener.receiveSelectedActors) {
-                window.opener.receiveSelectedActors(actorsToSend);
-            }
-            window.close(); // 팝업 닫기
-        }
-
-    </script>
 </body>
+<script src="/js/selectAllActor.js"></script>
 </html>

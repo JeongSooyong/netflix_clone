@@ -35,7 +35,8 @@ WHERE
 <!-- 배우 조회 -->
 <select id="selectActor">
 SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
-	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_NATION
+	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_NATION,
+  ACTOR_BIRTH
 	FROM actor a 
 	WHERE ACTOR_NO = #{actorNo}
 </select>
@@ -51,11 +52,30 @@ VALUES
 </insert>
 
 <!-- 배우 전체 조회 -->
-<select id="selectAllActor">
+<select id="selectAllActor" resultMap="actorResultMap">
 SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
 	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_BIRTH,
 	ACTOR_NATION 
 	FROM actor a
 </select>
+
+<!-- 배우 검색 -->
+<select id="searchActor" resultMap="actorResultMap">
+SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
+	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_BIRTH,
+	ACTOR_NATION 
+	FROM actor a 
+	WHERE ACTOR_NAME LIKE CONCAT('%', #{keyword}, '%')
+</select>
+
+<!-- 출연 배우 insert -->
+<insert id="insertMovieActors" parameterType="map">
+INSERT INTO movie_actor (movie_no, actor_no)
+  VALUES
+<foreach collection="actorNos" item="actorNo" separator=",">
+  (#{movieNo}, #{actorNo})
+</foreach>
+</insert>
+
 
 </mapper>

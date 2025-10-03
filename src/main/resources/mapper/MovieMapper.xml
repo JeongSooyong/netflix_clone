@@ -30,7 +30,8 @@ SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_DESCRIP,
 </select>
 
 <!-- 영상 등록 -->
-<insert id="insertMovie" parameterType="com.soo.netflix_clone.vo.MovieVo">
+<insert id="insertMovie" parameterType="com.soo.netflix_clone.vo.MovieVo" 
+        useGeneratedKeys="true" keyProperty="movieNo">
 INSERT INTO netflix.movie 
   (MOVIE_TITLE, MOVIE_DESCRIP, MOVIE_RELEASE_DATE, 
   MOVIE_DURATION, MOVIE_GENRE, MOVIE_POSTER, 
@@ -80,6 +81,8 @@ FROM netflix.movie M
   WHERE M.MOVIE_TITLE LIKE CONCAT('%', #{keyword}, '%')
   AND M.COMMON_NO = 201
 </select>
+
+
 
 
 </mapper>

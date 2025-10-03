@@ -40,4 +40,27 @@ public class ActorServiceImpl implements IActorService {
         return dao.selectAllActor();
     }
 
+    // 배우 검색
+    @Override
+    public List<ActorVo> searchActor(String keyword) {
+        return dao.searchActor(keyword);
+    }
+
+    // 출연 배우 insert
+    @Override
+    public int insertMovieActors(int movieNo, List<Integer> actorNos) {
+
+        if (actorNos == null || actorNos.isEmpty()) {
+            return 0;
+        }
+        
+        return dao.insertMovieActors(movieNo, actorNos);
+    }
+
+    // 출연 배우 조회
+    @Override
+    public List<ActorVo> getActorsByMovie(int movieNo) {
+        return dao.getActorsByMovie(movieNo);
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.soo.netflix_clone.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,35 @@ public class ActorDaoImpl implements IActorDao {
     @Override
     public List<ActorVo> selectAllActor() {
         return session.selectList(NS + "selectAllActor");
+    }
+
+    // 배우 검색
+    @Override
+    public List<ActorVo> searchActor(String keyword) {
+        return session.selectList(NS + "searchActor", keyword);
+    }
+
+    // 출연 배우 insert
+    @Override
+    public int insertMovieActors(int movieNo, List<Integer> actorNos) {
+
+        // // 삽입할 배우가 없으면 0을 반환
+        if (actorNos == null || actorNos.isEmpty()) {
+            return 0; 
+        }
+        
+        // 여러 매개변수를 MyBatis 매퍼로 전달하기 위해 Map 사용
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("movieNo", movieNo);
+        paramMap.put("actorNos", actorNos); 
+
+        return session.insert(NS + "insertMovieActors", paramMap);
+    }
+
+    // 출연 배우 조회
+    @Override
+    public List<ActorVo> getActorsByMovie(int movieNo) {
+        return session.selectOne(NS + "getActorsByMovie", movieNo);
     }
 
 

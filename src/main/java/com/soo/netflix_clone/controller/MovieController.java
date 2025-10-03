@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -93,10 +95,12 @@ public class MovieController {
 
     // 영상 등록
     @PostMapping("/insertMovie2")
+    @Transactional
     public String insertMovie2(
         @ModelAttribute MovieVo movieVo, 
         @RequestParam("moviePosterFile") MultipartFile posterFile,
         @RequestParam(value = "movieGenres", required = false) List<Integer> selectedGenreNos, // 장르를 List형태로 받아옴.
+        @RequestParam(value = "selectedActorNos", required = false) String selectedActorNosStr,
         RedirectAttributes redirectAttributes
     ) {
 
@@ -190,15 +194,47 @@ public class MovieController {
 
             // 서비스 계층의 insertMovie메서드 실행
             int result = movieService.insertMovie(movieVo); 
-            
+
             // result가 0보다 클 경우(영화가 성공적으로 등록되었을 경우)
             if (result > 0) {
+
+                List<Integer> actorNos = null;
+                if (selectedActorNosStr != null && !selectedActorNosStr.trim().isEmpty()) {
+                    actorNos = Arrays.stream(selectedActorNosStr.split(","))
+                                     .map(Integer::parseInt)
+                                     .collect(Collectors.toList());
+                    System.out.println("파싱된 actorNos: " + actorNos);
+                } else {
+                    System.out.println("배우가 선택되지 않았습니다.");
+                }
+
+                // actorService의 insertMovieActors 메서드를 호출
+                if (actorNos != null && !actorNos.isEmpty()) {
+                    int insertedActorCount = actorService.insertMovieActors(movieVo.getMovieNo(), actorNos);
+                    
+                    if (insertedActorCount == 0) {
+                        throw new IllegalStateException("선택된 배우 정보를 영화와 연결하는 데 실패했습니다.");
+                    }
+                } else {
+                    System.out.println("배우가 선택되지 않아 배우 연결을 건너뜁니다.");
+                }
+                
                 redirectAttributes.addFlashAttribute("successMsg", "영화가 성공적으로 등록되었습니다!");
+                
                 return "redirect:/main";
-            } else { // 그렇지 않을 경우(영화 등록에 실패했을경우)
+
+            } else { // 영화 등록 실패
                 redirectAttributes.addFlashAttribute("errorMsg", "영화 등록에 실패했습니다.");
-                return "redirect:/insertMovie";
+                return "redirect:/movie/insertMovie"; 
             }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMsg", "배우 ID 형식이 올바르지 않습니다: " + e.getMessage());
+            return "redirect:/movie/insertMovie"; 
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMsg", "영화 등록 중 오류가 발생했습니다: " + e.getMessage());
+            return "redirect:/movie/insertMovie"; 
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("errorMsg", "영화 등록 중 예상치 못한 오류가 발생했습니다: " + e.getMessage());
