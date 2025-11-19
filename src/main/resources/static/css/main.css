@@ -8,14 +8,17 @@ body.main-body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 40px;
-    background: rgba(20,20,20,0.9);
+    padding: 15px 4%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
 }
-.logo {
-    color: #e50914;
-    font-size: 2rem;
-    font-weight: bold;
-    letter-spacing: 2px;
+.navbar nav a.logo {
+    color: #e50914; 
+    font-size: 2rem; 
+    font-weight: bold; 
+    letter-spacing: 2px; 
+    margin-left: 20px; 
+    text-decoration: none; 
 }
 .navbar nav a {
     color: #fff;
