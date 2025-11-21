@@ -31,7 +31,37 @@ public class UserServiceImpl implements IUserService {
     // 개인정보 및 로그인
     @Override
     public UserVo selectUser(UserVo vo) {
-        return dao.selectUser(vo);
+        
+        // dao에서 selectUser 메서드 호출
+        UserVo userVo = dao.selectUser(vo);
+
+        // 아이디가 존재하지 않는 경우
+        if (userVo == null) {
+            return null;
+        }
+        
+        // 비밀번호가 입력되지 않았을 경우
+        if (vo.getUserPw()!=null && !vo.getUserPw().isEmpty()) {
+
+            // vo의 getUserPw 메서드로 평문 비밀번호와 userVo의 getUserPw 메서드로 암호화된 비밀번호를 
+            // 호출하여 두 비밀번호를 비교한다.
+            if (bCryptPasswordEncoder.matches(vo.getUserPw(),userVo.getUserPw())) {
+
+                // 두 비밀번호가 일치하면 로그인
+                userVo.setUserPw(null);
+                return userVo;
+
+            } else { // 비밀번호 불일치시
+                return null;
+            }
+
+        } else {
+
+            userVo.setUserPw(null);
+
+            return userVo;
+
+        }
     }
 
     // 아이디 존재 여부 확인
