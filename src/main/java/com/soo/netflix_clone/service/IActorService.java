@@ -3,6 +3,7 @@ package com.soo.netflix_clone.service;
 import java.util.List;
 
 import com.soo.netflix_clone.vo.ActorVo;
+import com.soo.netflix_clone.vo.MovieVo;
 
 public interface IActorService {
 
@@ -27,6 +28,8 @@ public interface IActorService {
     // 출연 배우 조회
     public List<ActorVo> getActorsByMovie(int movieNo);
 
+    // 배우 출연 영화 조회
+    public List<MovieVo> selectMoviesByActorNo(int actorNo);
     
 
 }

@@ -77,5 +77,16 @@ INSERT INTO movie_actor (movie_no, actor_no)
 </foreach>
 </insert>
 
+<!-- 배우 출연 영화 select -->
+<select id="selectMoviesByActorNo" parameterType="Integer" result="movieResultMap">
+SELECT m.MOVIE_NO, m.MOVIE_TITLE, m.MOVIE_DESCRIP,
+		m.MOVIE_RELEASE_DATE, m.MOVIE_DURATION, m.MOVIE_GENRE,
+		m.MOVIE_POSTER, m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT,
+		m.COMMON_NO 
+	FROM movie m 
+	JOIN movie_actor ma ON m.MOVIE_NO = ma.MOVIE_NO 
+	WHERE ma.ACTOR_NO = #{actorNo}
+</select>
+
 
 </mapper>

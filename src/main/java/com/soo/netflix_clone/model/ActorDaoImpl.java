@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.soo.netflix_clone.vo.ActorVo;
+import com.soo.netflix_clone.vo.MovieVo;
 
 @Repository // DB에 접근하는 것을 명시하는 어노테이션
 public class ActorDaoImpl implements IActorDao {
@@ -75,6 +76,12 @@ public class ActorDaoImpl implements IActorDao {
     @Override
     public List<ActorVo> getActorsByMovie(int movieNo) {
         return session.selectOne(NS + "getActorsByMovie", movieNo);
+    }
+    
+    // 배우 출연 영화 조회
+    @Override
+    public List<MovieVo> selectMoviesByActorNo(int actorNo) {
+        return session.selectList(NS + "selectMoviesByActorNo", actorNo);
     }
 
 
