@@ -15,6 +15,20 @@
         <result property="actorNation" column="actor_nation"/>
     </resultMap>
 
+<!-- movieResultMap 정의 -->
+<resultMap id="movieResultMap" type="com.soo.netflix_clone.vo.MovieVo">
+    <id property="movieNo" column="MOVIE_NO"/>
+    <result property="movieTitle" column="MOVIE_TITLE"/>
+    <result property="movieDescrip" column="MOVIE_DESCRIP"/>
+    <result property="movieReleaseDate" column="MOVIE_RELEASE_DATE"/>
+    <result property="movieDuration" column="MOVIE_DURATION"/>
+    <result property="movieGenre" column="MOVIE_GENRE"/>
+    <result property="moviePoster" column="MOVIE_POSTER"/>
+    <result property="movieVideoUrl" column="MOVIE_VIDEO_URL"/>
+    <result property="movieViewCount" column="MOVIE_VIEW_COUNT"/>
+    <result property="commonNo" column="COMMON_NO"/>
+</resultMap>
+
 <!-- 영화 출현 배우 -->
 <select id="selectActorsByMovie" parameterType="Integer" resultType="com.soo.netflix_clone.vo.ActorVo">
 SELECT A.ACTOR_NO AS actorNo,
@@ -78,7 +92,7 @@ INSERT INTO movie_actor (movie_no, actor_no)
 </insert>
 
 <!-- 배우 출연 영화 select -->
-<select id="selectMoviesByActorNo" parameterType="Integer" result="movieResultMap">
+<select id="selectMoviesByActorNo" parameterType="Integer" resultMap="movieResultMap">
 SELECT m.MOVIE_NO, m.MOVIE_TITLE, m.MOVIE_DESCRIP,
 		m.MOVIE_RELEASE_DATE, m.MOVIE_DURATION, m.MOVIE_GENRE,
 		m.MOVIE_POSTER, m.MOVIE_VIDEO_URL, m.MOVIE_VIEW_COUNT,

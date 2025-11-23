@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soo.netflix_clone.service.ActorServiceImpl;
 import com.soo.netflix_clone.vo.ActorVo;
+import com.soo.netflix_clone.vo.MovieVo;
 
 @Controller
 public class ActorController {
@@ -43,6 +44,10 @@ public class ActorController {
         // 서비스의 selectActor메서드 호출
         ActorVo actor = actorService.selectActor(actorNo);
         model.addAttribute("actor", actor);
+
+        // 배우의 출연 영화 목록 조회하는 코드
+        List<MovieVo> filmography = actorService.selectMoviesByActorNo(actorNo);
+        model.addAttribute("filmography", filmography);
 
         return "actorinfo";
     }
