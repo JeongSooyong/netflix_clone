@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 페이지 타이틀: 검색어와 함께 "배우 검색 결과" 표시 -->
+    <title th:text="${keyword} ? (${keyword} + ' 배우 검색 결과 - 넷플릭스') : '배우 검색 - 넷플릭스'"></title>
+    
+    <!-- 공통 CSS 파일 -->
+    <link rel="stylesheet" href="/css/main.css"> 
+    <!-- 이 페이지 전용 CSS 파일 링크 -->
+    <link rel="stylesheet" href="/css/searchActor.css">
+    
+</head>
+<body class="main-body">
+    <!-- 헤더 (검색창 포함) -->
+    <header class="navbar">
+        <div class="search-bar">
+            <!-- form의 action은 /searchRouterController에서 리다이렉트되도록 합니다. -->
+            <form th:action="@{/search}" method="get">
+                <select name="searchCategory" id="searchCategory">
+                    <!-- 현재 searchCategory 값을 모델에서 가져와 선택된 상태를 유지합니다. -->
+                    <option value="movie" th:selected="${searchCategory == 'movie'}">영화</option>
+                    <option value="actor" th:selected="${searchCategory == 'actor'}">배우</option>
+                </select>
+                <!-- 검색어 입력 필드: 이전 검색어를 th:value로 표시하여 유지 -->
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요..." th:value="${keyword}">
+                <button type="submit">검색</button>
+            </form>
+        </div>
+        <nav>
+            <!-- (main.html의 내비게이션 바 내용이 있다면 여기에 복사) -->
+            <!-- 예: <a href="/main">홈</a> <a href="/my-list">내 목록</a> -->
+        </nav>
+    </header>
+
+    <!-- 배우 검색 결과 섹션 -->
+    <div class="search-results-section">
+        <!-- 검색어가 있을 경우 제목을 표시 -->
+        <h2 th:if="${keyword != null and !keyword.trim().isEmpty()}" 
+            th:text="'&quot;' + ${keyword} + '&quot; 에 대한 배우 검색 결과'">배우 검색 결과</h2>
+        
+        <!-- 검색 결과 메시지 (Controller에서 model.addAttribute("searchMessage", ...);로 전달된 내용) -->
+        <p class="search-results-message" th:text="${searchMessage}"></p>
+
+        <!-- 배우 목록을 표시할 컨테이너 -->
+        <!-- actors 리스트가 null이 아니거나 비어있지 않을 때만 actor-list 표시 -->
+        <div class="actor-list" th:if="${actors != null and !#lists.isEmpty(actors)}">
+            <!-- actors 리스트의 각 ActorVo 객체를 actor 변수에 할당하여 반복 -->
+            <div th:each="actor : ${actors}" class="actor-item">
+                <!-- 각 배우의 상세 정보 페이지로 이동하는 링크 -->
+                <a th:href="@{/actors/{actorNo}(actorNo=${actor.actorNo})}">
+                    <!-- 배우 포스터 이미지 표시 -->
+                    <!-- 이미지 경로는 /img/ 폴더에 저장된 파일명이라고 가정 -->
+                    <img th:src="@{/img/{filename}(filename=${actor.actorPoster})}" th:alt="${actor.actorName} + ' 포스터'">
+                    <!-- 배우 이름 표시 -->
+                    <p th:text="${actor.actorName}"></p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 검색 결과가 없거나 키워드가 없을 때 메시지 표시 -->
+        <div th:unless="${actors != null and !#lists.isEmpty(actors)}" class="no-results">
+            <!-- 검색어가 있지만 결과가 없을 때 -->
+            <p th:if="${keyword != null and !keyword.trim().isEmpty()}">
+                일치하는 배우가 없습니다. 다른 검색어를 시도해보세요.
+            </p>
+            <!-- 검색어가 아예 없거나 비어있을 때 -->
+            <p th:unless="${keyword != null and !keyword.trim().isEmpty()}">
+                배우를 검색하시려면 위 검색창에 검색어를 입력해주세요.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -423,11 +423,14 @@ public class MovieController {
     public String searchMovies(
             // 뷰의 keyword를 파라미터로
             @RequestParam(value = "keyword", required = false) String keyword,
-            Model model
-    ) {
+            // 검색 항목을 movie로
+        @RequestParam(value = "searchCategory", defaultValue = "movie") String searchCategory,
+            Model model) {
 
         // MovieVo를 List형태로 searchResults에 할당
         List<MovieVo> searchResults;
+
+        
 
         // 검색어가 비어있지 않은 경우
         if (keyword != null && !keyword.trim().isEmpty()) {
@@ -444,7 +447,7 @@ public class MovieController {
         } else {
             return "redirect:/main";
         }
-        
+        model.addAttribute("searchCategory", searchCategory);
         model.addAttribute("movies", searchResults); 
 
         return "searchMovie"; 

@@ -10,8 +10,12 @@
 <body class="main-body">
     <header class="navbar">
         <div class="search-bar">
-            <form th:action="@{/searchMovie}" method="get">
-                <input type="text" name="keyword" placeholder="영화 제목을 검색하세요..." th:value="${keyword}">
+            <form th:action="@{/search}" method="get"> 
+                <select name="searchCategory" id="searchCategory">
+                    <option value="movie" th:selected="${searchCategory == 'movie'}">영화</option>
+                    <option value="actor" th:selected="${searchCategory == 'actor'}">배우</option>
+                </select>
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요..." th:value="${keyword}">
                 <button type="submit">검색</button>
             </form>
         </div>

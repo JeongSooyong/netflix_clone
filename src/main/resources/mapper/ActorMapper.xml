@@ -74,7 +74,7 @@ SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
 </select>
 
 <!-- 배우 검색 -->
-<select id="searchActor" resultMap="actorResultMap">
+<select id="searchActor" parameterType="String" resultMap="actorResultMap">
 SELECT ACTOR_NO, ACTOR_NAME, ACTOR_POSTER,
 	ACTOR_DESCRIP, ACTOR_GENDER, ACTOR_BIRTH,
 	ACTOR_NATION 

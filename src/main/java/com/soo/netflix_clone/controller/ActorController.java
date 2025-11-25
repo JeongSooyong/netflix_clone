@@ -46,7 +46,8 @@ public class ActorController {
         model.addAttribute("actor", actor);
 
         // 배우의 출연 영화 목록 조회하는 코드
-        List<MovieVo> filmography = actorService.selectMoviesByActorNo(actorNo);
+        // actorService의 selectMoviesByActorNo메서드를 호출하여 List타입의 변수 filmography에 할당
+        List<MovieVo> filmography = actorService.selectMoviesByActorNo(actorNo); 
         model.addAttribute("filmography", filmography);
 
         return "actorinfo";
@@ -157,6 +158,39 @@ public class ActorController {
 
         return "selectAllActor";
 
+    }
+
+    // 배우 검색 
+    @GetMapping("/searchActor")
+    public String searchActor(
+        // 뷰의 keyword를 파라미터로
+        @RequestParam(value = "keyword", required = false) String keyword, 
+        // 검색 항목을 actor로
+        @RequestParam(value = "searchCategory", defaultValue = "actor") String searchCategory,
+        Model model) {
+    // ActorVo를 List형태로 searchResults에 할당
+    List<ActorVo> searchResults;
+
+    // 검색어가 비어있지 않은 경우
+    if (keyword != null && !keyword.trim().isEmpty()) {
+        // 서비스계층의 keyword를 파라미터로 하는 배우 검색 메서드 호출
+        searchResults = actorService.searchActor(keyword);
+        model.addAttribute("keyword", keyword);
+
+        // searchResults가 null 일 경우
+        if (searchResults.isEmpty()) {
+            model.addAttribute("searchMessage", "'" + keyword + "' 에 대한 검색 결과가 없습니다.");
+        } else { // 반대의 경우
+            model.addAttribute("searchMessage", "'" + keyword + "' 에 대한 검색 결과입니다.");
+        }
+    } else {
+        return "redirect:/main";
+    }
+
+    model.addAttribute("searchCategory", searchCategory);
+    model.addAttribute("actors", searchResults);
+
+        return "searchActor";
     }
 
 

@@ -2,13 +2,11 @@ package com.soo.netflix_clone.controller;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.soo.netflix_clone.service.MovieServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
@@ -16,6 +14,8 @@ import com.soo.netflix_clone.service.WatchHistoryServiceImpl;
 import com.soo.netflix_clone.vo.MovieVo;
 import com.soo.netflix_clone.vo.UserVo;
 import com.soo.netflix_clone.vo.WatchHistoryVo;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -37,6 +37,8 @@ public class MainController {
     // 로그인 했을시 메인 페이지
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session) {
+
+        model.addAttribute("searchCategory", "movie"); 
 
         // 로그인된 사용자 정보를 담는 변수 loginUser
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
@@ -64,6 +66,21 @@ public class MainController {
         List<MovieVo> movies = movieService.selectAllMovies();
         model.addAttribute("movies", movies);
         return "main";  
+    }
+
+    // 웹 페이지의 /search 경로로 들어오는 GET요청을 처리
+    @GetMapping("/search")
+    // 웹 페이지의 searchCategory를 파라미터로 하고 기본값은 movie로 한다.
+    public String searchRouter(@RequestParam(value = "searchCategory", 
+        defaultValue = "movie") String searchCategory) {
+
+        // 만약 searchCategory가 actor와 같다면 searchActor로
+        if ("actor".equalsIgnoreCase(searchCategory)) {
+            return "forward:/searchActor";
+        }
+
+        // defaultValue가 movie이기 때문에 카테고리의 기본값으로 설정되어있는 movie에 맞게 searchMovie로
+        return "forward:/searchMovie";
     }
     
 }
