@@ -44,7 +44,7 @@
         <div class="row-posters">
             <!-- 컨트롤러에서 넘겨받은 'movies' 리스트를 반복하여 출력 -->
             <div th:each="movie : ${movies}" class="movie-item">
-                <a th:href="@{/selectMovie/{movieTitle}(movieTitle=${movie.movieTitle})}">
+                <a th:href="@{/selectMovie/{movieNo}(movieNo=${movie.movieNo})}">
                     <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}" class="row-poster">
                     <p class="movie-title" th:text="${movie.movieTitle}"></p>
                 </a>
