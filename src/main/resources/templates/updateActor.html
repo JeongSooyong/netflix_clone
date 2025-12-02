@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- actorVo 객체가 모델에 없을 수도 있으므로, 조건부로 타이틀 설정 (Thymeleaf 삼항 연산자) -->
+    <title th:text="${(actorVo != null and actorVo.actorName != null) ? actorVo.actorName + ' 배우 정보 수정 - 넷플릭스' : '배우 정보 수정 - 넷플릭스'}"></title>
+    <!-- 이 페이지 전용 CSS 파일 링크 -->
+    <link rel="stylesheet" href="/css/updateActor.css">
+    <!-- 헤더 프래그먼트를 사용한다면 여기에 포함 (선택 사항) -->
+    <!-- <div th:replace="fragments/header :: headerFragment"></div> -->
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${actorVo != null and actorVo.actorNo != 0} ? '배우 정보 수정' : '새 배우 등록'">배우 정보 수정</h1>
+        
+        <!-- 
+            th:object="${actorVo}"는 컨트롤러에서 'actorVo'라는 이름으로 모델에 추가된 ActorVo 객체와 이 폼을 매핑합니다.
+            th:action="@{/updateActor}"는 폼 제출 시 ActorController의 @PostMapping("/updateActor")로 요청을 보냅니다.
+            파일 업로드를 하려면 method="post" 외에 enctype="multipart/form-data" 속성도 필요합니다. 
+            (지금은 텍스트 필드로 포스터 파일명을 입력하는 것을 가정)
+        -->
+        <form th:action="@{/updateActor}" th:object="${actorVo}" method="post">
+            <!-- actorNo는 숨겨진 필드로 전달하여 업데이트 시 어떤 배우의 정보를 수정하는지 식별합니다. -->
+            <input type="hidden" th:field="*{actorNo}">
+
+            <div class="form-group">
+                <label for="actorName">이름:</label>
+                <input type="text" id="actorName" th:field="*{actorName}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="actorPoster">포스터 이미지 (파일명 또는 URL):</label>
+                <!-- 현재는 파일명/URL을 텍스트로 받는다고 가정합니다. 
+                     실제 파일 업로드 기능을 추가하려면 input type="file"로 변경하고 폼에 enctype 추가 필요 -->
+                <input type="text" id="actorPoster" th:field="*{actorPoster}">
+                <div class="current-poster" th:if="*{actorPoster != null and actorPoster != ''}">
+                    현재 포스터: 
+                    <img th:src="@{/img/{filename}(filename=*{actorPoster})}" 
+                         th:alt="'현재 포스터'" 
+                         style="max-width: 100px; display: block; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="actorDescrip">소개:</label>
+                <textarea id="actorDescrip" th:field="*{actorDescrip}" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="actorGender">성별:</label>
+                <select id="actorGender" th:field="*{actorGender}" required>
+                    <option value="">-- 선택 --</option>
+                    <option value="Male">남성</option>
+                    <option value="Female">여성</option>
+                    <option value="Other">기타</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="actorBirth">생년월일:</label>
+                <!-- LocalDate 타입과 호환되도록 input type="date" 사용 -->
+                <input type="date" id="actorBirth" th:field="*{actorBirth}">
+            </div>
+
+            <div class="form-group">
+                <label for="actorNation">국적:</label>
+                <input type="text" id="actorNation" th:field="*{actorNation}">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">저장</button>
+                <!-- 취소 버튼 클릭 시 이전 페이지로 돌아갑니다. -->
+                <button type="button" class="btn-cancel" onclick="history.back()">취소</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

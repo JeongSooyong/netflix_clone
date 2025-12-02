@@ -30,6 +30,10 @@
                 <!-- actorVo의 actorDescrip 필드 사용 -->
                 <span th:text="${actor.actorDescrip}">배우의 자세한 약력 및 소개 글입니다. 여기에 긴 텍스트가 들어갈 수 있습니다.</span>
             </div>
+            <div th:if="${loginUser != null and loginUser.commonNo == 104}" class="admin-actions">
+                <!-- 'editActor'는 배우 정보를 수정할 폼으로 이동하는 경로입니다. -->
+                <a th:href="@{/updateActor/{actorNo}(actorNo=${actor.actorNo})}" class="btn-edit-actor">배우 정보 수정</a>
+            </div>
         </div>
     </div>
 

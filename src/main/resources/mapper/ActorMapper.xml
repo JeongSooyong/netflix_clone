@@ -102,5 +102,13 @@ SELECT m.MOVIE_NO, m.MOVIE_TITLE, m.MOVIE_DESCRIP,
 	WHERE ma.ACTOR_NO = #{actorNo}
 </select>
 
+<!-- 배우 정보 수정 -->
+<update id="updateActor" parameterType="com.soo.netflix_clone.vo.ActorVo">
+UPDATE netflix.actor
+	SET ACTOR_NAME=#{actorName}, ACTOR_POSTER=#{actorPoster}, ACTOR_DESCRIP=#{actorDescrip}, 
+	ACTOR_GENDER=#{actorGender}, ACTOR_BIRTH=#{actorBirth}, ACTOR_NATION=#{actorNation}
+	WHERE ACTOR_NO=#{actorNo}
+</update>
+
 
 </mapper>

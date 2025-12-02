@@ -1,0 +1,113 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #141414; /* 넷플릭스 배경색 */
+    color: #e5e5e5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 상단 정렬 */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #333;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 600px;
+    margin-top: 50px; /* 헤더와의 간격 */
+}
+
+h1 {
+    color: #e50914; /* 넷플릭스 빨간색 */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #b3b3b3;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: calc(100% - 20px); /* 패딩 고려 */
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #444;
+    color: #e5e5e5;
+    font-size: 1em;
+}
+
+.form-group textarea {
+    resize: vertical; /* 세로 크기 조절 가능 */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #e50914;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.3);
+}
+
+.current-poster {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #888;
+}
+
+.current-poster img {
+    border-radius: 5px;
+    border: 1px solid #666;
+    margin-top: 5px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-submit, .btn-cancel {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    margin: 0 10px;
+}
+
+.btn-submit {
+    background-color: #e50914; /* 넷플릭스 레드 */
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #f40612;
+    transform: translateY(-2px);
+}
+
+.btn-cancel {
+    background-color: #666;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #777;
+    transform: translateY(-2px);
+}

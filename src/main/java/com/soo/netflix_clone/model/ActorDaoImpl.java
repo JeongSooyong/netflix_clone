@@ -84,5 +84,11 @@ public class ActorDaoImpl implements IActorDao {
         return session.selectList(NS + "selectMoviesByActorNo", actorNo);
     }
 
+    // 배우 정보 수정
+    @Override
+    public int updateActor(ActorVo vo) {
+        return session.update(NS + "updateActor", vo);
+    }
+
 
 }

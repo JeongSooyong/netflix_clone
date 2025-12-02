@@ -31,4 +31,7 @@ public interface IActorDao {
     // 배우 출연 영화 조회
     public List<MovieVo> selectMoviesByActorNo(int actorNo);
 
+    // 배우 정보 수정
+    public int updateActor(ActorVo vo);
+
 }

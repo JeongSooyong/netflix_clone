@@ -70,4 +70,10 @@ public class ActorServiceImpl implements IActorService {
         return dao.selectMoviesByActorNo(actorNo);
     }
 
+    // 배우 정보 수정
+    @Override
+    public int updateActor(ActorVo vo) {
+        return dao.updateActor(vo);
+    }
+
 }
