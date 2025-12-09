@@ -230,4 +230,43 @@ public class ActorController {
         return "updateActor";
     }
 
+    @PostMapping("/updateActor2")
+    public String updateActor2(@ModelAttribute ActorVo actorVo, HttpSession session, RedirectAttributes rttr) {
+
+        // 로그인 된 사용자의 정보를 변수 loginUser에 할당
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+
+        // 현재 로그인 된 사용자가 null 인지 관리자가 아닌지 확인하는 조건문
+        if (loginUser == null || loginUser.getCommonNo() != 104) {
+            rttr.addFlashAttribute("message", "관리자만 접근 가능");
+            return "redirect:/main";
+        }
+
+        try {
+            // 뷰에서 전송된 수정할 actorVo 정보를 담는다.
+            // actorService의 updateActor 메서드 호출하여 해당 메서드가 성공적으로 작동됐을때
+            // result에 변수 1이 할당된다.
+            int result = actorService.updateActor(actorVo);
+            
+            if (result > 0) {
+                rttr.addFlashAttribute("message", "배우 정보 수정 완료");
+                
+                return "redirect:/main";
+            } else {
+                
+                rttr.addFlashAttribute("message", "배우 정보 수정 실패");
+                
+                return "redirect:/updateActor/" + actorVo.getActorNo();
+
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            rttr.addFlashAttribute("message", "오류 발생");
+
+            return "redirect:/updateActor/" + actorVo.getActorNo();
+        }
+    }
+
 }

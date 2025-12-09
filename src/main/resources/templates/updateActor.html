@@ -20,7 +20,7 @@
             파일 업로드를 하려면 method="post" 외에 enctype="multipart/form-data" 속성도 필요합니다. 
             (지금은 텍스트 필드로 포스터 파일명을 입력하는 것을 가정)
         -->
-        <form th:action="@{/updateActor}" th:object="${actorVo}" method="post">
+        <form th:action="@{/updateActor2}" th:object="${actorVo}" method="post">
             <!-- actorNo는 숨겨진 필드로 전달하여 업데이트 시 어떤 배우의 정보를 수정하는지 식별합니다. -->
             <input type="hidden" th:field="*{actorNo}">
 
@@ -51,9 +51,8 @@
                 <label for="actorGender">성별:</label>
                 <select id="actorGender" th:field="*{actorGender}" required>
                     <option value="">-- 선택 --</option>
-                    <option value="Male">남성</option>
-                    <option value="Female">여성</option>
-                    <option value="Other">기타</option>
+                    <option value="남">남성</option>
+                    <option value="여">여성</option>
                 </select>
             </div>
 
