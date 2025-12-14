@@ -11,6 +11,7 @@ public class ActorVo {
     private String actorGender;
     private LocalDate actorBirth;
     private String actorNation;
+    private int commonNo;
 
 
 
@@ -70,6 +71,14 @@ public class ActorVo {
         this.actorNation = actorNation;
     }
 
+    public int getCommonNo() {
+        return this.commonNo;
+    }
+
+    public void setCommonNo(int commonNo) {
+        this.commonNo = commonNo;
+    }
+
 
     @Override
     public String toString() {
@@ -81,6 +90,7 @@ public class ActorVo {
             ", actorGender='" + getActorGender() + "'" +
             ", actorBirth='" + getActorBirth() + "'" +
             ", actorNation='" + getActorNation() + "'" +
+            ", commonNo='" + getCommonNo() + "'" +
             "}";
     }
     

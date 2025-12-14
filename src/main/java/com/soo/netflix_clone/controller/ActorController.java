@@ -269,4 +269,31 @@ public class ActorController {
         }
     }
 
+    // 배우 비공개 처리
+    @PostMapping("/actorPrivate/{actorNo}")
+    public String actorPriavte(@PathVariable("actorNo") int actorNo, 
+        HttpSession session, RedirectAttributes redirectAttributes) {
+        
+        // 현재 세션을 변수 loginUser에 할당
+        UserVo loginUser = (UserVo) session.getAttribute("loginUser");
+
+        // loginUser가 null이거나 loginUser가 104(관리자)가 아닐 경우
+        if (loginUser == null || loginUser.getCommonNo() != 104) {
+            redirectAttributes.addFlashAttribute("errorMessage", "관리자만 접근할 수 있는 기능입니다.");
+            return "redirect:/main";
+        }
+        
+        // 서비스 계층의 actorPrivate를 호출하여 변수 updatedRows에 할당
+        int updatedRows = actorService.actorPrivate(actorNo);
+
+        // updatedRows가 0보다 크면 영화 비공개처리 완료
+        if (updatedRows > 0) {
+            redirectAttributes.addFlashAttribute("successMessage", "'" + actorNo + "' 배우가 성공적으로 비공개 처리되었습니다.");
+        } else { // 그렇지 않다면 비공개처리 실패
+            redirectAttributes.addFlashAttribute("errorMessage", "'" + actorNo + "' 배우 비공개 처리에 실패했거나 해당 배우를 찾을 수 없습니다.");
+        }
+
+        return "redirect:/main";
+    }
+
 }

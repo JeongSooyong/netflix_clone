@@ -33,6 +33,9 @@
             <div th:if="${loginUser != null and loginUser.commonNo == 104}" class="admin-actions">
                 <!-- 'editActor'는 배우 정보를 수정할 폼으로 이동하는 경로입니다. -->
                 <a th:href="@{/updateActor/{actorNo}(actorNo=${actor.actorNo})}" class="btn-edit-actor">배우 정보 수정</a>
+                <form th:action="@{/actorPrivate/{actorNo}(actorNo=${actor.actorNo})}" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn-hide-actor" onclick="return confirm('정말로 이 배우를 비공개 처리하시겠습니까?');">배우 비공개</button>
+                </form>
             </div>
         </div>
     </div>

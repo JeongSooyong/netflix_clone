@@ -406,7 +406,7 @@ public class MovieController {
             return "redirect:/main"; 
         }
 
-        // 서비스계층의 moviePrivate를 호출하여 변수 updateRows에 할당
+        // 서비스계층의 moviePrivate를 호출하여 변수 updatedRows에 할당
         int updatedRows = movieService.moviePrivate(movieTitle); 
 
         // updateRows가 0보다 크다면 영화 비공개처리 완료

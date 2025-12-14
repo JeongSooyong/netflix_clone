@@ -76,4 +76,9 @@ public class ActorServiceImpl implements IActorService {
         return dao.updateActor(vo);
     }
 
+    // 배우 비공개
+    public int actorPrivate(int actorNo) {
+        return dao.actorPrivate(actorNo);
+    }
+
 }

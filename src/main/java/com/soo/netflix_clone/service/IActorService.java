@@ -33,6 +33,9 @@ public interface IActorService {
 
     // 배우 정보 수정
     public int updateActor(ActorVo vo);
+
+    // 배우 비공개
+    public int actorPrivate(int actorNo);
     
 
 }

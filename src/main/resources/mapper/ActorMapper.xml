@@ -13,6 +13,7 @@
         <result property="actorGender" column="actor_gender"/>
         <result property="actorBirth" column="actor_birth"/>
         <result property="actorNation" column="actor_nation"/>
+        <result property="commonNo" column="common_no"/>
     </resultMap>
 
 <!-- movieResultMap 정의 -->
@@ -108,6 +109,13 @@ UPDATE netflix.actor
 	SET ACTOR_NAME=#{actorName}, ACTOR_POSTER=#{actorPoster}, ACTOR_DESCRIP=#{actorDescrip}, 
 	ACTOR_GENDER=#{actorGender}, ACTOR_BIRTH=#{actorBirth}, ACTOR_NATION=#{actorNation}
 	WHERE ACTOR_NO=#{actorNo}
+</update>
+
+<!-- 배우 비공개 -->
+<update id="actorPrivate" parameterType="Integer">
+UPDATE netflix.actor
+  SET COMMON_NO=402
+  WHERE ACTOR_NO=#{actorNo}
 </update>
 
 

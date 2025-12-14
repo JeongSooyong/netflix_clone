@@ -90,5 +90,11 @@ public class ActorDaoImpl implements IActorDao {
         return session.update(NS + "updateActor", vo);
     }
 
+    // 배우 비공개
+    @Override
+    public int actorPrivate(int actorNo) {
+        return session.update(NS + "actorPrivate", actorNo);
+    }
+
 
 }
