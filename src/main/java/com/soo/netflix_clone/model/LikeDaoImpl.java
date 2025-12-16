@@ -50,4 +50,31 @@ public class LikeDaoImpl implements ILikeDao {
         return session.selectOne(NS + "isLikedMovie", isLiked);
     }
 
+    // 배우 추천
+    @Override
+    public int likeActor(LikeVo vo) {
+        return session.insert(NS + "likeActor", vo);
+    }
+
+    // 배우 추천 취소
+    @Override
+    public int likeActorCancel(LikeVo vo) {
+        return session.delete(NS + "likeActorCancel", vo);
+    }
+
+    // 배우 추천 개수
+    @Override
+    public int countLikeActor(int actorNo) {
+        return session.selectOne(NS + "countLikeActor", actorNo);
+    }
+
+    // 배우 추천 여부 확인
+    @Override
+    public int isLikedActor(int userNo, int actorNo) {
+        Map<String, Integer> isLiked = new HashMap<>();
+        isLiked.put("userNo", userNo);
+        isLiked.put("actorNo", actorNo);
+        return session.selectOne(NS + "isLikedActor", isLiked);
+    }
+
 }

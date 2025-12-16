@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soo.netflix_clone.service.ActorServiceImpl;
+import com.soo.netflix_clone.service.LikeServiceImpl;
 import com.soo.netflix_clone.service.UserServiceImpl;
 import com.soo.netflix_clone.vo.ActorVo;
 import com.soo.netflix_clone.vo.MovieVo;
@@ -35,6 +36,10 @@ public class ActorController {
     @Autowired
     private ActorServiceImpl actorService;
 
+    // Like서비스 자동 주입
+    @Autowired
+    private LikeServiceImpl likeService;
+
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
     @Value("${file.upload-dir}")
@@ -48,8 +53,24 @@ public class ActorController {
         ActorVo actor = actorService.selectActor(actorNo);
         model.addAttribute("actor", actor);
 
+        // 로그인된 세션 UserVo를 가져오는 loginUser
         UserVo loginUser = (UserVo) session.getAttribute("loginUser");
         model.addAttribute("loginUser", loginUser);
+
+        // like 서비스 계층의 countLikeActor 메서드를 호출하여 countLikeActor에 할당
+        int countLikeActor = likeService.countLikeActor(actorNo);
+
+        model.addAttribute("countLikeActor", countLikeActor);
+
+        // 추천 여부의 기본 값을 false로 할당
+        boolean isLiked = false;
+
+        // loginUser가 null이 아닌지 확인(로그인 여부 확인)
+        if (loginUser != null) {
+            // 로그인된 상태라면 서비스계층의 isLikedActor 메서드를 동작시켜서 0보다 크다면 true를 할당
+            isLiked = likeService.isLikedActor(loginUser.getUserNo(), actorNo) > 0;
+        }
+        model.addAttribute("isLiked", isLiked);
 
         // 배우의 출연 영화 목록 조회하는 코드
         // actorService의 selectMoviesByActorNo메서드를 호출하여 List타입의 변수 filmography에 할당

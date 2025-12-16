@@ -8,6 +8,7 @@
     <resultMap id="likeResultMap" type="com.soo.netflix_clone.vo.LikeVo">
         <result property="userNo" column="user_no"/>
         <result property="movieNo" column="movie_no"/>
+        <result property="actorVo" column="actor_no"/>
     </resultMap>
 
 <!-- 영화 추천 -->
@@ -35,6 +36,33 @@ SELECT COUNT(*)
 SELECT COUNT(*)
   FROM netflix.`like`
   WHERE USER_NO = #{userNo} AND MOVIE_NO = #{movieNo}
+</select>
+
+<!-- 배우 추천 -->
+<insert id="likeActor" parameterType="com.soo.netflix_clone.vo.LikeVo">
+INSERT INTO netflix.`like`
+  (USER_NO, ACTOR_NO)
+VALUES(#{userNo}, #{actorNo})
+</insert>
+
+<!-- 배우 추천 취소 -->
+<delete id="likeActorCancel" parameterType="com.soo.netflix_clone.vo.LikeVo">
+DELETE FROM netflix.`like`
+  WHERE USER_NO=#{userNo} AND ACTOR_NO=#{actorNo}
+</delete>
+
+<!-- 배우 추천 개수 -->
+<select id="countLikeActor" parameterType="Integer">
+SELECT COUNT(*)
+	FROM netflix.`like`
+	WHERE ACTOR_NO = #{actorNo}
+</select>
+
+<!-- 배우 추천 여부 확인 -->
+<select id="isLikedActor" parameterType="map">
+SELECT COUNT(*)
+  FROM netflix.`like`
+  WHERE USER_NO = #{userNo} AND ACTOR_NO = #{actorNo}
 </select>
 
 

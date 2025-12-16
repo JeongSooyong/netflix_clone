@@ -16,4 +16,16 @@ public interface ILikeService {
     // 영상 추천 여부 확인
     public int isLikedMovie(int userNo, int movieNo);
 
+    // 배우 추천
+    public int likeActor(LikeVo vo);
+
+    // 배우 추천 취소
+    public int likeActorCancel(LikeVo vo);
+
+    // 배우 추천 개수
+    public int countLikeActor(int actorNo);
+
+    // 배우 추천 여부 확인
+    public int isLikedActor(int userNo, int actorNo);
+
 }

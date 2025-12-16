@@ -37,4 +37,28 @@ public class LikeServiceImpl implements ILikeService {
         return dao.isLikedMovie(userNo, movieNo);
     }
 
+    // 배우 추천
+    @Override
+    public int likeActor(LikeVo vo) {
+        return dao.likeActor(vo);
+    }
+
+    // 배우 추천 취소
+    @Override
+    public int likeActorCancel(LikeVo vo) {
+        return dao.likeActorCancel(vo);
+    }
+
+    // 배우 추천 개수
+    @Override
+    public int countLikeActor(int actorNo) {
+        return dao.countLikeActor(actorNo);
+    }
+
+    // 배우 추천 여부 확인
+    @Override
+    public int isLikedActor(int userNo, int actorNo) {
+        return dao.isLikedActor(userNo, actorNo);
+    }
+
 }

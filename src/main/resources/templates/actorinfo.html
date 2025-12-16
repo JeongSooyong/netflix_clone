@@ -6,54 +6,54 @@
     <!-- 배우 이름으로 페이지 타이틀 설정 -->
     <title th:text="${actor.actorName} + ' 정보 - 넷플릭스'"></title>
     <link rel="stylesheet" href="/css/actorinfo.css">
+    <script src="/js/actorInfo.js"></script>
 
 </head>
 <body>
     <div class="actor-container">
         <div class="actor-profile">
-            <!-- actorVo의 actorPoster 필드를 사용하여 이미지 로드 -->
-            <!-- 이미지 경로는 src/main/resources/static/img/ 에 있다고 가정합니다. -->
             <img th:src="@{/img/{filename}(filename=${actor.actorPoster})}"
                  th:alt="${actor.actorName} + ' 프로필 이미지'">
         </div>
         <div class="actor-info">
-            <!-- actorVo의 actorName 필드 사용 -->
             <h1 th:text="${actor.actorName}">배우 이름</h1>
             <p><strong>국적:</strong> <span th:text="${actor.actorNation}">국적 정보</span></p>
             <p><strong>성별:</strong> <span th:text="${actor.actorGender}">성별 정보</span></p>
-            <!-- actorVo의 actorBirth 필드 사용 (LocalDate 타입 가정) -->
-            <!-- #temporals 유틸리티로 날짜를 'yyyy년 MM월 dd일' 형식으로 포맷 -->
             <p><strong>생년월일:</strong> <span th:text="${#temporals.format(actor.actorBirth, 'yyyy년 MM월 dd일')}">생년월일 정보</span></p>
             
             <div class="actor-description">
                 <strong>소개:</strong>
-                <!-- actorVo의 actorDescrip 필드 사용 -->
                 <span th:text="${actor.actorDescrip}">배우의 자세한 약력 및 소개 글입니다. 여기에 긴 텍스트가 들어갈 수 있습니다.</span>
             </div>
+            
+            <!-- 관리자 액션 (기존 코드) -->
             <div th:if="${loginUser != null and loginUser.commonNo == 104}" class="admin-actions">
-                <!-- 'editActor'는 배우 정보를 수정할 폼으로 이동하는 경로입니다. -->
                 <a th:href="@{/updateActor/{actorNo}(actorNo=${actor.actorNo})}" class="btn-edit-actor">배우 정보 수정</a>
                 <form th:action="@{/actorPrivate/{actorNo}(actorNo=${actor.actorNo})}" method="post" style="display: inline-block;">
                     <button type="submit" class="btn-hide-actor" onclick="return confirm('정말로 이 배우를 비공개 처리하시겠습니까?');">배우 비공개</button>
                 </form>
             </div>
+
+            <th:block th:if="${loginUser != null}">
+                <button type="button" class="btn-like" id="toggleLikeButton" th:data-actor-no="${actor.actorNo}"
+                    th:data-is-liked="${isLiked} ? 'true' : 'false'"
+                    th:classappend="${isLiked} ? 'btn-unlike' : 'btn-like'">
+                    <span th:text="${isLiked} ? '추천 취소' : '추천'"></span>
+                </button>
+            </th:block>
+            <span id="countLikeActor" th:text="|추천수: ${countLikeActor}">추천수: 0</span>
         </div>
     </div>
 
     <div class="filmography-section">
         <h2>출연 작품</h2>
         <div class="filmography-list">
-            <!-- filmography 리스트가 비어있지 않은 경우에만 각 영화 정보 표시 -->
             <div th:each="movie : ${filmography}" class="filmography-item">
-                <!-- movie.movieNo는 영화의 고유 번호 (기존 movieVo의 필드명이라고 가정) -->
                 <a th:href="@{/selectMovie/{movieNo}(movieNo=${movie.movieNo})}">
-                    <!-- movie.moviePoster는 영화 포스터 파일명 또는 경로 (기존 movieVo의 필드명이라고 가정) -->
                     <img th:src="@{/img/{filename}(filename=${movie.moviePoster})}" th:alt="${movie.movieTitle}">
-                    <!-- movie.movieTitle은 영화 제목 (기존 movieVo의 필드명이라고 가정) -->
                     <p th:text="${movie.movieTitle}"></p>
                 </a>
             </div>
-            <!-- filmography 리스트가 비어있을 경우 메시지 표시 -->
             <div th:if="${#lists.isEmpty(filmography)}" class="no-movies-message">
                 <p>등록된 출연 작품이 없습니다.</p>
             </div>
