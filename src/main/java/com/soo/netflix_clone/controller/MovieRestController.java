@@ -146,7 +146,7 @@ public class MovieRestController {
             LikeVo likeVo = new LikeVo();
             // 세션에 저장된 현재 로그인 사용자(loginUser)의 userNo를 likeVo의 userNo 필드에 할당
             likeVo.setUserNo(loginUser.getUserNo());
-            // selectMovie에서 선택된 영화의 movieNo를 movieNo를 likeVo의 movieNo에 할당
+            // selectMovie에서 선택된 영화의 movieNo를 likeVo의 movieNo에 할당
             likeVo.setMovieNo(movieNo);
 
             // 서비스 계층의 likeMovieCancel 메서드를 호출하여 변수 deleted에 할당

@@ -55,10 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         this.classList.toggle('btn-like', !isLiked);
 
                         // data객체가 currentCountLikeActor를 고유 속성으로 가지고 있는지 확인
-                        if (data.hasOwnProperty('currentLikeCount')) {
+                        if (data.hasOwnProperty('currentCountLikeActor') && currentCountLikeActor) {
                             // span태그 안에서 currentCountLikeActor 변수 할당 성공여부 확인
                             if (currentCountLikeActor) {
-                                currentCountLikeActor.textContent = data.currentLikeCount;
+                                currentCountLikeActor.textContent = data.currentCountLikeActor;
                             }
                         }
                         else {
