@@ -15,15 +15,28 @@ public class ReviewServiceImpl implements IReviewService {
     @Autowired
     private IReviewDao dao;
     
-    // 리뷰 조회
+    // 영화 리뷰 조회
     @Override
     public List<ReviewVo> selectMovieReview(int reviewTarget) {
         return dao.selectMovieReview(reviewTarget);
     }
 
-    // 리뷰 작성
+    // 영화 리뷰 작성
+    @Override
     public int insertMovieReview(ReviewVo vo) {
         return dao.insertMovieReview(vo);
+    }
+
+    // 배우 리뷰 조회
+    @Override
+    public List<ReviewVo> selectActorReview(int reviewTarget) {
+        return dao.selectActorReview(reviewTarget);
+    }
+
+    // 배우 리뷰 작성
+    @Override
+    public int insertActorReview(ReviewVo vo) {
+        return dao.insertActorReview(vo);
     }
 
 }

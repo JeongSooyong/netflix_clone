@@ -59,5 +59,70 @@
             </div>
         </div>
     </div>
+    <div class="review-section">
+        <h2>배우에 대한 리뷰</h2>
+        <!-- 로그인한 사용자만 리뷰 작성 폼 표시 -->
+        <div th:if="${loginUser != null}" class="review-form">
+            <h3>리뷰 작성하기</h3>
+            <!-- form 태그에 id="reviewForm" 추가 -->
+            <form id="reviewForm" th:action="@{/actor/{actorNo}/review(actorNo=${actor.actorNo})}" method="post">
+                <!-- actorNo input 추가 및 userNo input id 변경 -->
+                <input type="hidden" id="actorNoInput" name="actorNo" th:value="${actor.actorNo}" />
+                <input type="hidden" id="userNoInput" name="userNo" th:value="${loginUser.userNo}" />
+                
+                <div style="margin-bottom: 10px;">
+                    <label>평점: </label>
+                    <div class="rating-input">
+                        <!-- name을 reviewRating으로 변경 -->
+                        <input type="radio" id="star5" name="reviewRating" value="5" required><label for="star5">★</label>
+                        <input type="radio" id="star4" name="reviewRating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="reviewRating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="reviewRating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="reviewRating" value="1"><label for="star1">★</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="reviewContentTextarea">내용:</label>
+                    <!-- id를 reviewContentTextarea로 변경 -->
+                    <textarea id="reviewContentTextarea" name="reviewContent" rows="4" placeholder="배우에 대한 생각이나 평가를 자유롭게 남겨주세요." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit-review">리뷰 등록</button>
+            </form>
+        </div>
+        <div th:unless="${loginUser != null}" class="review-login-prompt">
+            <p><a href="/login">로그인</a>하시면 리뷰를 작성할 수 있습니다.</p>
+        </div>
+    </div>
+
+    <!-- reviews-list-section에 id="reviewListContainer" 추가 -->
+    <div class="reviews-list-section" id="reviewListContainer">
+        <h3>등록된 리뷰 <span th:text="${#lists.size(reviews)}"></span>개</h3>
+        <!-- no-movies-message에 id="noReviewMessage" 추가 -->
+        <div th:if="${#lists.isEmpty(reviews)}" class="no-reviews-message" id="noReviewMessage">
+            <p>아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해보세요!</p>
+        </div>
+        <div th:each="review : ${reviews}" class="review-item">
+            <p>
+                <strong><span th:text="${review.userId}">사용자 닉네임</span></strong>
+                <span class="star-rating">
+                    <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+                        <span th:classappend="${review.reviewRating != null and i <= review.reviewRating} ? 'filled' : ''">★</span>
+                    </th:block>
+                </span>
+               <small th:text="${#temporals.format(review.reviewDate, 'yyyy.MM.dd HH:mm')}"></small>
+            </p>
+            <p class="review-content" th:text="${review.reviewComment}">리뷰 내용이 여기에 표시됩니다.</p>
+            <!-- 본인의 리뷰인 경우 수정/삭제 버튼 -->
+            <div th:if="${loginUser != null and loginUser.userNo == review.userNo}" class="review-actions">
+                <!-- 수정 버튼은 JavaScript를 이용해 폼을 표시하는 방식으로 구현될 수 있습니다. -->
+                <button type="button" class="btn-edit-review">수정</button>
+                <form th:action="@{/actor/{actorNo}/review/{reviewNo}(actorNo=${actor.actorNo}, reviewNo=${review.reviewNo})}" method="post" style="display: inline-block;">
+                    <input type="hidden" name="_method" value="delete" /> <!-- Spring Boot에서 DELETE 매핑을 위한 설정 -->
+                    <button type="submit" class="btn-delete-review" onclick="return confirm('정말로 이 리뷰를 삭제하시겠습니까?');">삭제</button>
+                </form>
+            </div>
+            <hr>
+        </div>
+    </div>
 </body>
 </html>

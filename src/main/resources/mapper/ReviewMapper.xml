@@ -16,7 +16,7 @@
         <result property="userId" column="user_id"/>
     </resultMap>
 
-<!-- 리뷰 조회 -->
+<!-- 영화 리뷰 조회 -->
 <select id="selectMovieReview" parameterType="Integer">
 SELECT r.REVIEW_NO, r.USER_NO, r.REVIEW_TARGET, 
 	r.REVIEW_DATE, r.REVIEW_COMMENT, r.REVIEW_RATING,
@@ -29,13 +29,35 @@ SELECT r.REVIEW_NO, r.USER_NO, r.REVIEW_TARGET,
         r.REVIEW_TARGET = #{reviewTarget}
 </select>
 
-<!-- 리뷰 작성 -->
+<!-- 영화 리뷰 작성 -->
 <insert id="insertMovieReview" parameterType="com.soo.netflix_clone.vo.ReviewVo">
 INSERT INTO netflix.review
 	(USER_NO, REVIEW_TARGET, REVIEW_DATE, 
 	REVIEW_COMMENT, REVIEW_RATING, COMMON_NO)
 	VALUES(#{userNo}, #{reviewTarget}, CURRENT_TIMESTAMP,
 	#{reviewComment}, #{reviewRating}, 301)
+</insert>
+
+<!-- 배우 리뷰 조회 -->
+<select id="selectActorReview" parameterType="Integer">
+SELECT r.REVIEW_NO, r.USER_NO, r.REVIEW_TARGET, 
+	r.REVIEW_DATE, r.REVIEW_COMMENT, r.REVIEW_RATING,
+	r.COMMON_NO, u.USER_ID
+    FROM 
+        netflix.review r
+    INNER JOIN 
+        netflix.user u ON r.USER_NO = u.USER_NO
+    WHERE 
+        r.REVIEW_TARGET = #{reviewTarget}
+</select>
+
+<!-- 배우 리뷰 작성 -->
+<insert id="insertActorReview" parameterType="com.soo.netflix_clone.vo.ReviewVo">
+INSERT INTO netflix.review
+	(USER_NO, REVIEW_TARGET, REVIEW_DATE, 
+	REVIEW_COMMENT, REVIEW_RATING, COMMON_NO)
+	VALUES(#{userNo}, #{reviewTarget}, CURRENT_TIMESTAMP,
+	#{reviewComment}, #{reviewRating}, 302)
 </insert>
 
 </mapper>

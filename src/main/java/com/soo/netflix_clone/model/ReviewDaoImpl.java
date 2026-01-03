@@ -22,16 +22,28 @@ public class ReviewDaoImpl implements IReviewDao {
         this.session = session;
     }
 
-    // 리뷰 조회
+    // 영화 리뷰 조회
     @Override
     public List<ReviewVo> selectMovieReview(int reviewTarget) {
         return session.selectList(NS + "selectMovieReview", reviewTarget);
     }
 
-    // 리뷰 작성
+    // 영화 리뷰 작성
     @Override
     public int insertMovieReview(ReviewVo vo) {
         return session.insert(NS + "insertMovieReview", vo);
     }
 
+    // 배우 리뷰 조회
+    @Override
+    public List<ReviewVo> selectActorReview(int reviewTarget) {
+        return session.selectList(NS + "selectActorReview", reviewTarget);
+    }
+
+    // 배우 리뷰 작성
+    @Override
+    public int insertActorReview(ReviewVo vo) {
+        return session.insert(NS + "insertActorReview", vo);
+    }
+    
 }

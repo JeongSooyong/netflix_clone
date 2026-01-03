@@ -111,7 +111,7 @@
 
         <!-- 기존 리뷰 목록 표시 -->
         <div class="reviews-list" id="reviewsListContainer">
-            <h3>관람객 리뷰</h3>
+            <h3>영상 리뷰</h3>
             <div class="review-item" th:each="reviewItem : ${review}">
                 <p><strong>작성자: <span th:text="${reviewItem.userId}">리뷰 작성자명</span></strong></p>
                 <p class="review-rating" th:text="${'⭐'.repeat(reviewItem.reviewRating)}">⭐⭐⭐⭐⭐</p>

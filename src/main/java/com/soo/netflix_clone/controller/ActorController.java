@@ -22,9 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soo.netflix_clone.service.ActorServiceImpl;
 import com.soo.netflix_clone.service.LikeServiceImpl;
-import com.soo.netflix_clone.service.UserServiceImpl;
+import com.soo.netflix_clone.service.ReviewServiceImpl;
 import com.soo.netflix_clone.vo.ActorVo;
 import com.soo.netflix_clone.vo.MovieVo;
+import com.soo.netflix_clone.vo.ReviewVo;
 import com.soo.netflix_clone.vo.UserVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -39,6 +40,10 @@ public class ActorController {
     // Like서비스 자동 주입
     @Autowired
     private LikeServiceImpl likeService;
+
+    // Review서비스 자동 주입
+    @Autowired
+    private ReviewServiceImpl reviewService;
 
     // application.properties의 'file.upload-dir' 값을 주입
     // 이 경로는 File 객체 생성 시 문자열로 사용
@@ -60,7 +65,12 @@ public class ActorController {
         // like 서비스 계층의 countLikeActor 메서드를 호출하여 countLikeActor에 할당
         int countLikeActor = likeService.countLikeActor(actorNo);
 
+        // review 서비스 계층의 selectActorReview 메서드 호출
+        List<ReviewVo> reviews = reviewService.selectActorReview(actorNo);
+        model.addAttribute("reviews", reviews);
+
         model.addAttribute("countLikeActor", countLikeActor);
+
 
         // 추천 여부의 기본 값을 false로 할당
         boolean isLiked = false;

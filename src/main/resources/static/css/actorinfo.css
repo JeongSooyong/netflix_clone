@@ -204,6 +204,37 @@ body {
     color: #888;
     padding: 60px;
 }
+.star-rating {
+    display: inline-block;
+    font-size: 1.5em;
+    color: #ddd; /* 빈 별 색상 */
+    letter-spacing: -2px; /* 별 사이 간격 조절 */
+    margin-bottom: 5px;
+}
+.star-rating .filled {
+    color: gold; /* 채워진 별 색상 */
+}
+/* 리뷰 폼 별점 입력 */
+.review-form .rating-input {
+    direction: rtl; /* 별 순서를 오른쪽에서 왼쪽으로 */
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.8em;
+}
+.review-form .rating-input input {
+    display: none;
+}
+.review-form .rating-input label {
+    color: #ddd;
+    float: right;
+    cursor: pointer;
+    padding: 0 2px;
+}
+.review-form .rating-input label:hover,
+.review-form .rating-input label:hover ~ label,
+.review-form .rating-input input:checked ~ label {
+    color: gold;
+}
 
 /* 반응형 디자인 (모바일 화면) */
 @media (max-width: 768px) {
@@ -257,3 +288,34 @@ body {
         margin: 10px 5px;
     }
 }
+        .star-rating {
+            display: inline-block;
+            font-size: 1.5em;
+            color: #ddd; /* 빈 별 색상 */
+            letter-spacing: -2px; /* 별 사이 간격 조절 */
+            margin-bottom: 5px;
+        }
+        .star-rating .filled {
+            color: gold; /* 채워진 별 색상 */
+        }
+        /* 리뷰 폼 별점 입력 */
+        .review-form .rating-input {
+            direction: rtl; /* 별 순서를 오른쪽에서 왼쪽으로 */
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 1.8em;
+        }
+        .review-form .rating-input input {
+            display: none;
+        }
+        .review-form .rating-input label {
+            color: #ddd;
+            float: right;
+            cursor: pointer;
+            padding: 0 2px;
+        }
+        .review-form .rating-input label:hover,
+        .review-form .rating-input label:hover ~ label,
+        .review-form .rating-input input:checked ~ label {
+            color: gold;
+        }

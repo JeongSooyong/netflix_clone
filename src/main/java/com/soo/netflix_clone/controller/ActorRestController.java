@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soo.netflix_clone.service.ActorServiceImpl;
 import com.soo.netflix_clone.service.LikeServiceImpl;
+import com.soo.netflix_clone.service.ReviewServiceImpl;
 import com.soo.netflix_clone.vo.ActorVo;
 import com.soo.netflix_clone.vo.LikeVo;
+import com.soo.netflix_clone.vo.ReviewVo;
 import com.soo.netflix_clone.vo.UserVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +34,10 @@ public class ActorRestController {
     // Like 서비스 자동주입
     @Autowired
     private LikeServiceImpl likeService;
+
+    // Review 서비스 자동주입
+    @Autowired
+    private ReviewServiceImpl reviewService;
 
     // 배우 검색
     @GetMapping("/api/actors/search")
@@ -168,6 +174,17 @@ public class ActorRestController {
             response.put("message", "취소 처리 중 오류가 발생했습니다.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 리뷰 작성
+    @PostMapping("/insertActorReview")
+    @ResponseBody
+    public ResponseEntity<String> insertMovieReview(@RequestBody ReviewVo reviewVo){
+        
+        // 리뷰 서비스 계층의 insertMovieReview메서드 호출
+        reviewService.insertActorReview(reviewVo);
+
+        return ResponseEntity.ok("리뷰가 성공적으로 작성되었습니다.");
     }
 
 }
